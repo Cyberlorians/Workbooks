@@ -1,1 +1,1 @@
-For Conditional-Access-Change-Dashboard-MAG Workbook please review the original authors doc [here](https://danielchronlund.com/category/conditional-access/). Again, this has been modified by Cyberlorians to work in AzureUSGovernment. Thank you Daniel Chronlund for the original content.
+## Conditional-Access-Change-Dashboard-MAG ## Workbook please review the original authors doc [here](https://danielchronlund.com/category/conditional-access/). Again, this has been modified by Cyberlorians to work in AzureUSGovernment. Thank you Daniel Chronlund for the original content.
