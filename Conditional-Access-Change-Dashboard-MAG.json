@@ -4,7 +4,7 @@
       {
         "type": 1,
         "content": {
-          "json": "## Conditional Access Change Dashboard\n---\nVersion: 2022.1 (https://github.com/DanielChronlund/Conditional-Access-Sentinel-Analytics-Rules-Pack)\n\nCreated by: Daniel Chronlund (https://danielchronlund.com)and tweaked by Cyberlorians to support AzureUSGovernment"
+          "json": "## Conditional Access Change Dashboard\n---\nVersion: 2022.1 (https://github.com/Cyberlorians/Workbooks)\n\nCreated by: Daniel Chronlund (https://danielchronlund.com) and tweaked by Cyberlorians to support AzureUSGovernment"
         },
         "name": "text - 2"
       },
