@@ -1,0 +1,816 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "value::all"
+        ],
+        "parameters": [
+          {
+            "id": "8c87c98a-2ee4-4b06-9152-ae62330b3c31",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": []
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 4"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# Users and Guests"
+      },
+      "name": "text - 4"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": " Inactive Users - Enter Max and Minimum Time Values",
+        "items": [
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "dcac7506-becc-423e-a8a7-b49f78efcf8c",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "UserType",
+                  "type": 2,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ],
+                    "showDefault": false
+                  },
+                  "jsonData": "[\"Member\",\"Guest\"]",
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "value": [
+                    "Member"
+                  ]
+                },
+                {
+                  "id": "62339408-f594-49c1-b272-e8db1f0a0ffb",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "MaxTimeValue",
+                  "type": 1,
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "value": "365"
+                },
+                {
+                  "id": "b9b49b7d-f818-4ff5-b45a-6086e0af0d14",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "MinTimeValue",
+                  "type": 1,
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "value": "30"
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "name": "parameters - 19"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Get Sign-in logs for inactive users\r\nSigninLogs\r\n| where UserType in ({UserType}) or '*' in ({UserType})\r\n| where TimeGenerated > ago({MaxTimeValue}d)\r\n| where ResultType == 0\r\n| where isnotempty(UserType)\r\n| summarize arg_max(TimeGenerated, *) by UserPrincipalName\r\n| where TimeGenerated < ago({MinTimeValue}d)\r\n| summarize by TimeGenerated, UserType, UserPrincipalName, ['Days Since Last Logon']=datetime_diff(\"day\",now(),TimeGenerated), HomeTenantId, ResourceTenantId\r\n| sort by TimeGenerated desc\r\n",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Member or Guest Last Logon",
+              "exportParameterName": "Detail",
+              "exportDefaultValue": "{ \"Name\":\"\", \"Type\":\"*\", \"Parent\":\"*\"}",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Days Since Last Logon",
+                    "formatter": 1
+                  }
+                ]
+              },
+              "tileSettings": {
+                "showBorder": false,
+                "titleContent": {
+                  "columnMatch": "CA Policy Name",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "failure",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              },
+              "mapSettings": {
+                "locInfo": "LatLong",
+                "sizeSettings": "failure",
+                "sizeAggregation": "Sum",
+                "legendMetric": "failure",
+                "legendAggregation": "Sum",
+                "itemColorSettings": {
+                  "type": "heatmap",
+                  "colorAggregation": "Sum",
+                  "nodeColorField": "failure",
+                  "heatmapPalette": "greenRed"
+                }
+              }
+            },
+            "customWidth": "75",
+            "name": "query - 10 - Copy - Copy",
+            "styleSettings": {
+              "margin": "50"
+            }
+          }
+        ]
+      },
+      "name": "InactiveGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": "Expired Guest Invites",
+        "items": [
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "62339408-f594-49c1-b272-e8db1f0a0ffb",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "TimeRange",
+                  "type": 1,
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "value": "90"
+                },
+                {
+                  "id": "b9b49b7d-f818-4ff5-b45a-6086e0af0d14",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "TimeFrame",
+                  "type": 1,
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "value": "30"
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "name": "parameters - 19"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AuditLogs\r\n| where TimeGenerated between (ago({TimeRange}d) .. ago({TimeFrame}d)) \r\n| where OperationName == \"Invite external user\"\r\n| extend GuestUPN = tolower(tostring(TargetResources[0].userPrincipalName))\r\n| summarize arg_max(TimeGenerated, *) by GuestUPN\r\n| project TimeGenerated, GuestUPN\r\n| join kind=leftanti  (\r\n    AuditLogs\r\n    //| where TimeGenerated > ago (timerange)\r\n    | where TimeGenerated > ago({TimeRange}d)\r\n    | where OperationName == \"Redeem external user invite\"\r\n    | where CorrelationId <> \"00000000-0000-0000-0000-000000000000\"\r\n    | extend d = tolower(tostring(TargetResources[0].displayName))\r\n    | parse d with * \"upn: \" GuestUPN \",\" *\r\n    | project TimeGenerated, GuestUPN)\r\n    on GuestUPN\r\n| project TimeGenerated, GuestUPN, ['Days Since Invite Sent']=datetime_diff(\"day\", now(), TimeGenerated)",
+              "size": 1,
+              "title": "Guest Invites Not Redeemed",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "name": "query - 2"
+          }
+        ]
+      },
+      "name": "group - 5"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago (360d)\r\n| where UserType == \"Guest\"\r\n| where AADTenantId != HomeTenantId and HomeTenantId != ResourceTenantId\r\n| where ResultType == 0\r\n| summarize arg_max(TimeGenerated, *) by UserPrincipalName\r\n| project TimeGenerated, UserPrincipalName\r\n| summarize ['Count of Last Signin']=count() by startofmonth(TimeGenerated)\r\n| render columnchart with (title=\"Guest inactivity per month\")",
+        "size": 0,
+        "title": "Guest inactivity per month within last 365d",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "tileSettings": {
+          "showBorder": false
+        },
+        "graphSettings": {
+          "type": 0
+        }
+      },
+      "name": "query - 4"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# Service Principals"
+      },
+      "name": "text - 5"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "9d469d3d-e539-4940-adf0-47698983b0fa",
+            "version": "KqlParameterItem/1.0",
+            "name": "SPTime",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "95"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 16"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AADServicePrincipalSignInLogs\r\n| where TimeGenerated > ago({SPTime}d)\r\n//| where TimeGenerated > ago(365d)\r\n| where ResultType == \"0\"\r\n| summarize arg_max(TimeGenerated, *) by AppId\r\n| project TimeGenerated, ServicePrincipalName, ['Days Since Last Logon']=datetime_diff(\"day\", now(),TimeGenerated)\r\n| where ['Days Since Last Logon'] >= 45 | sort by ['Days Since Last Logon'] desc ",
+        "size": 1,
+        "title": "Inactive Service Principals within SPTime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Days Since Last Logon",
+              "formatter": 1
+            }
+          ]
+        }
+      },
+      "name": "query - 6"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AADServicePrincipalSignInLogs\r\n| where TimeGenerated > ago({SPTime}d)\r\n| where ResultType != \"0\"\r\n| extend ErrorDescription = case (\r\n    ResultType == \"7000215\", strcat(\"Invalid client secret is provided\"),\r\n    ResultType == \"7000222\", strcat(\"The provided client secret keys are expired\"),\r\n    ResultType == \"700027\", strcat(\"Client assertion failed signature validation\"),\r\n    ResultType == \"700024\", strcat(\"Client assertion is not within its valid time range\"),\r\n    ResultType == \"70021\", strcat(\"No matching federated identity record found for presented assertion\"),\r\n    ResultType == \"500011\", strcat(\"The resource principal named was not found in the tenant\"),\r\n    ResultType == \"700082\", strcat(\"The refresh token has expired due to inactivity\"),\r\n    ResultType == \"90025\", strcat(\"Request processing has exceeded gateway allowance\"),\r\n    ResultType == \"500341\", strcat(\"The user account has been deleted from the directory\"),\r\n    ResultType == \"100007\", strcat(\"AAD Regional ONLY supports auth either for MSIs OR for requests from MSAL using SN+I for 1P apps or 3P apps in Microsoft infrastructure tenants\"),\r\n    ResultType == \"1100000\", strcat(\"Non-retryable error has occurred\"),\r\n    ResultType == \"90033\", strcat(\"A transient error has occurred. Please try again\"),\r\n    ResultType == \"53003\",strcat(\"Access has been blocked by Conditional Access policies. The access policy does not allow token issuance.\"),\r\n    \"Unknown\"\r\n    )\r\n| project TimeGenerated, ServicePrincipalName, ServicePrincipalId, ErrorDescription, ResultType, IPAddress",
+        "size": 0,
+        "title": "Service Principal Error Codes within SPTime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "$gen_group",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "40ch"
+              }
+            },
+            {
+              "columnMatch": "ErrorDescription",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "ResultType",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "$gen_group",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "40ch"
+              }
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "ResultType",
+              "ErrorDescription"
+            ]
+          }
+        }
+      },
+      "name": "query - 7"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# Enterprise Applications"
+      },
+      "name": "text - 8"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "fbdaf430-0fbb-47b1-9947-4ec01ba8a883",
+            "version": "KqlParameterItem/1.0",
+            "name": "EATime",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "65"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 17"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago({EATime}d)\r\n//| where TimeGenerated > ago (365d)\r\n| where ResultType == 0\r\n| summarize arg_max(TimeGenerated, *) by AppId\r\n| project\r\n    AppDisplayName,\r\n    ['Last Logon Time']=TimeGenerated,\r\n    ['Days Since Last Logon']=datetime_diff(\"day\", now(), TimeGenerated)\r\n| where ['Days Since Last Logon'] > 30 | sort by ['Days Since Last Logon'] desc ",
+        "size": 0,
+        "title": "Apps with no Sign-ins past 30days",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Days Since Last Logon",
+              "formatter": 1
+            }
+          ]
+        }
+      },
+      "name": "query - 9"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago({EATime}d)\r\n//| where TimeGenerated > ago(30d)\r\n| where ResultType == 0\r\n| summarize ['Total Signins']=count(), ['Distinct User Signins']=dcount(UserPrincipalName) by AppDisplayName | sort by ['Distinct User Signins'] desc ",
+        "size": 0,
+        "title": "Total sign-in vs distinct sign-ins",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Total Signins",
+              "formatter": 1
+            },
+            {
+              "columnMatch": "Distinct User Signins",
+              "formatter": 1
+            }
+          ],
+          "sortBy": [
+            {
+              "itemKey": "AppDisplayName",
+              "sortOrder": 1
+            }
+          ]
+        },
+        "sortBy": [
+          {
+            "itemKey": "AppDisplayName",
+            "sortOrder": 1
+          }
+        ]
+      },
+      "name": "query - 10"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n//| where TimeGenerated > ago(30d)\r\n| where TimeGenerated > ago({EATime}d)\r\n| where ResultType == 0\r\n| summarize ['Distinct Member Signins']=dcountif(UserPrincipalName, UserType == \"Member\"), ['Distinct Guest Signins']=dcountif(UserPrincipalName, UserType == \"Guest\")  by AppDisplayName | sort by ['Distinct Guest Signins'] ",
+        "size": 0,
+        "title": "Member vs Guest for each app",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Distinct Member Signins",
+              "formatter": 1
+            },
+            {
+              "columnMatch": "Distinct Guest Signins",
+              "formatter": 1
+            }
+          ]
+        }
+      },
+      "name": "query - 11"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# Privilege Access"
+      },
+      "name": "text - 12"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "aba2622f-95e5-459a-bc69-5c4c7cf39e73",
+            "version": "KqlParameterItem/1.0",
+            "name": "PATime",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "55"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 18"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "//Detects users who have accessed Azure AD Management interfaces who have not accessed in the previous timeframe\r\n//let timeframe = startofday(ago(1d));\r\nlet applications = dynamic([\"Azure Active Directory PowerShell\", \"Microsoft Azure PowerShell\", \"Graph Explorer\", \"ACOM Azure Website\"]);\r\nSigninLogs\r\n| where TimeGenerated > ({PATime}d) and TimeGenerated < startofday(now())\r\n| where AppDisplayName in (applications)\r\n| project UserPrincipalName, AppDisplayName\r\n| join kind=rightanti\r\n    (\r\n    SigninLogs\r\n    | where TimeGenerated > startofday(now())\r\n    | where AppDisplayName in (applications)\r\n    )\r\n    on UserPrincipalName, AppDisplayName\r\n| where ResultType == 0\r\n| project TimeGenerated, UserPrincipalName, ResultType, AppDisplayName, IPAddress, Location, UserAgent",
+        "size": 0,
+        "title": "Detects users who have accessed Azure AD Management interfaces who have not accessed in PATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 13"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AuditLogs\r\n| where TimeGenerated > ago (365d)\r\n| project TimeGenerated, OperationName, Result, TargetResources, InitiatedBy\r\n| where OperationName == \"Add member to role completed (PIM activation)\"\r\n| where Result == \"success\"\r\n| extend ['Last Role Activated'] = tostring(TargetResources[0].displayName)\r\n| extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| summarize arg_max(TimeGenerated, *) by Actor\r\n| project Actor, ['Last Role Activated'], ['Last Activation Time']=TimeGenerated, ['Days Since Last Activation']=datetime_diff(\"day\", now(), TimeGenerated)\r\n| where ['Days Since Last Activation'] >= ({PATime})\r\n| sort by ['Days Since Last Activation'] desc",
+        "size": 0,
+        "title": "Users who haven't elevated to a role more than PATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 14"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "1a4b8407-431e-49cb-9232-564a4cd61c7f",
+            "version": "KqlParameterItem/1.0",
+            "name": "PATimeRange",
+            "type": 1,
+            "value": "180"
+          },
+          {
+            "id": "3b2c6aed-6af1-48fb-ad26-61bfcc9dbab7",
+            "version": "KqlParameterItem/1.0",
+            "name": "TZ",
+            "type": 1,
+            "description": "Set TimeZone with +-",
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "-5",
+            "label": ""
+          },
+          {
+            "id": "875d5837-9ee4-4ca9-9ef6-005646cb54e6",
+            "version": "KqlParameterItem/1.0",
+            "name": "WorkDayStart",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "6"
+          },
+          {
+            "id": "0ef92195-c347-4a58-b0a4-132e133b30ef",
+            "version": "KqlParameterItem/1.0",
+            "name": "WorkDayEnd",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "15"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 19"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "AuditLogs\r\n| extend LocalTime = TimeGenerated, '({TZ}h)'\r\n| where LocalTime > ago({PATimeRange}d)\r\n// Change hours of the day to suit your company, i.e this would find activations between 6pm and 6am\r\n| where hourofday(LocalTime) !between (({WorkDayStart}) .. ({WorkDayEnd}))\r\n| where OperationName == \"Add member to role completed (PIM activation)\"\r\n| extend RoleName = tostring(TargetResources[0].displayName)\r\n| project LocalTime, OperationName, Identity, RoleName, ActivationReason=ResultReason",
+        "size": 0,
+        "title": "PIM elevation outside of working hours ",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 15"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# MFA and Passwordless"
+      },
+      "name": "text - 20"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "22ef5fd0-b8dd-49a3-9d83-c4ca40cef72d",
+            "version": "KqlParameterItem/1.0",
+            "name": "MFATime",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "30"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 22"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago({MFATime}d)\r\n| summarize ['Single Factor Authentication']=countif(AuthenticationRequirement == \"singleFactorAuthentication\"), ['Multi Factor Authentication']=countif(AuthenticationRequirement == \"multiFactorAuthentication\") by bin(TimeGenerated, 1d)\r\n| render timechart with (ytitle=\"Count\", title=\"Single vs Multifactor Authentication last 30 days\")",
+        "size": 0,
+        "title": "Single vs MultiFactor Authentication last MFATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 21"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago({MFATime}d)\r\n| where ResultType == 0\r\n| summarize\r\n    TotalCount=count(),\r\n    MFACount=countif(AuthenticationRequirement == \"multiFactorAuthentication\"),\r\n    nonMFACount=countif(AuthenticationRequirement == \"singleFactorAuthentication\")\r\n    by AppDisplayName\r\n| project AppDisplayName, TotalCount, MFACount, nonMFACount, MFAPercentage=(todouble(MFACount) * 100 / todouble(TotalCount))\r\n| sort by MFAPercentage desc",
+        "size": 0,
+        "title": "Percentage of signins that are MFA by MFATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "query - 23"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| project TimeGenerated, AuthenticationDetails\r\n| where TimeGenerated > ago({MFATime}d)\r\n| extend AuthMethod = tostring(parse_json(AuthenticationDetails)[0].authenticationMethod)\r\n| where AuthMethod != \"Previously satisfied\"\r\n| summarize\r\n    Password=countif(AuthMethod == \"Password\"),\r\n    Passwordless=countif(AuthMethod in (\"FIDO2 security key\", \"Passwordless phone sign-in\", \"Windows Hello for Business\", \"Mobile app notification\",\"X.509 Certificate\"))\r\n    by startofweek(TimeGenerated)\r\n| render timechart  with ( xtitle=\"Week\", ytitle=\"Signin Count\", title=\"Password vs Passwordless signins per week\")",
+        "size": 0,
+        "title": "Password vs Passwordless by MFATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "tileSettings": {
+          "showBorder": false
+        }
+      },
+      "name": "query - 24"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| project TimeGenerated, AuthenticationDetails\r\n| where TimeGenerated > ago({MFATime}d)\r\n| extend AuthMethod = tostring(parse_json(AuthenticationDetails)[0].authenticationMethod)\r\n| where AuthMethod in (\"FIDO2 security key\", \"Passwordless phone sign-in\", \"Windows Hello for Business\", \"Mobile app notification\",\"X.509 Certificate\")\r\n| summarize ['Passwordless Method']=count()by AuthMethod, startofweek(TimeGenerated)\r\n| render timechart with ( xtitle=\"Week\", ytitle=\"Signin Count\", title=\"Passwordless methods per week\")",
+        "size": 0,
+        "title": "Passwordless methods per week by MFATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 25"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# Legacy Authentication"
+      },
+      "name": "text - 26"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "5df704aa-b05a-4430-a8d8-441544ab9857",
+            "version": "KqlParameterItem/1.0",
+            "name": "LATime",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "60"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 29"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago({LATime}d)\r\n| where ResultType == 0\r\n| where ClientAppUsed in (\"Exchange ActiveSync\", \"Exchange Web Services\", \"AutoDiscover\", \"Unknown\", \"POP3\", \"IMAP4\", \"Other clients\", \"Authenticated SMTP\", \"MAPI Over HTTP\", \"Offline Address Book\")\r\n| summarize ['Count of legacy auth attempts'] = count()by ClientAppUsed, UserPrincipalName\r\n| sort by ClientAppUsed asc, ['Count of legacy auth attempts'] desc ",
+        "size": 0,
+        "title": "Legacy apps being used for signin by LATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 27"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago({LATime}d)\r\n| where ResultType in (\"0\", \"53003\")\r\n| where ClientAppUsed in (\"Exchange ActiveSync\", \"Exchange Web Services\", \"AutoDiscover\", \"Unknown\", \"POP3\", \"IMAP4\", \"Other clients\", \"Authenticated SMTP\", \"MAPI Over HTTP\", \"Offline Address Book\")\r\n| summarize\r\n    ['Legacy Auth Users Allowed']=dcountif(UserPrincipalName, ResultType == 0),\r\n    ['Legacy Auth Users Blocked']=dcountif(UserPrincipalName, ResultType == 53003)\r\n    by bin(TimeGenerated, 1d)\r\n| render timechart with (ytitle=\"Count\",title=\"Legacy auth distinct users allowed vs blocked by Conditional Access\")",
+        "size": 0,
+        "title": "Legacy auth distinct users allowed vs blocked by Conditional Access by LATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 28"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "# Conditional Access"
+      },
+      "name": "text - 30"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "c1de2781-dea2-4352-abcd-6ac9d1026d6d",
+            "version": "KqlParameterItem/1.0",
+            "name": "CATime",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": "60"
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 32"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago ({CATime}d)\r\n| project TimeGenerated, ConditionalAccessPolicies\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend CAPolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| summarize CAResults=make_set(CAResult) by CAPolicyName\r\n| where CAResults !has \"success\" and CAResults !has \"failure\"",
+        "size": 0,
+        "title": "Policies with no success events (user allowed in) & no failures (user blocked) by CATime.",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 31"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where TimeGenerated > ago ({CATime}d)\r\n| project TimeGenerated, ConditionalAccessPolicies, ResultType, ResultDescription\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend CAPolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| where CAResult == \"failure\"\r\n| summarize CAFailureCount=count()by CAPolicyName, ResultType, ResultDescription\r\n| sort by CAFailureCount desc ",
+        "size": 0,
+        "title": "Failures and the reason by CATime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "query - 33"
+    }
+  ],
+  "fallbackResourceIds": [
+    "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
