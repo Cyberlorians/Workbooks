@@ -40,7 +40,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "value::all"
+          "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
         ],
         "parameters": [
           {
@@ -130,12 +130,12 @@
             "version": "KqlParameterItem/1.0",
             "name": "UserPrincipalName",
             "type": 1,
+            "description": "Type username prefix and any search will be found",
             "timeContext": {
-              "durationMs": 604800000
+              "durationMs": 0
             },
             "timeContextFromParameter": "CAPTime",
-            "defaultValue": "value::all",
-            "value": ""
+            "defaultValue": "value::all"
           },
           {
             "id": "75142a7d-ca45-427e-a349-a7d217191be2",
@@ -237,7 +237,7 @@
           }
         ],
         "style": "pills",
-        "queryType": 1,
+        "queryType": 0,
         "resourceType": "microsoft.resourcegraph/resources"
       },
       "conditionalVisibility": {
