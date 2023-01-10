@@ -63,7 +63,8 @@
             },
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
-            "resourceType": "microsoft.operationalinsights/workspaces"
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": null
           },
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
@@ -237,7 +238,7 @@
         ],
         "style": "pills",
         "queryType": 1,
-        "resourceType": "microsoft.operationalinsights/workspaces"
+        "resourceType": "microsoft.resourcegraph/resources"
       },
       "conditionalVisibility": {
         "parameterName": "Tab",
