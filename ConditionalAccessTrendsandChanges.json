@@ -40,7 +40,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "{Workspace}"
+          "value::all"
         ],
         "parameters": [
           {
@@ -50,23 +50,20 @@
             "type": 5,
             "description": "Select at least one workspace that contains continuous export data based on the selected subscriptions",
             "isRequired": true,
-            "multiSelect": true,
-            "quote": "'",
-            "delimiter": ",",
             "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
             "crossComponentResources": [
               "value::all"
             ],
             "typeSettings": {
-              "additionalResourceOptions": []
+              "additionalResourceOptions": [],
+              "showDefault": false
             },
             "timeContext": {
               "durationMs": 0
             },
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
-            "resourceType": "microsoft.resourcegraph/resources",
-            "value": []
+            "resourceType": "microsoft.operationalinsights/workspaces"
           },
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
@@ -124,37 +121,20 @@
               ]
             },
             "value": {
-              "durationMs": 2592000000
+              "durationMs": 604800000
             }
           },
           {
             "id": "7ffbab18-9e02-4840-a27f-e89207b0636a",
             "version": "KqlParameterItem/1.0",
             "name": "UserPrincipalName",
-            "type": 2,
-            "multiSelect": true,
-            "quote": "'",
-            "delimiter": ",",
-            "query": "// Get Sign-in logs for any Report-Only Conditional Access policies where the result = ReportOnlyFailure\r\nSigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n//| where ConditionalAccessPolicies[\"result\"] == \"reportOnlyFailure\"\r\n| where ConditionalAccessPolicies[\"result\"] contains \"report\"\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend City = tostring(todynamic(LocationDetails).city)\r\n| extend State = tostring(todynamic(LocationDetails).state)\r\n| extend AzureADApplication = AppDisplayName\r\n| distinct UserPrincipalName\r\n| union \r\n// Get Non Interactive Sign-in logs for any Report-Only Conditional Access policies where the result = ReportOnlyFailure\r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend City = tostring(todynamic(LocationDetails).city)\r\n| extend State = tostring(todynamic(LocationDetails).state)\r\n| extend AzureADApplication = AppDisplayName\r\n//| project TimeGenerated, Category,UserPrincipalName, AzureADApplication = AppDisplayName, ClientApplication = ClientAppUsed, ClientBrowser = todynamic(DeviceDetail).browser, ClientOperatingSystem = todynamic(DeviceDetail).operatingSystem, ClientIPAddress = IPAddress ,ConditionalAccessPolicyName = ConditionalAccessPolicies[\"displayName\"], City, State, CAResult)\r\n| distinct UserPrincipalName)\r\n\r\n",
-            "crossComponentResources": [
-              "{Workspace}"
-            ],
-            "typeSettings": {
-              "additionalResourceOptions": [
-                "value::all"
-              ],
-              "showDefault": false
-            },
+            "type": 1,
             "timeContext": {
-              "durationMs": 0
+              "durationMs": 604800000
             },
             "timeContextFromParameter": "CAPTime",
             "defaultValue": "value::all",
-            "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces",
-            "value": [
-              "value::all"
-            ]
+            "value": ""
           },
           {
             "id": "75142a7d-ca45-427e-a349-a7d217191be2",
@@ -184,7 +164,7 @@
             "multiSelect": true,
             "quote": "'",
             "delimiter": ",",
-            "query": "// Get Sign-in logs for\r\nSigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| project AzureADApplication = AppDisplayName\r\n| union \r\n// Get Non Interactive Sign-in logs \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| project  AzureADApplication = AppDisplayName)\r\n| distinct AzureADApplication\r\n| sort by AzureADApplication asc nulls first ",
+            "query": "SigninLogs | union AADNonInteractiveUserSignInLogs\r\n| extend AzureADApplication = AppDisplayName\r\n| where isnotempty(AzureADApplication)\r\n| distinct AzureADApplication\r\n| sort by AzureADApplication asc ",
             "crossComponentResources": [
               "{Workspace}"
             ],
@@ -210,7 +190,7 @@
             "multiSelect": true,
             "quote": "'",
             "delimiter": ",",
-            "query": "// Get Sign-in logs \r\nSigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| distinct ['PolicyName']\r\n| union \r\n// Get Non Interactive Sign-in logs \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| distinct ['PolicyName'])\r\n| distinct ['PolicyName']\r\n| sort by ['PolicyName'] asc",
+            "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend displayName_ = tostring(ConditionalAccessPolicies.displayName)\r\n| distinct displayName_\r\n| sort by displayName_ asc\r\n",
             "crossComponentResources": [
               "{Workspace}"
             ],
@@ -226,7 +206,10 @@
             "timeContextFromParameter": "CAPTime",
             "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces"
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
           },
           {
             "id": "b4ddb6f0-8afb-4f3c-aca9-c3d3847e019b",
@@ -253,7 +236,7 @@
           }
         ],
         "style": "pills",
-        "queryType": 0,
+        "queryType": 1,
         "resourceType": "microsoft.operationalinsights/workspaces"
       },
       "conditionalVisibility": {
@@ -273,6 +256,9 @@
             "type": 9,
             "content": {
               "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "value::all"
+              ],
               "parameters": [
                 {
                   "id": "38660ba6-7173-4395-8c08-b477161f5bfc",
@@ -280,15 +266,13 @@
                   "name": "Workspace",
                   "type": 5,
                   "isRequired": true,
-                  "multiSelect": true,
-                  "quote": "'",
-                  "delimiter": ",",
                   "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
                   "crossComponentResources": [
                     "value::all"
                   ],
                   "typeSettings": {
-                    "additionalResourceOptions": []
+                    "additionalResourceOptions": [],
+                    "showDefault": false
                   },
                   "timeContext": {
                     "durationMs": 0
@@ -296,7 +280,7 @@
                   "timeContextFromParameter": "TimeRange",
                   "queryType": 1,
                   "resourceType": "microsoft.resourcegraph/resources",
-                  "value": []
+                  "value": null
                 },
                 {
                   "id": "e327ae2b-6659-4d53-98d7-7326e30a893a",
@@ -334,13 +318,13 @@
                     "durationMs": 86400000
                   },
                   "value": {
-                    "durationMs": 2592000000
+                    "durationMs": 604800000
                   }
                 }
               ],
               "style": "pills",
-              "queryType": 0,
-              "resourceType": "microsoft.operationalinsights/workspaces"
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources"
             },
             "conditionalVisibility": {
               "parameterName": "Tab",
@@ -574,6 +558,20 @@
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
                 "{Workspace}"
+              ],
+              "gridSettings": {
+                "sortBy": [
+                  {
+                    "itemKey": "TimeGenerated",
+                    "sortOrder": 2
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "TimeGenerated",
+                  "sortOrder": 2
+                }
               ]
             },
             "conditionalVisibility": {
@@ -596,9 +594,9 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "// Get Sign-in logs for any Report-Only Conditional Access policies where the result = ReportOnlyFailure\nSigninLogs\n| mvexpand ConditionalAccessPolicies\n| where ConditionalAccessPolicies[\"result\"] has_any ('')\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\n| project CAResult\n| union \n// Get Non Interactive Sign-in logs for any Report-Only Conditional Access policies where the result = ReportOnlyFailure\nAADNonInteractiveUserSignInLogs \n| mvexpand todynamic(ConditionalAccessPolicies)\n| where ConditionalAccessPolicies[\"result\"] has_any ('')\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\n| project CAResult\n| summarize count() by CAResult\n",
-        "size": 4,
-        "title": "Conditional Access Signin Summaries",
+        "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\n| project CAResult\n| summarize count() by CAResult",
+        "size": 1,
+        "title": "Conditional Access 'Signin' Summaries",
         "timeContextFromParameter": "CAPTime",
         "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces",
@@ -639,7 +637,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "// Get Sign-in logs for any Report-Only Conditional Access policies\r\nSigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n//| where Result in ({Report}) or '*' in ({Report})\r\n| where Result in ({Report})\r\n//| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| where Category in ({CategorySignIn})\r\n//| where AzureADApplication in ({AzureADApplication}) or '*' in ({AzureADApplication})\r\n| where AzureADApplication in ({AzureADApplication})\r\n//| where UserPrincipalName in ({UserPrincipalName}) or '*' in ({UserPrincipalName})\r\n| where UserPrincipalName in ({UserPrincipalName})\r\n//| where ['PolicyName'] in ({PolicyName}) or '*' in ({PolicyName})\r\n| where ['PolicyName'] in ({PolicyName})\r\n| project TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS = DeviceDetail.operatingSystem, DeviceName = DeviceDetail.displayName, Managed = DeviceDetail.isManaged, Trust = DeviceDetail.trustType,ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result\r\n| union \r\n// Get Non Interactive Sign-in logs \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n//| where Result in ({Report}) or '*' in ({Report})\r\n| where Result in ({Report})\r\n//| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| where Category in ({CategorySignIn})\r\n//| where AzureADApplication in ({AzureADApplication}) or '*' in ({AzureADApplication})\r\n| where AzureADApplication in ({AzureADApplication})\r\n//| where UserPrincipalName in ({UserPrincipalName}) or '*' in ({UserPrincipalName})\r\n| where UserPrincipalName in ({UserPrincipalName})\r\n//| where ['PolicyName'] in ({PolicyName}) or '*' in ({PolicyName})\r\n| where ['PolicyName'] in ({PolicyName})\r\n| project TimeGenerated, Category,UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS = todynamic(DeviceDetail).operatingSystem, ClientIP = IPAddress, ['PolicyName'], Location, NamedNetwork, Result)\r\n| order by TimeGenerated\r\n",
+        "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust,ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result\r\n| union \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust, ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result)\r\n| order by TimeGenerated desc",
         "size": 0,
         "showAnalytics": true,
         "title": "Conditional Access Status",
@@ -738,7 +736,7 @@
               }
             }
           ],
-          "rowLimit": 500,
+          "rowLimit": 5000,
           "hierarchySettings": {
             "treeType": 1,
             "groupBy": [
