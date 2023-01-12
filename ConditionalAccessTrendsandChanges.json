@@ -40,7 +40,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
+          "{Workspace}"
         ],
         "parameters": [
           {
@@ -220,25 +220,28 @@
             "multiSelect": true,
             "quote": "'",
             "delimiter": ",",
+            "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| distinct CAResult",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
             "typeSettings": {
               "additionalResourceOptions": [
                 "value::all"
               ],
               "showDefault": false
             },
-            "jsonData": "[\"reportOnlySuccess\",\"reportOnlyNotApplied\",\"reportOnlyInterrupted\",\"reportOnlyFailure\",\"success\",\"notApplied\",\"notEnabled\",\"failure\"]",
             "timeContext": {
-              "durationMs": 86400000
+              "durationMs": 0
             },
+            "timeContextFromParameter": "CAPTime",
             "defaultValue": "value::all",
-            "value": [
-              "value::all"
-            ]
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
           }
         ],
         "style": "pills",
         "queryType": 0,
-        "resourceType": "microsoft.resourcegraph/resources"
+        "resourceType": "microsoft.operationalinsights/workspaces"
       },
       "conditionalVisibility": {
         "parameterName": "Tab",
