@@ -93,7 +93,7 @@
               ]
             },
             "value": {
-              "durationMs": 2592000000
+              "durationMs": 259200000
             }
           }
         ],
@@ -2028,8 +2028,7 @@
                   },
                   "name": "CR1.2OtherMethods"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU12Visible",
@@ -2337,8 +2336,7 @@
                   "showPin": true,
                   "name": "Total MFA Count by App"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU13Visible",
@@ -2598,8 +2596,7 @@
                   },
                   "name": "New Role Assigned Group"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU14Visible",
@@ -2809,8 +2806,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU15Visible",
@@ -3020,8 +3016,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU16Visible",
@@ -3231,8 +3226,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU17Visible",
@@ -3442,8 +3436,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU18Visible",
@@ -3653,8 +3646,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isU19Visible",
@@ -4758,8 +4750,7 @@
                   "customWidth": "50",
                   "name": "text - 9"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD21Visible",
@@ -4969,8 +4960,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD22Visible",
@@ -5180,8 +5170,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD23Visible",
@@ -5391,8 +5380,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD24Visible",
@@ -5602,8 +5590,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD25Visible",
@@ -5813,8 +5800,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD26Visible",
@@ -6024,8 +6010,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isD27Visible",
@@ -6052,7 +6037,6 @@
       "content": {
         "version": "NotebookGroup/1.0",
         "groupType": "editable",
-        "loadType": "always",
         "items": [
           {
             "type": 3,
@@ -6830,8 +6814,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isA31Visible",
@@ -7041,8 +7024,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isA32Visible",
@@ -7252,8 +7234,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isA33Visible",
@@ -7463,8 +7444,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isA34Visible",
@@ -7674,8 +7654,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isA35Visible",
@@ -8498,7 +8477,6 @@
               "groupType": "editable",
               "title": "4.1 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -8690,8 +8668,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA41Visible",
@@ -8710,7 +8687,6 @@
               "groupType": "editable",
               "title": "4.2 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -8902,8 +8878,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA42Visible",
@@ -8922,7 +8897,6 @@
               "groupType": "editable",
               "title": "4.3 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -9114,8 +9088,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA43Visible",
@@ -9134,7 +9107,6 @@
               "groupType": "editable",
               "title": "4.4 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -9326,8 +9298,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA44Visible",
@@ -9346,7 +9317,6 @@
               "groupType": "editable",
               "title": "4.5 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -9538,8 +9508,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA45Visible",
@@ -9558,7 +9527,6 @@
               "groupType": "editable",
               "title": "4.6 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -9750,8 +9718,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA46Visible",
@@ -9770,7 +9737,6 @@
               "groupType": "editable",
               "title": "4.7 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -9962,8 +9928,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isDA47Visible",
@@ -10024,11 +9989,6 @@
               }
             },
             "customWidth": "40",
-            "conditionalVisibility": {
-              "parameterName": "pillar",
-              "comparison": "isEqualTo",
-              "value": "p5"
-            },
             "name": "NetworkZT",
             "styleSettings": {
               "showBorder": true
@@ -10480,7 +10440,6 @@
               "groupType": "editable",
               "title": "5.1 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -10672,8 +10631,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isNE51Visible",
@@ -10692,7 +10650,6 @@
               "groupType": "editable",
               "title": "5.2 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -10884,8 +10841,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isNE52Visible",
@@ -10904,7 +10860,6 @@
               "groupType": "editable",
               "title": "5.3 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -11096,8 +11051,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isNE53Visible",
@@ -11116,7 +11070,6 @@
               "groupType": "editable",
               "title": "5.4 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -11308,8 +11261,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isNE54Visible",
@@ -11605,7 +11557,6 @@
                     "groupType": "editable",
                     "title": "CR6.1",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -11680,7 +11631,6 @@
                     "groupType": "editable",
                     "title": "CR6.2",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -11755,7 +11705,6 @@
                     "groupType": "editable",
                     "title": "CR6.3",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -11830,7 +11779,6 @@
                     "groupType": "editable",
                     "title": "CR6.4",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -11906,7 +11854,6 @@
                     "groupType": "editable",
                     "title": "CR6.5",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -11981,7 +11928,6 @@
                     "groupType": "editable",
                     "title": "CR6.6",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -12056,7 +12002,6 @@
                     "groupType": "editable",
                     "title": "CR6.7",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -12137,7 +12082,6 @@
               "groupType": "editable",
               "title": "6.1 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -12329,8 +12273,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO61Visible",
@@ -12349,7 +12292,6 @@
               "groupType": "editable",
               "title": "6.2 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -12541,8 +12483,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO62Visible",
@@ -12561,7 +12502,6 @@
               "groupType": "editable",
               "title": "6.3 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -12753,8 +12693,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO63Visible",
@@ -12773,7 +12712,6 @@
               "groupType": "editable",
               "title": "6.4 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -12965,8 +12903,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO64Visible",
@@ -12985,7 +12922,6 @@
               "groupType": "editable",
               "title": "6.5 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -13177,8 +13113,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO65Visible",
@@ -13197,7 +13132,6 @@
               "groupType": "editable",
               "title": "6.6 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -13389,8 +13323,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO66Visible",
@@ -13409,7 +13342,6 @@
               "groupType": "editable",
               "title": "6.7 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -13601,8 +13533,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isAO67Visible",
@@ -14333,7 +14264,6 @@
               "groupType": "editable",
               "title": "7.1 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -14525,8 +14455,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isVA71Visible",
@@ -14545,7 +14474,6 @@
               "groupType": "editable",
               "title": "7.2 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -14737,8 +14665,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isVA72Visible",
@@ -14757,7 +14684,6 @@
               "groupType": "editable",
               "title": "7.3 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -14949,8 +14875,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isVA73Visible",
@@ -14969,7 +14894,6 @@
               "groupType": "editable",
               "title": "7.4 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -15161,8 +15085,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isVA74Visible",
@@ -15181,7 +15104,6 @@
               "groupType": "editable",
               "title": "7.5 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -15373,8 +15295,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isVA75Visible",
@@ -15393,7 +15314,6 @@
               "groupType": "editable",
               "title": "7.6 Activities",
               "expandable": true,
-              "loadType": "always",
               "items": [
                 {
                   "type": 12,
@@ -15585,8 +15505,7 @@
                   "customWidth": "33",
                   "name": "query - 4"
                 }
-              ],
-              "exportParameters": true
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isVA76Visible",
@@ -18865,7 +18784,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "{\"version\":\"CustomEndpoint/1.0\",\"data\":null,\"headers\":[],\"method\":\"GET\",\"url\":\"https://raw.githubusercontent.com/Cyberlorians/Articles/main/IdentityGRC.md\",\"contentType\":\"text/plain\",\"urlParams\":[],\"transformers\":null,\"ignoreStandardHeaders\":true}",
+              "query": "{\"version\":\"CustomEndpoint/1.0\",\"data\":null,\"headers\":[],\"method\":\"GET\",\"url\":\"https://raw.githubusercontent.com/dcaddick/gsd_public/main/GSD.md\",\"contentType\":\"text/plain\",\"urlParams\":[],\"transformers\":null,\"ignoreStandardHeaders\":true}",
               "size": 3,
               "queryType": 10,
               "visualization": "card",
