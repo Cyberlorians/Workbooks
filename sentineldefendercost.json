@@ -293,7 +293,7 @@
             "label": "Total seats (E5/A5/F5/G5)",
             "type": 1,
             "description": "Enter the total number of Microsoft 365 E5, A5, F5, G5 and Microsoft 365 E5, A5, F5, G5 Security licenses in your environment",
-            "value": "25"
+            "value": "0"
           }
         ],
         "style": "pills",
