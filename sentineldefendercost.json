@@ -32,7 +32,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
+          "value::all"
         ],
         "parameters": [
           {
@@ -152,7 +152,7 @@
             "label": "Total seats (Defender for Server)",
             "type": 1,
             "description": "Enter the total number of Microsoft Defender for Server licenses that are in the environment",
-            "query": "securityresources\r\n| where type == \"microsoft.security/pricings\"\r\n| where name == \"VirtualMachines\"\r\n| extend Defenderplan= split(properties, \",\")[2]\r\n| extend plan = parse_json(properties)\r\n| where isnotnull(Defenderplan) and Defenderplan contains 'P2'\r\n| join resources on subscriptionId\r\n| where type1 == 'microsoft.compute/virtualmachines/extensions'\r\n| where name1 contains 'MDE'\r\n| count",
+            "query": "// dfsp2allcomputes\r\n// Click the \"Run query\" command above to execute the query and see results.\r\nsecurityresources\r\n| where type == \"microsoft.security/pricings\"\r\n| where name == \"VirtualMachines\"\r\n| extend Defenderplan= split(properties, \",\")[2]\r\n| where Defenderplan contains 'P2'\r\n| join resources on subscriptionId\r\n| where type1 == 'microsoft.compute/virtualmachines/extensions' or type1 == 'microsoft.hybridcompute/machines/extensions' or type1 == 'microsoft.compute/virtualmachinescalesets/machines/extensions' \r\n| where name1 contains 'MDE'\r\n| project hostname = tostring(split(id1, \"/\")[8]), Defenderplan, name1, type1\r\n| count //remove to see details",
             "crossComponentResources": [
               "value::all"
             ],
@@ -161,7 +161,7 @@
           }
         ],
         "style": "pills",
-        "queryType": 0,
+        "queryType": 1,
         "resourceType": "microsoft.resourcegraph/resources"
       },
       "conditionalVisibility": {
@@ -310,7 +310,7 @@
     {
       "type": 1,
       "content": {
-        "json": "## Microsoft Sentinel benefit for Microsoft Defender for Server customers\r\n\r\nWith security information and event management (SIEM) and extended detection and response (XDR) from Microsoft, you’re armed with the context and automation you need to stop sophisticated, cross-domain attacks across your entire organization. \r\n\r\nMicrosoft Defender for Server Security customers can get data grant of up to 500MB per host/day of  data ingestion into Microsoft Sentinel. <br>\r\n\r\nThe data sources included in this offer include:<br>\r\n-Protecton Status<br>\r\n-Security Alerts<br>\r\n-Security Baselines<br>\r\n-Security Baseline Summary<br>\r\n-Security Detection<br>\r\n-Event (SysMon Events)<br>\r\n-Update<br>\r\n-Update Summary<br>\r\n-Windows Firewall<br>\r\n-Windows Security Events<br>\r\n\r\nThe data grant will be calculated at the end of the month and applied to your bill, covering the cost of up to 500 MB of data ingestion per host/day.\r\n\r\nVisit https://learn.microsoft.com/en-us/azure/defender-for-cloud/enhanced-security-features-overview#faq---pricing-and-billing/ for more information.\r\n\r\n<br>\r\n\r\n### Below is the ingestion for the eligible data sources:\r\n\r\n_**Note:** Kindly specify **Total seats (Defender for Server) ** and **Ingestion Price** parameters for calculation._"
+        "json": "## Microsoft Sentinel benefit for Microsoft Defender for Server customers\r\n\r\nWith security information and event management (SIEM) and extended detection and response (XDR) from Microsoft, you’re armed with the context and automation you need to stop sophisticated, cross-domain attacks across your entire organization. \r\n\r\nMicrosoft Defender for Server Security customers can get data grant of up to 500MB per host/day of  data ingestion into Microsoft Sentinel. <br>\r\n\r\nThe data sources included in this offer include:<br>\r\n-SecurityAlert<br>\r\n-SecurityBaseline<br>\r\n-SecurityBaselineSummary<br>\r\n-SecurityDetection<br>\r\n-SecurityEvent<br>\r\n-WindowsFirewall<br>\r\n-SysmonEvent<br>\r\n-ProtectionStatus<br>\r\n-Update & UpdateSummary<br>\r\n\r\nThe data grant will be calculated at the end of the month and applied to your bill, covering the cost of up to 500 MB of data ingestion per host/day.\r\n\r\nVisit https://learn.microsoft.com/en-us/azure/defender-for-cloud/faq-defender-for-servers#is-the-500-mb-of-free-data-ingestion-allowance-applied-per-workspace-or-per-machine- for more information.\r\n\r\n<br>\r\n\r\n### Below is the ingestion for the eligible data sources:\r\n\r\n_**Note:** Kindly specify **Total seats (Defender for Server) ** and **Ingestion Price** parameters for calculation._"
       },
       "conditionalVisibility": {
         "parameterName": "Tab",
@@ -458,7 +458,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "Usage\r\n| where IsBillable == true\r\n| summarize size = sum(Quantity)/1024 by IsBillable\r\n| project ['Total data ingestion'] = size, ['Estimated cost'] = size*{Price}",
+              "query": "Usage\r\n| where IsBillable == true\r\n| summarize size = sum(Quantity)/1024 by IsBillable\r\n| project ['Total data ingestion'] = size, ['Estimated cost'] = size*{Price}\r\n\r\n",
               "size": 4,
               "title": "Total billable ingestion and cost in the last {TimeRange}",
               "timeContextFromParameter": "TimeRange",
@@ -468,25 +468,33 @@
                 "{Workspace}"
               ],
               "visualization": "tiles",
-              "tileSettings": {
-                "titleContent": {
-                  "formatter": 12,
-                  "formatOptions": {
-                    "palette": "greenRed",
-                    "compositeBarSettings": {
-                      "labelText": "",
-                      "columnSettings": []
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Data over 90 days",
+                    "formatter": 0,
+                    "numberFormat": {
+                      "unit": 36,
+                      "options": {
+                        "style": "decimal",
+                        "useGrouping": false
+                      }
                     }
                   },
-                  "numberFormat": {
-                    "unit": 0,
-                    "options": {
-                      "currency": "USD",
-                      "style": "currency",
-                      "useGrouping": false
+                  {
+                    "columnMatch": "Retention Cost",
+                    "formatter": 0,
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": {
+                        "style": "decimal"
+                      }
                     }
                   }
-                },
+                ]
+              },
+              "tileSettings": {
+                "titleContent": {},
                 "leftContent": {
                   "columnMatch": "Total data ingestion",
                   "formatter": 12,
@@ -497,7 +505,6 @@
                     "unit": 39,
                     "options": {
                       "style": "decimal",
-                      "useGrouping": false,
                       "maximumFractionDigits": 1
                     }
                   }
@@ -513,8 +520,7 @@
                     "options": {
                       "currency": "USD",
                       "style": "currency",
-                      "useGrouping": false,
-                      "maximumFractionDigits": 1
+                      "maximumFractionDigits": 2
                     }
                   }
                 },
@@ -528,7 +534,7 @@
               "comparison": "isEqualTo",
               "value": "mssc"
             },
-            "name": "query - 8"
+            "name": "query - 7 - Copy"
           }
         ]
       },
@@ -538,7 +544,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "Usage\r\n| where IsBillable == true\r\n| where DataType in (\"ProtectionStatus\", \r\n\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"Event\",\r\n\"WindowsFirewall\", \r\n\"Update\", \r\n\"UpdateSummary\"  \r\n)   \r\n| summarize BillableDataGB = sum(Quantity) / 1000. by DataType\r\n| order by BillableDataGB desc\r\n",
+        "query": "Usage\r\n| where IsBillable == true\r\n| where DataType in (\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"WindowsFirewall\", \r\n\"SysmonEvent\", \r\n\"ProtectionStatus\", \r\n\"Update\", \r\n\"UpdateSummary\")\r\n| summarize BillableDataGB = sum(Quantity) / 1000. by DataType\r\n| order by BillableDataGB desc\r\n",
         "size": 0,
         "timeContextFromParameter": "TimeRange",
         "queryType": 0,
@@ -581,7 +587,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "Usage\r\n| where IsBillable == true\r\n| where DataType in (\"ProtectionStatus\", \r\n\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"Event\",\r\n\"WindowsFirewall\", \r\n\"Update\", \r\n\"UpdateSummary\")      \r\n| summarize DailyIngestionGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yyyy-MM-dd') \r\n| extend MaxDataGrantGB  = ((500*toreal({TotalDfSSeats}))/1024)\r\n| sort by TimeGenerated asc\r\n",
+        "query": "Usage\r\n| where IsBillable == true\r\n| where DataType in (\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"WindowsFirewall\", \r\n\"SysmonEvent\", \r\n\"ProtectionStatus\", \r\n\"Update\", \r\n\"UpdateSummary\")      \r\n| summarize DailyIngestionGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yyyy-MM-dd') \r\n| extend MaxDataGrantGB  = ((500*toreal({TotalDfSSeats}))/1024)\r\n| sort by TimeGenerated asc\r\n",
         "size": 0,
         "aggregation": 3,
         "timeContextFromParameter": "TimeRange",
@@ -634,7 +640,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "Usage\r\n| where IsBillable == true\r\n| where DataType in (\"ProtectionStatus\", \r\n\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"Event\",\r\n\"WindowsFirewall\", \r\n\"Update\", \r\n\"UpdateSummary\")    \r\n| summarize TotalBillableDataGB = sum(Quantity) / 1024\r\n\r\n",
+              "query": "Usage\r\n| where IsBillable == true\r\n| where DataType in (\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"WindowsFirewall\", \r\n\"SysmonEvent\", \r\n\"ProtectionStatus\", \r\n\"Update\", \r\n\"UpdateSummary\")    \r\n| summarize TotalBillableDataGB = sum(Quantity) / 1024\r\n\r\n",
               "size": 4,
               "title": "Total ingestion",
               "timeContextFromParameter": "TimeRange",
@@ -669,7 +675,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "let DailyMaxDiscountGB  = ((500*toreal({TotalDfSSeats}))/1024);\r\nUsage\r\n| where IsBillable == true\r\n| where DataType in  (\"ProtectionStatus\", \r\n\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"Event\",\r\n\"WindowsFirewall\", \r\n\"Update\", \r\n\"UpdateSummary\")    \r\n| summarize DailyBillableGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yy-MM-dd') \r\n| extend DailyMaxGrantGB = DailyMaxDiscountGB\r\n| summarize MaxDataGrantGB = sum(toreal(DailyMaxGrantGB))\r\n\r\n",
+              "query": "let DailyMaxDiscountGB  = ((500*toreal({TotalDfSSeats}))/1024);\r\nUsage\r\n| where IsBillable == true\r\n| where DataType in  (\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"WindowsFirewall\", \r\n\"SysmonEvent\", \r\n\"ProtectionStatus\", \r\n\"Update\", \r\n\"UpdateSummary\")    \r\n| summarize DailyBillableGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yy-MM-dd') \r\n| extend DailyMaxGrantGB = DailyMaxDiscountGB\r\n| summarize MaxDataGrantGB = sum(toreal(DailyMaxGrantGB))\r\n\r\n",
               "size": 4,
               "title": "Total Data Grant Limit",
               "timeContextFromParameter": "TimeRange",
@@ -716,7 +722,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "let DailyMaxDiscountGB  = ((500*toreal({TotalDfSSeats}))/1024);\r\nUsage\r\n| where IsBillable == true\r\n| where DataType in (\"ProtectionStatus\", \r\n\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"Event\",\r\n\"WindowsFirewall\", \r\n\"Update\", \r\n\"UpdateSummary\")    \r\n| summarize DailyBillableGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yy-MM-dd') \r\n| summarize TotalEligibleGB = sum(iif(toreal(DailyBillableGB)>toreal(DailyMaxDiscountGB),toreal(DailyMaxDiscountGB),DailyBillableGB))\r\n\r\n",
+              "query": "let DailyMaxDiscountGB  = ((500*toreal({TotalDfSSeats}))/1024);\r\nUsage\r\n| where IsBillable == true\r\n| where DataType in (\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"WindowsFirewall\", \r\n\"SysmonEvent\", \r\n\"ProtectionStatus\", \r\n\"Update\", \r\n\"UpdateSummary\")    \r\n| summarize DailyBillableGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yy-MM-dd') \r\n| summarize TotalEligibleGB = sum(iif(toreal(DailyBillableGB)>toreal(DailyMaxDiscountGB),toreal(DailyMaxDiscountGB),DailyBillableGB))\r\n\r\n",
               "size": 4,
               "title": "Total Data Grant Used",
               "timeContextFromParameter": "TimeRange",
@@ -763,7 +769,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "let DailyMaxDiscountGB  = ((500*toreal({TotalDfSSeats}))/1024);\r\nUsage\r\n| where IsBillable == true\r\n| where DataType in (\"ProtectionStatus\", \r\n\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"Event\",\r\n\"WindowsFirewall\", \r\n\"Update\", \r\n\"UpdateSummary\")   \r\n| summarize DailyBillableGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yy-MM-dd') \r\n| summarize TotalEligibleGB = sum(iif(toreal(DailyBillableGB)>toreal(DailyMaxDiscountGB),toreal(DailyMaxDiscountGB),DailyBillableGB))\r\n| extend TotalDiscount = toreal(TotalEligibleGB)*{Price}\r\n| project TotalDiscount\r\n\r\n",
+              "query": "let DailyMaxDiscountGB  = ((500*toreal({TotalDfSSeats}))/1024);\r\nUsage\r\n| where IsBillable == true\r\n| where DataType in (\"SecurityAlert\", \r\n\"SecurityBaseline\", \r\n\"SecurityBaselineSummary\",\r\n\"SecurityDetection\",\r\n\"SecurityEvent\",\r\n\"WindowsFirewall\", \r\n\"SysmonEvent\", \r\n\"ProtectionStatus\", \r\n\"Update\", \r\n\"UpdateSummary\")   \r\n| summarize DailyBillableGB = toreal(sum(Quantity))/ 1024  by format_datetime(TimeGenerated, 'yy-MM-dd') \r\n| summarize TotalEligibleGB = sum(iif(toreal(DailyBillableGB)>toreal(DailyMaxDiscountGB),toreal(DailyMaxDiscountGB),DailyBillableGB))\r\n| extend TotalDiscount = toreal(TotalEligibleGB)*{Price}\r\n| project TotalDiscount\r\n\r\n",
               "size": 4,
               "title": "Estimated Saving",
               "timeContextFromParameter": "TimeRange",
@@ -1361,7 +1367,7 @@
         ],
         "timeContextFromParameter": "TimeRange",
         "timeContext": {
-          "durationMs": 7776000000
+          "durationMs": 2592000000
         },
         "metrics": [
           {
