@@ -1,0 +1,10 @@
+[
+{
+        "GraphEndpoint": "domains",
+        "GraphUri": "https://graph.microsoft.com/v1.0/domains"
+},
+{
+        "GraphEndpoint": "partners",
+        "GraphUri": "https://graph.microsoft.com/v1.0/policies/crossTenantAccessPolicy/partners"
+}
+]
