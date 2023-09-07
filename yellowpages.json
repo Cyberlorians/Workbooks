@@ -6,5 +6,9 @@
 {
         "GraphEndpoint": "partners",
         "GraphUri": "https://graph.microsoft.com/v1.0/policies/crossTenantAccessPolicy/partners"
+},
+        {
+        "GraphEndpoint": "authenitcationMethodsPolicy",
+        "GraphUri": "https://graph.microsoft.com/v1.0/policies/authenticationMethodsPolicy"
 }
 ]
