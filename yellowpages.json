@@ -11,4 +11,8 @@
         "GraphEndpoint": "authenitcationMethodsPolicy",
         "GraphUri": "https://graph.microsoft.com/v1.0/policies/authenticationMethodsPolicy"
 }
+        {
+        "GraphEndpoint": "authenticationStrengthPolicies",
+        "GraphUri": "https://graph.microsoft.com/v1.0/policies/authenticationStrengthPolicies"
+},
 ]
