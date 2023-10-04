@@ -14,5 +14,10 @@
         {
         "GraphEndpoint": "authenticationStrengthPolicies",
         "GraphUri": "https://graph.microsoft.com/beta/policies/authenticationStrengthPolicies"
+        },
+        {
+        "GraphEndpoint": "deviceConfigurations",
+        "GraphUri": "https://graph.microsoft.com/beta/deviceManagement/deviceConfigurations"
         }
+        
 ]
