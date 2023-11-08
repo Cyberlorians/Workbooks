@@ -1,23 +1,27 @@
 [
 {
         "GraphEndpoint": "domains",
-        "GraphUri": "https://graph.microsoft.com/beta/domains"
+        "GraphUri": "https://graph.microsoft.com/v1.0/domains"
 },
 {
         "GraphEndpoint": "partners",
-        "GraphUri": "https://graph.microsoft.com/beta/policies/crossTenantAccessPolicy/partners"
+        "GraphUri": "https://graph.microsoft.com/v1.0/policies/crossTenantAccessPolicy/partners"
 },
         {
         "GraphEndpoint": "authenitcationMethodsPolicy",
-        "GraphUri": "https://graph.microsoft.com/beta/policies/authenticationMethodsPolicy"
+        "GraphUri": "https://graph.microsoft.com/v1.0/policies/authenticationMethodsPolicy"
 },
         {
         "GraphEndpoint": "authenticationStrengthPolicies",
-        "GraphUri": "https://graph.microsoft.com/beta/policies/authenticationStrengthPolicies"
+        "GraphUri": "https://graph.microsoft.com/v1.0/policies/authenticationStrengthPolicies"
         },
         {
         "GraphEndpoint": "deviceConfigurations",
-        "GraphUri": "https://graph.microsoft.com/beta/deviceManagement/deviceConfigurations"
+        "GraphUri": "https://graph.microsoft.com/v1.0/deviceManagement/deviceConfigurations"
+        },
+        {
+        "GraphEndpoint": "accessPackages",
+        "GraphUri": "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages?$expand=catalog"
         }
         
 ]
