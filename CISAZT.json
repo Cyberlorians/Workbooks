@@ -20,8 +20,13 @@
         "GraphUri": "https://graph.microsoft.com/v1.0/deviceManagement/deviceConfigurations"
         },
         {
+        "GraphEndpoint": "devices",
+        "GraphUri": "https://graph.microsoft.com/v1.0/devices"
+        },
+        {
         "GraphEndpoint": "accessPackages",
         "GraphUri": "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages?$expand=catalog"
         }
+        
         
 ]
