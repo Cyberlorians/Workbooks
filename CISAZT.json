@@ -21,7 +21,7 @@
         },
         {
         "GraphEndpoint": "devices",
-        "GraphUri": "https://graph.microsoft.com/v1.0/devices"
+        "GraphUri": "https://graph.microsoft.com/v1.0/devices?$select=displayName,operatingSystemVersion,operatingSystem,profileType,trustType,isManaged,accountEnabled,approximateLastSignInDateTime,registrationDateTime"
         },
         {
         "GraphEndpoint": "accessPackages",
