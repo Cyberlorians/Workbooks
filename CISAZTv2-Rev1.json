@@ -91,7 +91,7 @@
               "allowCustom": true
             },
             "value": {
-              "durationMs": 2592000000
+              "durationMs": 7776000000
             }
           },
           {
@@ -577,7 +577,6 @@
                     "groupType": "editable",
                     "title": "1.1 Authentication",
                     "expandable": true,
-                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -1730,6 +1729,7 @@
                           "groupType": "editable",
                           "title": "Optimal Maturity Status",
                           "expandable": true,
+                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
@@ -2170,7 +2170,7 @@
                       {
                         "type": 1,
                         "content": {
-                          "json": "## Resources\r\n💡 [Assign eligibility for a group in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner?WT.mc_id=Portal-fx) (x)<br>\r\n💡 [Configure Microsoft Entra role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings) (x1)<br>\r\n💡 [Configure Microsoft Entra Group settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-role-settings) (x2)\r\n<br>\r\n💡 [Configure Microsoft Entra Azure resource role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-resource-roles-configure-role-settings) (x3) <br>\r\n"
+                          "json": "## Resources\r\n💡 [Assign eligibility for a group in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner?WT.mc_id=Portal-fx) (1)<br>\r\n💡 [Configure Microsoft Entra role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings) (x1)<br>\r\n💡 [Configure Microsoft Entra Group settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-role-settings) (x2)\r\n<br>\r\n💡 [Configure Microsoft Entra Azure resource role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-resource-roles-configure-role-settings) (x3) <br>\r\n"
                         },
                         "customWidth": "33",
                         "name": "text - 9"
@@ -2192,11 +2192,12 @@
                           "groupType": "editable",
                           "title": "Initial Maturity Status",
                           "expandable": true,
+                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Initial Maturity** - Agency authorizes access, including for privileged access requests, that expires with automated review.\r\n\r\n**Guidance**\r\n\r\n* Review Current \"Active and Permanent Assignments\" for both Roles and Groups. No User or Group shall be in *Active* and *Permanent Assignments*, this is deemed *NOT* Zero Trust. Exception to rule would be any break glass accounts. See portals link (1). <br>\r\n* Create (Privileged Identity Management) PIM Access Reviews. Access reviews allow reviewers to attest to whether users still need to be in a role. See portals link (2).<br>\r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
+                                "json": "**Initial Maturity** - Agency authorizes access, including for privileged access requests, that expires with automated review.\r\n\r\n**Guidance**\r\n\r\n* Review Current \"Active and Permanent Assignments\" for both Roles and Groups. No User or Group shall be in *Active* and *Permanent Assignments*, this is deemed *NOT* Zero Trust. Exception to rule would be any break glass accounts. See portals link **(1)**. <br>\r\n* Create (Privileged Identity Management) PIM Access Reviews. Access reviews allow reviewers to attest to whether users still need to be in a role. See portals link (2).<br>\r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
                                 "style": "info"
                               },
                               "name": "text - 0"
@@ -2261,7 +2262,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Advanced Maturity** -  Agency authorizes need-based and session-based access, including for privileged access request, that is tailored to actions and resources.\r\n\r\n**Guidance** \r\n\r\n* In Microsoft Entra ID, you can use Privileged Identity Management (PIM) to manage just-in-time (need-based) membership in the group or just-in-time ownership of the group. Groups can be used to provide access to Microsoft Entra roles, Azure roles, and various other scenarios. *DO NOT add active, permanent members to these roles*. To Discover Groups, see portals link (3) and to manage Group eligibility, see resources link (x). \r\n* In Privileged Identity Management (PIM) in Microsoft Entra ID, role settings define role assignment properties. These properties include multifactor authentication and approval requirements for activation, assignment maximum duration, and notification settings. Referring to session based policies you should have default or more strict session based eligible assignments based on roles and assignment. See resources link (x1) for Entra ID roles, resources link for (x3) for azure resource settings and resources link (x2) for groups settings.\r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
+                                "json": "**Advanced Maturity** -  Agency authorizes need-based and session-based access, including for privileged access request, that is tailored to actions and resources.\r\n\r\n**Guidance** \r\n\r\n* In Microsoft Entra ID, you can use Privileged Identity Management (PIM) to manage just-in-time (need-based) membership in the group or just-in-time ownership of the group. Groups can be used to provide access to Microsoft Entra roles, Azure roles, and various other scenarios. *DO NOT add active, permanent members to these roles*. To Discover Groups, see portals link (3) and to manage Group eligibility, review [Resources (1)](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner?WT.mc_id=Portal-fx).\r\n* In Privileged Identity Management (PIM) in Microsoft Entra ID, role settings define role assignment properties. These properties include multifactor authentication and approval requirements for activation, assignment maximum duration, and notification settings. Referring to session based policies you should have default or more strict session based eligible assignments based on roles and assignment. See resources link (x1) for Entra ID roles, resources link for (x3) for azure resource settings and resources link (x2) for groups settings.\r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
                                 "style": "info"
                               },
                               "name": "text - 10"
@@ -4098,7 +4099,7 @@
                       {
                         "type": 1,
                         "content": {
-                          "json": "## Microsoft Portals Commercial\r\n🔀 [Azure Active Directory](https://portal.azure.com/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId~/null) <br>\r\n🔀 [Microsoft Intune](https://endpoint.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) <br>\r\n🔀 [M365 Defender Portal](https://security.microsoft.com/machines?category=endpoints)<br>"
+                          "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Microsoft Entra ID - Device Inventory](https://entra.microsoft.com/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId/Overview) (1) <br>\r\n🔀 [Microsoft Entra Connect](https://entra.microsoft.com/#view/Microsoft_AAD_Connect_Provisioning/AADConnectMenuBlade/~/GetStarted) (2) <br>\r\n🔀 [Microsoft XDR - Device Inventory](https://security.microsoft.com/devices) (3) <br>\r\n🔀 [Microsoft Endpoint - Device Inventory](https://endpoint.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) (4) <br>\r\n🔀 [Microsoft Endpoint - Compliance](https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesComplianceMenu/~/policies) (5) <br>\r\n🔀 [Entra ID - Conditional Access](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/CaTemplates.ReactView) (6) <br>\r\n\r\n"
                         },
                         "name": "LT-1"
                       }
@@ -4110,7 +4111,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Microsoft Portals Government\r\n🔀 [Azure Active Directory](https://portal.azure.us/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId~/null) <br>\r\n🔀 [Microsoft Intune](https://endpoint.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) <br>\r\n🔀 [M365 Defender Portal](https://security.microsoft.us/machines?category=endpoints)<br>\r\n"
+                    "json": "## Microsoft Portals Government\r\n🔀 [Microsoft Entra ID - Device Inventory](https://entra.microsoft.us/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId/Overview) (1) <br>\r\n🔀 [Microsoft Entra Connect](https://entra.microsoft.us/#view/Microsoft_AAD_Connect_Provisioning/AADConnectMenuBlade/~/GetStarted) (2) <br>\r\n🔀 [Microsoft XDR - Device Inventory](https://security.microsoft.us/devices) (3) <br>\r\n🔀 [Microsoft Endpoint - Device Inventory](https://endpoint.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) (4) <br>\r\n🔀 [Microsoft Endpoint - Compliance](https://intune.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesComplianceMenu/~/policies) (5) <br>\r\n🔀 [Entra ID - Conditional Access](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/CaTemplates.ReactView) (6) <br>\r\n\r\n\r\n"
                   },
                   "customWidth": "33",
                   "name": "text - 9"
@@ -4118,255 +4119,489 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Resources\r\n\r\n💡[M365 Defender Device inventory](https://learn.microsoft.com/en-us/graph/api/resources/intune-graph-overview?view=graph-rest-1.0%22%20%EF%BF%BDHYPERLINK%20%22https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/machines-view-overview?view=o365-worldwide)<br>\r\n💡[What is a device identity (Azure Active Directory)?](https://learn.microsoft.com/en-us/azure/active-directory/devices/overview)<br>\r\n💡[Manage device identities by using the Azure portal](https://learn.microsoft.com/en-us/azure/active-directory/devices/device-management-azure-portal) <br>\r\n💡[Manage your devices and control features with Microsoft Intune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/manage-devices) <br>\r\n💡[Hybrid Azure AD joined devices](https://learn.microsoft.com/en-us/azure/active-directory/devices/concept-azure-ad-join-hybrid) <br>\r\n💡[Conditional Access policy: Device Compliancy](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device)<br>\r\n💡[ZT Guide: Endpoint Zero Trust Deployment Objectives](https://learn.microsoft.com/en-us/security/zero-trust/deploy/endpoints#endpoint-zero-trust-deployment-objectives)<br>\r\n💡[Intune Reporting](https://learn.microsoft.com/en-us/mem/intune/fundamentals/review-logs-using-azure-monitor) ** not yet availble in DoD cloud<br>\r\n💡[Provide Additional Intune Reporting](https://www.linkedin.com/pulse/provide-additional-intune-reporting-data-wmi-iren%C3%A4us-becker/)<br>\r\n💡[Working with Intune in Microsoft Graph](https://learn.microsoft.com/en-us/graph/api/resources/intune-graph-overview?view=graph-rest-1.0)<br>\r\n"
+                    "json": "## Resources\r\n\r\n💡[Microsoft Graph - Device Inventory](https://learn.microsoft.com/en-us/graph/api/device-list?view=graph-rest-1.0&tabs=http) (1) <br>\r\n💡[Entra Connect & Comparisons](https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/what-is-cloud-sync#comparison-between-azure-ad-connect-and-cloud-sync) (2) <br>\r\n💡[Microsoft XDR - Device Inventory](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/machines-view-overview?view=o365-worldwide) (3) <br>\r\n💡[Microsoft Intune - Co-Management](https://learn.microsoft.com/en-us/mem/configmgr/comanage/overview) (4) <br>\r\n💡[Microsoft Intune - Compliance](https://learn.microsoft.com/en-us/mem/intune/protect/device-compliance-get-started) (5) <br>\r\n💡[Entra ID - Deploy Compliant Device Policy](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-compliant-device-admin) (6) <br>"
                   },
                   "customWidth": "33",
                   "name": "text - 6"
                 },
                 {
-                  "type": 1,
+                  "type": 12,
                   "content": {
-                    "json": "## Visual Representation"
-                  },
-                  "name": "text - 5"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "AuditLogs\r\n| where Category == 'Device'\r\n| extend AADOS = tostring(AdditionalDetails[1].value)\r\n| summarize count() by AADOS\r\n| render piechart",
-                    "size": 3,
-                    "showAnalytics": true,
-                    "title": "AAD Device Count by OS Platform",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "25",
-                  "showPin": true,
-                  "name": "AAD Device Count by OS Platform"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "AuditLogs\r\n| where Category contains 'Device'\r\n//| extend AADOS = tostring(AdditionalDetails[1].value)\r\n//| project OSPlatform, OSversion, JoinType\r\n| extend DeviceName = tostring(TargetResources[0].displayName)\r\n| extend JoinType = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[11].newValue))[0])\r\n| extend deviceOS = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[9].newValue))[0])\r\n//| where isnotempty(displayName_)\r\n| where isnotempty(DeviceName)\r\n//| where isnotempty(deviceOS)\r\n| project TimeGenerated, DeviceName, OperationName\r\n| sort by TimeGenerated desc\r\n",
-                    "size": 0,
-                    "showAnalytics": true,
-                    "title": "AAD Device List",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "45",
-                  "showPin": true,
-                  "name": "AAD Device List"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "AuditLogs\r\n| where Category contains 'Device'\r\n| extend value_ = tostring(AdditionalDetails[2].value)\r\n| where isnotempty(value_)\r\n| project value_\r\n| summarize count() by value_",
-                    "size": 3,
-                    "showAnalytics": true,
-                    "title": "AAD Device Count by Join Type",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "visualization": "piechart"
-                  },
-                  "customWidth": "25",
-                  "showPin": true,
-                  "name": "AAD Device Count by Join Type"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "DeviceInfo\r\n| where isnotempty(DeviceName) and isnotempty(OSPlatform)\r\n| distinct OSPlatform, DeviceName\r\n| summarize count() by OSPlatform, DeviceName\r\n| sort by count_ desc\r\n| render piechart",
-                    "size": 3,
-                    "showAnalytics": true,
-                    "title": "365D Device Count by OS Platform",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "25",
-                  "showPin": true,
-                  "name": "365D Device Count by OS Platform"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "DeviceInfo\r\n| where isnotempty(DeviceName) and isnotempty(OSPlatform) and isnotempty(JoinType)\r\n| distinct DeviceName, OSPlatform, JoinType, OSVersion\r\n| summarize by DeviceName, OSPlatform, OSVersion, JoinType\r\n",
-                    "size": 1,
-                    "showAnalytics": true,
-                    "title": "365D Device List",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "gridSettings": {
-                      "formatters": [
-                        {
-                          "columnMatch": "Group",
-                          "formatter": 1
+                    "version": "NotebookGroup/1.0",
+                    "groupType": "editable",
+                    "items": [
+                      {
+                        "type": 12,
+                        "content": {
+                          "version": "NotebookGroup/1.0",
+                          "groupType": "editable",
+                          "title": "Initial Maturity Status",
+                          "expandable": true,
+                          "items": [
+                            {
+                              "type": 1,
+                              "content": {
+                                "json": "**Initial Maturity** - Agency receives self-reported device characteristics (e.g., keys, tokens, users, etc., on the device) but has limited enforcement mechanisms. Agency has a preliminary, basic process in place to approve software use and push updates and configuration changes to devices.\r\n\r\n**Guidance**\r\n\r\n* Register end user devices with Entra ID and manage device identities from the Entra admin center. Device details can be obtained via Microsoft Graph (Resources **1**) and Entra Devices Overview (Portals **1**) tracks device assets, management state, operating system, join type, and owner.\r\n* Use Entra Connect Sync to synchronize existing Active Directory managed devices with Entra ID (Portals **2**). Devices under Sync will be displayed as Workplace (Entra ID Registered), AzureAd (Entra ID Joined) and ServerAD (Entra ID Hyrbid Joined). To see what Entra Connect is and viewing comparisons (Resources **2**).\r\n* View device inventory for onboarded and discovered devices in the Microsoft XDR portal (Portals **3**). \r\n* View device inventory for managed devices in from the Microsoft Intune portal (Portals **4**). Use co-management to attach your existing Configuration Manager deployment to Microsoft 365 Cloud (Resources **4**).",
+                                "style": "info"
+                              },
+                              "name": "text - 0"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s has 'devices'\r\n| mv-expand todynamic(value_s);\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| project ['Device Name'] = tostring(value_s.displayName), ['Device Id'] = tostring(value_s.deviceId), ['Operating System'] = tostring(value_s.operatingSystem), ['OS Version'] = tostring(value_s.operatingSystemVersion), ['Profile Type'] = tostring(value_s.profileType), ['Trust'] = tostring(value_s.trustType), ['Managed'] = tostring(value_s.isManaged), ['Account Enabled'] = tostring(value_s.accountEnabled), ['Last SignIn'] = tostring(value_s.approximateLastSignInDateTime), ['Registration Date'] = tostring(value_s.registrationDateTime)\r\n",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Microsoft Graph Device Details",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "showPin": true,
+                              "name": "Microsoft Graph Device Details"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "AuditLogs\r\n| where Category == 'Device'\r\n| extend Entra = tostring(AdditionalDetails[1].value)\r\n| where Entra != 'RegisteredDevice'\r\n| summarize count() by Entra\r\n| render piechart",
+                                "size": 3,
+                                "showAnalytics": true,
+                                "title": "Entra ID Device Count by OS ",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces"
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Entra ID Device Count by OS "
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "AuditLogs\r\n| where Category contains 'Device'\r\n| extend DeviceName = tostring(TargetResources[0].displayName)\r\n| extend OSVersion = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue))[0])\r\n//| extend InitiatedService = tostring(parse_json(tostring(InitiatedBy.app)).displayName)\r\n| extend OSPlatform = tostring(AdditionalDetails[1].value)\r\n| extend JoinType = tostring(AdditionalDetails[2].value)\r\n| where isnotempty(DeviceName)\r\n| where Identity <> \"Microsoft Intune\"\r\n| distinct  OSPlatform, DeviceName, JoinType, OperationName\r\n",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Entra ID Device List",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "OSPlatform",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "OSPlatform"
+                                    ]
+                                  }
+                                }
+                              },
+                              "customWidth": "45",
+                              "showPin": true,
+                              "name": "Entra ID Device List"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "AuditLogs\r\n| where Category contains 'Device'\r\n| extend value_ = tostring(AdditionalDetails[2].value)\r\n| where isnotempty(value_)\r\n| project value_\r\n| summarize count() by value_",
+                                "size": 3,
+                                "showAnalytics": true,
+                                "title": "Entra ID Device Count by Join Type",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "visualization": "piechart"
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Entra ID Device Count by Join Type"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "DeviceInfo\r\n| where isnotempty(DeviceName) and isnotempty(OSPlatform)\r\n| distinct OSPlatform, DeviceName\r\n| summarize count() by OSPlatform, DeviceName\r\n| sort by count_ desc\r\n| render piechart",
+                                "size": 3,
+                                "showAnalytics": true,
+                                "title": "Microsoft XDR Device Count by OS Platform",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces"
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Microsoft XDR Device Count by OS Platform"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "DeviceInfo\r\n| where isnotempty(DeviceName) and isnotempty(OSPlatform) and isnotempty(JoinType)\r\n| distinct DeviceName, OSPlatform, JoinType, OSVersion\r\n| summarize by DeviceName, OSPlatform, OSVersion, JoinType\r\n",
+                                "size": 1,
+                                "showAnalytics": true,
+                                "title": "Microsoft XDR Device List",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "Group",
+                                      "formatter": 1
+                                    },
+                                    {
+                                      "columnMatch": "DeviceName",
+                                      "formatter": 1
+                                    },
+                                    {
+                                      "columnMatch": "OSPlatform",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "OSPlatform"
+                                    ]
+                                  }
+                                },
+                                "graphSettings": {
+                                  "type": 0,
+                                  "topContent": {
+                                    "columnMatch": "AccountObjectId",
+                                    "formatter": 1
+                                  },
+                                  "centerContent": {
+                                    "columnMatch": "InvestigationPriority",
+                                    "formatter": 1,
+                                    "numberFormat": {
+                                      "unit": 17,
+                                      "options": {
+                                        "maximumSignificantDigits": 3,
+                                        "maximumFractionDigits": 2
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "customWidth": "45",
+                              "showPin": true,
+                              "name": "Microsoft XDR Device List"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "DeviceInfo\r\n| where isnotempty(DeviceName) and isnotempty(JoinType)\r\n| distinct DeviceName, JoinType\r\n| summarize count() by JoinType",
+                                "size": 3,
+                                "showAnalytics": true,
+                                "title": "Microsoft XDR Device Count by Join Type",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "visualization": "piechart",
+                                "tileSettings": {
+                                  "showBorder": false,
+                                  "titleContent": {
+                                    "columnMatch": "JoinType",
+                                    "formatter": 1
+                                  },
+                                  "leftContent": {
+                                    "columnMatch": "count_",
+                                    "formatter": 12,
+                                    "formatOptions": {
+                                      "palette": "auto"
+                                    },
+                                    "numberFormat": {
+                                      "unit": 17,
+                                      "options": {
+                                        "maximumSignificantDigits": 3,
+                                        "maximumFractionDigits": 2
+                                      }
+                                    }
+                                  }
+                                },
+                                "graphSettings": {
+                                  "type": 0,
+                                  "topContent": {
+                                    "columnMatch": "JoinType",
+                                    "formatter": 1
+                                  },
+                                  "centerContent": {
+                                    "columnMatch": "count_",
+                                    "formatter": 1,
+                                    "numberFormat": {
+                                      "unit": 17,
+                                      "options": {
+                                        "maximumSignificantDigits": 3,
+                                        "maximumFractionDigits": 2
+                                      }
+                                    }
+                                  }
+                                },
+                                "chartSettings": {
+                                  "seriesLabelSettings": [
+                                    {
+                                      "seriesName": "",
+                                      "label": "Other",
+                                      "color": "magenta"
+                                    }
+                                  ]
+                                }
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Microsoft XDR Device Count by Join Type"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDevices\r\n| where isnotempty(OS)\r\n| distinct OS\r\n| summarize count() by OS",
+                                "size": 3,
+                                "showAnalytics": true,
+                                "title": "Intune Device Count by OS Platform",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "visualization": "piechart"
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Intune Device Count by OS Platform"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDevices\r\n| where isnotempty(DeviceName) and isnotempty(OS) and isnotempty(JoinType)\r\n| extend OSPlatform = OS\r\n| distinct DeviceName, OSPlatform, OS, OSVersion, JoinType\r\n| summarize by DeviceName, OSPlatform, OSVersion, JoinType",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Intune Device List",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "OSPlatform",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "OSPlatform"
+                                    ]
+                                  }
+                                }
+                              },
+                              "customWidth": "45",
+                              "showPin": true,
+                              "name": "Intune Device List"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDevices\r\n| where isnotempty(DeviceName) and isnotempty(JoinType)\r\n| distinct DeviceName, JoinType\r\n| summarize count() by JoinType",
+                                "size": 3,
+                                "showAnalytics": true,
+                                "title": "Intune Device Count by Join Type",
+                                "timeContext": {
+                                  "durationMs": 86400000
+                                },
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "visualization": "piechart"
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Intune Device Count by Join Type"
+                            }
+                          ]
                         },
-                        {
-                          "columnMatch": "DeviceName",
-                          "formatter": 1
+                        "name": "u21initialstatus"
+                      },
+                      {
+                        "type": 12,
+                        "content": {
+                          "version": "NotebookGroup/1.0",
+                          "groupType": "editable",
+                          "title": "Advanced Maturity Status",
+                          "expandable": true,
+                          "items": [
+                            {
+                              "type": 1,
+                              "content": {
+                                "json": "**Advanced Maturity** -  Agency has verified insights (i.e., an administrator can inspect and verify the data on device) on initial access to device and enforces compliance for most devices and virtual assets. Agency uses automated methods to manage devices and virtual assets, approve software, and identify vulnerabilities and install patches. \r\n\r\n**Guidance** - Any device attempting to connect to the network will be detected; only those devices that are compliant (e.g., anti-virus is up to date, approved configuration) will receive access to requested network. <br>\r\n* Manage devices with Microsoft Intune. Configure OS, software and device compliance policies (Portals **5**) & (Resources **5**). Require compliant device within Entra Conditional Access policies (Portals **6**) & (Resources **6**).\r\n ",
+                                "style": "info"
+                              },
+                              "name": "text - 10"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDevices\r\n| summarize arg_max(DeviceName, *) by DeviceName\r\n| where isnotempty(CompliantState)\r\n| summarize ComplianceCount=count()by CompliantState",
+                                "size": 2,
+                                "showAnalytics": true,
+                                "title": "Intune Device Compliance Summary",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ],
+                                "visualization": "piechart",
+                                "chartSettings": {
+                                  "createOtherGroup": null
+                                }
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Intune Device Compliance Summary"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "// Visualize Windows Versions and filtering for devices that had a connection to intune in the last 30 days.\r\nIntuneDevices\r\n| where OS contains \"Windows\"\r\n| summarize arg_max(TimeGenerated, *) by DeviceName\r\n| summarize Versionen=count() by OSVersion\r\n| sort by Versionen desc \r\n| render piechart with ( title=\"Windows Build Versions\")",
+                                "size": 2,
+                                "showAnalytics": true,
+                                "title": "Windows Versions",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Windows Versions"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "// Visualize iOS Versions and filtering for devices that had a connection to intune in the last 30 days.\r\nIntuneDevices\r\n| where OS contains \"iOS/iPadOS\"\r\n| summarize arg_max(TimeGenerated, *) by DeviceName\r\n| summarize Versionen=count() by OSVersion\r\n| sort by Versionen desc \r\n| render piechart with ( title=\"iOS/iPadOS Versions\")",
+                                "size": 2,
+                                "showAnalytics": true,
+                                "title": "iOS/iPadOS Versions",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "iOS/iPadOS Versions"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "// Visualize Android Versions and filtering for devices that had a connection to intune in the last 30 days.\r\nIntuneDevices\r\n| where OS contains \"Android\"\r\n| summarize arg_max(TimeGenerated, *) by DeviceName\r\n| summarize Versionen=count() by OSVersion\r\n| sort by Versionen desc \r\n| render piechart with (title=\"Android Versions\")",
+                                "size": 2,
+                                "showAnalytics": true,
+                                "title": "Android Versions",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "customWidth": "25",
+                              "showPin": true,
+                              "name": "Android Versions"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDeviceComplianceOrg\r\n| where isnotempty(DeviceHealthThreatLevel)\r\n| where ComplianceState != \"Compliant\"\r\n| project TimeGenerated, ComplianceState, DeviceName, DeviceId, OS, UserName, UserEmail\r\n| summarize arg_max(TimeGenerated, *) by DeviceId",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Intune Non-Compliance Status",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "ComplianceState",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "ComplianceState"
+                                    ]
+                                  }
+                                }
+                              },
+                              "showPin": true,
+                              "name": "Intune Non-Compliance Status"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDevices\r\n| where isnotempty(LastContact)\r\n| summarize arg_max(TimeGenerated, *) by DeviceId\r\n| extend LastContactTime = todatetime(LastContact)\r\n| project DeviceId, LastContactTime\r\n| where LastContactTime <> todatetime('0001-01-01T00:00:00Z')\r\n| summarize ['Device Count']=count()by startofmonth(LastContactTime)\r\n| render columnchart with (title=\"Intune devices by last contact time\", xtitle=\"Month\")",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Intune Last Contact",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces"
+                              },
+                              "showPin": true,
+                              "name": "Intune Last Contact"
+                            }
+                          ]
                         },
-                        {
-                          "columnMatch": "OSPlatform",
-                          "formatter": 5
-                        }
-                      ],
-                      "hierarchySettings": {
-                        "treeType": 1,
-                        "groupBy": [
-                          "OSPlatform"
-                        ]
-                      }
-                    },
-                    "graphSettings": {
-                      "type": 0,
-                      "topContent": {
-                        "columnMatch": "AccountObjectId",
-                        "formatter": 1
+                        "name": "u21advanced"
                       },
-                      "centerContent": {
-                        "columnMatch": "InvestigationPriority",
-                        "formatter": 1,
-                        "numberFormat": {
-                          "unit": 17,
-                          "options": {
-                            "maximumSignificantDigits": 3,
-                            "maximumFractionDigits": 2
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "customWidth": "45",
-                  "showPin": true,
-                  "name": "365D Device List"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "DeviceInfo\r\n| where isnotempty(DeviceName) and isnotempty(JoinType)\r\n| distinct DeviceName, JoinType\r\n| summarize count() by JoinType",
-                    "size": 3,
-                    "showAnalytics": true,
-                    "title": "365D Device Count by Join Type",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "visualization": "piechart",
-                    "tileSettings": {
-                      "showBorder": false,
-                      "titleContent": {
-                        "columnMatch": "JoinType",
-                        "formatter": 1
-                      },
-                      "leftContent": {
-                        "columnMatch": "count_",
-                        "formatter": 12,
-                        "formatOptions": {
-                          "palette": "auto"
+                      {
+                        "type": 12,
+                        "content": {
+                          "version": "NotebookGroup/1.0",
+                          "groupType": "editable",
+                          "title": "Optimal Maturity Status",
+                          "expandable": true,
+                          "expanded": true,
+                          "items": [
+                            {
+                              "type": 1,
+                              "content": {
+                                "json": "**Optimal Maturity** -  Agency continuously verifies insights and enforces compliance throughout the lifetime of devices and virtual assets. Agency integrates device, software, configuration, and vulnerability management across all agency environments, including for virtual assets.\r\n\r\n**Guidance** ",
+                                "style": "info"
+                              },
+                              "name": "text - 10 - Copy"
+                            }
+                          ]
                         },
-                        "numberFormat": {
-                          "unit": 17,
-                          "options": {
-                            "maximumSignificantDigits": 3,
-                            "maximumFractionDigits": 2
-                          }
-                        }
+                        "name": "u21optimal"
                       }
-                    },
-                    "graphSettings": {
-                      "type": 0,
-                      "topContent": {
-                        "columnMatch": "JoinType",
-                        "formatter": 1
-                      },
-                      "centerContent": {
-                        "columnMatch": "count_",
-                        "formatter": 1,
-                        "numberFormat": {
-                          "unit": 17,
-                          "options": {
-                            "maximumSignificantDigits": 3,
-                            "maximumFractionDigits": 2
-                          }
-                        }
-                      }
-                    },
-                    "chartSettings": {
-                      "seriesLabelSettings": [
-                        {
-                          "seriesName": "",
-                          "label": "Other",
-                          "color": "magenta"
-                        }
-                      ]
-                    }
+                    ]
                   },
-                  "customWidth": "25",
-                  "showPin": true,
-                  "name": "365D Device Count by Join Type"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "IntuneDevices\r\n| where isnotempty(OS)\r\n| distinct OS\r\n| summarize count() by OS",
-                    "size": 3,
-                    "showAnalytics": true,
-                    "title": "Intune Device Count by OS Platform",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "visualization": "piechart"
-                  },
-                  "customWidth": "25",
-                  "showPin": true,
-                  "name": "Intune Device Count by OS Platform"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "IntuneDevices\r\n| summarize by DeviceName, OSVersion",
-                    "size": 0,
-                    "showAnalytics": true,
-                    "title": "Intune Device List",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "45",
-                  "showPin": true,
-                  "name": "Intune Device List"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "IntuneDevices\r\n| where isnotempty(DeviceName) and isnotempty(JoinType)\r\n| distinct DeviceName, JoinType\r\n| summarize count() by JoinType",
-                    "size": 3,
-                    "showAnalytics": true,
-                    "title": "Intune Device Count by Join Type",
-                    "timeContext": {
-                      "durationMs": 86400000
-                    },
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "visualization": "piechart"
-                  },
-                  "customWidth": "25",
-                  "showPin": true,
-                  "name": "Intune Device Count by Join Type"
+                  "name": "U21MaturityGroup"
                 }
               ]
             },
@@ -6226,6 +6461,7 @@
               "groupType": "editable",
               "title": "3.1 Network Segmentation",
               "expandable": true,
+              "expanded": true,
               "items": [
                 {
                   "type": 12,
@@ -12126,6 +12362,9 @@
                       "showBorder": false
                     },
                     "chartSettings": {
+                      "yAxis": [
+                        "value"
+                      ],
                       "showMetrics": false,
                       "seriesLabelSettings": [
                         {
@@ -12138,16 +12377,7 @@
                           "label": "Failure",
                           "color": "red"
                         }
-                      ],
-                      "ySettings": {
-                        "numberFormatSettings": {
-                          "unit": 1,
-                          "options": {
-                            "style": "decimal",
-                            "useGrouping": false
-                          }
-                        }
-                      }
+                      ]
                     },
                     "mapSettings": {
                       "locInfo": "LatLong",
@@ -12249,6 +12479,18 @@
             "name": "Zero Trust Maturity Status Tracker"
           },
           {
+            "type": 1,
+            "content": {
+              "json": "The President’s Executive Order 14028 \"Improving the Nation's Cybersecurity\" (issued May 12, 2021  requires agencies to enhance cybersecurity and software supply chain integrity.  OMB subsequently issued M 22-09 (issued January 26, 2022), directing federal agencies to adopt a zero-trust approach to cyber security and to meet specific cybersecurity standards and objectives by the end of Fiscal Year (FY) 2024.   This memorandum more specifically calls for agencies to comply with Zero Trust requirements and guidelines of the CISA Zero Trust Maturity Model (ZTMM) issued in April of 2023.  \r\n\r\n* Identity - Agency staff use enterprise-managed identities to access the applications they use in their work. Phishing-resistant Multi Factor Authentication (MFA) protects those personnel from sophisticated online attacks.\r\n\r\n* Devices - The Federal Government has a complete inventory of every device it operates and authorizes for Government use, and can prevent, detect, and respond to incidents on those devices.\r\n\r\n* Networks - Agencies encrypt all DNS requests and HTTP traffic within their environment and begin executing a plan to break down their perimeters into isolated environments.\r\n\r\n* Application & Workloads - Agencies treat all applications as internet-connected, routinely subject their applications to rigorous empirical testing, and welcome external vulnerability reports.\r\n\r\n* Data - Agencies are on a clear, shared path to deploy protections that make use of thorough data categorization. Agencies are taking advantage of cloud security services to monitor access to their sensitive data and have implemented enterprise-wide logging and information sharing.\r\n\r\n![Image Name](https://azure.microsoft.com/svghandler/azure-sentinel?width=600&height=315) \r\n![](https://github.com/Cyberlorians/uploadedimages/blob/main/cisaztprojectchange?width=600&height=315)\r\n\r\n"
+            },
+            "conditionalVisibility": {
+              "parameterName": "isess1Visible",
+              "comparison": "isEqualTo",
+              "value": "true"
+            },
+            "name": "text - 5"
+          },
+          {
             "type": 12,
             "content": {
               "version": "NotebookGroup/1.0",
@@ -12257,313 +12499,466 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "<br>\r\n## Microsoft Sentinel Ingestion"
+                    "json": "Please click the icon next to status to enable ingestion for the workbook. This workbook can be used Microsoft Sentiel OR Azure Monitor. Both solutions require ingestion into a dedicated Log Analytics Workspace. \r\n\r\n*Disclaimer* - some visuals may not work without Sentinel. I.e., User Entity Behavior Analytics being one of them.\r\n\r\n",
+                    "style": "upsell"
                   },
                   "name": "text - 3"
                 },
                 {
-                  "type": 9,
+                  "type": 12,
                   "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "parameters": [
+                    "version": "NotebookGroup/1.0",
+                    "groupType": "editable",
+                    "title": "Sentinel Visualization",
+                    "items": [
                       {
-                        "id": "23ba579d-c894-43be-9fe1-d1b04bc34d7a",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "Conditional Access Policy",
-                        "label": "Status",
-                        "type": 1,
-                        "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
-                        "crossComponentResources": [
-                          "{Workspace}"
-                        ],
-                        "timeContext": {
-                          "durationMs": 0
-                        },
-                        "timeContextFromParameter": "TimeRange",
-                        "queryType": 0,
-                        "resourceType": "microsoft.operationalinsights/workspaces"
-                      }
-                    ],
-                    "style": "formHorizontal",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "35",
-                  "name": "Azure Active Directory"
-                },
-                {
-                  "type": 11,
-                  "content": {
-                    "version": "LinkItem/1.0",
-                    "style": "list",
-                    "links": [
-                      {
-                        "id": "7c97e893-29f3-4d4c-a379-f220bb82518c",
-                        "linkTarget": "OpenBlade",
-                        "linkLabel": "Enable Azure Active Directory",
-                        "style": "secondary",
-                        "bladeOpenContext": {
-                          "bladeName": "DataConnectorBlade",
-                          "extensionName": "Microsoft_Azure_Security_Insights",
-                          "bladeParameters": [
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
                             {
-                              "name": "dataConnectorId",
-                              "source": "static",
-                              "value": "AzureActiveDirectory"
+                              "id": "4c8889da-4df2-422d-bd41-5971009b1f17",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "CISAIngest",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "CISAZT_CL\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "CISA Ingest"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "437e0b81-bfe5-4464-9d73-bb1057360021",
+                              "linkTarget": "ArmTemplate",
+                              "linkLabel": "CISA Zero Trust",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "DataConnectorBlade",
+                                "extensionName": "Microsoft_Azure_Security_Insights",
+                                "bladeParameters": [
+                                  {
+                                    "name": "dataConnectorId",
+                                    "source": "static",
+                                    "value": "AzureActiveDirectory"
+                                  }
+                                ]
+                              }
                             }
                           ]
+                        },
+                        "customWidth": "50",
+                        "name": "CISA Ingest",
+                        "styleSettings": {
+                          "margin": "2px"
+                        }
+                      },
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
+                            {
+                              "id": "23ba579d-c894-43be-9fe1-d1b04bc34d7a",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "Conditional Access Policy",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "Azure Active Directory"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "7c97e893-29f3-4d4c-a379-f220bb82518c",
+                              "linkTarget": "OpenBlade",
+                              "linkLabel": "Enable Azure Active Directory",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "DataConnectorBlade",
+                                "extensionName": "Microsoft_Azure_Security_Insights",
+                                "bladeParameters": [
+                                  {
+                                    "name": "dataConnectorId",
+                                    "source": "static",
+                                    "value": "AzureActiveDirectory"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "customWidth": "50",
+                        "name": "signin",
+                        "styleSettings": {
+                          "margin": "2px"
+                        }
+                      },
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
+                            {
+                              "id": "548cdd92-87c3-4e69-be08-52ecca0f76a8",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "BehaviorAnalytics",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "BehaviorAnalytics​​\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "parameters - 1"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "d9b9144c-69bc-4eb2-a747-a9e0d206780b",
+                              "linkTarget": "OpenBlade",
+                              "linkLabel": "Enable Behavorial Analytics",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "EntitySearchBlade",
+                                "extensionName": "Microsoft_Azure_Security_Insights"
+                              }
+                            }
+                          ]
+                        },
+                        "customWidth": "50",
+                        "name": "UEBA",
+                        "styleSettings": {
+                          "margin": "2px"
+                        }
+                      },
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
+                            {
+                              "id": "548cdd92-87c3-4e69-be08-52ecca0f76a8",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "M365Defender",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "AlertEvidence\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "parameters - 3"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "d9b9144c-69bc-4eb2-a747-a9e0d206780b",
+                              "linkTarget": "OpenBlade",
+                              "linkLabel": "Enable 365 Defender",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "DataConnectorBlade",
+                                "extensionName": "Microsoft_Azure_Security_Insights",
+                                "bladeParameters": [
+                                  {
+                                    "name": "dataConnectorId",
+                                    "source": "static",
+                                    "value": "MicrosoftThreatProtection"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "customWidth": "33",
+                        "name": "EL0"
+                      },
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
+                            {
+                              "id": "bdb72d3b-aede-4f2e-85e3-4379220e415b",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "AzureActivity",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "AzureActivity\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "parameters - 3 - Copy"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "58cc25ab-a9af-4516-99e1-fa22e0637a76",
+                              "linkTarget": "OpenBlade",
+                              "linkLabel": "Enable Azure Activity",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "DataConnectorBlade",
+                                "extensionName": "Microsoft_Azure_Security_Insights",
+                                "bladeParameters": [
+                                  {
+                                    "name": "dataConnectorId",
+                                    "source": "static",
+                                    "value": "AzureActivity"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "customWidth": "33",
+                        "name": "EL0"
+                      },
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
+                            {
+                              "id": "681060b5-9c30-481d-8bfa-73d595264d0b",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "MDCInitiatives",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "SecurityRecommendation\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "parameters - 3 - Copy - Copy"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "e98a1f9f-051b-4ecf-9ffc-ca278a9c010c",
+                              "linkTarget": "OpenBlade",
+                              "linkLabel": "Enable Defender for Cloud Initiatives",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "EnvironmentSettingsBlade",
+                                "extensionName": "Microsoft_Azure_Security",
+                                "bladeParameters": [
+                                  {
+                                    "name": "dataConnectorId",
+                                    "source": "static",
+                                    "value": "AzureActivity"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "customWidth": "33",
+                        "name": "EL0 - Copy"
+                      }
+                    ]
+                  },
+                  "customWidth": "50",
+                  "name": "Sentinel Visualization"
+                },
+                {
+                  "type": 12,
+                  "content": {
+                    "version": "NotebookGroup/1.0",
+                    "groupType": "editable",
+                    "title": "Azure Monitor Visualization",
+                    "items": [
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "crossComponentResources": [
+                            "{Workspace}"
+                          ],
+                          "parameters": [
+                            {
+                              "id": "23ba579d-c894-43be-9fe1-d1b04bc34d7a",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "Conditional Access Policy",
+                              "label": "Status",
+                              "type": 1,
+                              "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
+                              "crossComponentResources": [
+                                "{Workspace}"
+                              ],
+                              "timeContext": {
+                                "durationMs": 0
+                              },
+                              "timeContextFromParameter": "TimeRange",
+                              "queryType": 0,
+                              "resourceType": "microsoft.operationalinsights/workspaces"
+                            }
+                          ],
+                          "style": "formHorizontal",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "35",
+                        "name": "Azure Active Directory"
+                      },
+                      {
+                        "type": 11,
+                        "content": {
+                          "version": "LinkItem/1.0",
+                          "style": "list",
+                          "links": [
+                            {
+                              "id": "7c97e893-29f3-4d4c-a379-f220bb82518c",
+                              "linkTarget": "OpenBlade",
+                              "linkLabel": "Enable Azure Active Directory",
+                              "style": "secondary",
+                              "bladeOpenContext": {
+                                "bladeName": "DataConnectorBlade",
+                                "extensionName": "Microsoft_Azure_Security_Insights",
+                                "bladeParameters": [
+                                  {
+                                    "name": "dataConnectorId",
+                                    "source": "static",
+                                    "value": "AzureActiveDirectory"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "customWidth": "50",
+                        "name": "signin",
+                        "styleSettings": {
+                          "margin": "2px"
                         }
                       }
                     ]
                   },
                   "customWidth": "50",
-                  "name": "signin",
-                  "styleSettings": {
-                    "margin": "2px"
-                  }
-                },
-                {
-                  "type": 9,
-                  "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "parameters": [
-                      {
-                        "id": "548cdd92-87c3-4e69-be08-52ecca0f76a8",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "BehaviorAnalytics",
-                        "label": "Status",
-                        "type": 1,
-                        "query": "BehaviorAnalytics​​\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
-                        "crossComponentResources": [
-                          "{Workspace}"
-                        ],
-                        "timeContext": {
-                          "durationMs": 0
-                        },
-                        "timeContextFromParameter": "TimeRange",
-                        "queryType": 0,
-                        "resourceType": "microsoft.operationalinsights/workspaces"
-                      }
-                    ],
-                    "style": "formHorizontal",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "35",
-                  "name": "parameters - 1"
-                },
-                {
-                  "type": 11,
-                  "content": {
-                    "version": "LinkItem/1.0",
-                    "style": "list",
-                    "links": [
-                      {
-                        "id": "d9b9144c-69bc-4eb2-a747-a9e0d206780b",
-                        "linkTarget": "OpenBlade",
-                        "linkLabel": "Enable Behavorial Analytics",
-                        "style": "secondary",
-                        "bladeOpenContext": {
-                          "bladeName": "EntitySearchBlade",
-                          "extensionName": "Microsoft_Azure_Security_Insights"
-                        }
-                      }
-                    ]
-                  },
-                  "customWidth": "50",
-                  "name": "UEBA",
-                  "styleSettings": {
-                    "margin": "2px"
-                  }
-                },
-                {
-                  "type": 9,
-                  "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "parameters": [
-                      {
-                        "id": "548cdd92-87c3-4e69-be08-52ecca0f76a8",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "M365Defender",
-                        "label": "Status",
-                        "type": 1,
-                        "query": "AlertEvidence\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
-                        "crossComponentResources": [
-                          "{Workspace}"
-                        ],
-                        "timeContext": {
-                          "durationMs": 0
-                        },
-                        "timeContextFromParameter": "TimeRange",
-                        "queryType": 0,
-                        "resourceType": "microsoft.operationalinsights/workspaces"
-                      }
-                    ],
-                    "style": "formHorizontal",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "35",
-                  "name": "parameters - 3"
-                },
-                {
-                  "type": 11,
-                  "content": {
-                    "version": "LinkItem/1.0",
-                    "style": "list",
-                    "links": [
-                      {
-                        "id": "d9b9144c-69bc-4eb2-a747-a9e0d206780b",
-                        "linkTarget": "OpenBlade",
-                        "linkLabel": "Enable 365 Defender",
-                        "style": "secondary",
-                        "bladeOpenContext": {
-                          "bladeName": "DataConnectorBlade",
-                          "extensionName": "Microsoft_Azure_Security_Insights",
-                          "bladeParameters": [
-                            {
-                              "name": "dataConnectorId",
-                              "source": "static",
-                              "value": "MicrosoftThreatProtection"
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "customWidth": "33",
-                  "name": "EL0"
-                },
-                {
-                  "type": 9,
-                  "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "parameters": [
-                      {
-                        "id": "bdb72d3b-aede-4f2e-85e3-4379220e415b",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "AzureActivity",
-                        "label": "Status",
-                        "type": 1,
-                        "query": "AzureActivity\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
-                        "crossComponentResources": [
-                          "{Workspace}"
-                        ],
-                        "timeContext": {
-                          "durationMs": 0
-                        },
-                        "timeContextFromParameter": "TimeRange",
-                        "queryType": 0,
-                        "resourceType": "microsoft.operationalinsights/workspaces"
-                      }
-                    ],
-                    "style": "formHorizontal",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "35",
-                  "name": "parameters - 3 - Copy"
-                },
-                {
-                  "type": 11,
-                  "content": {
-                    "version": "LinkItem/1.0",
-                    "style": "list",
-                    "links": [
-                      {
-                        "id": "58cc25ab-a9af-4516-99e1-fa22e0637a76",
-                        "linkTarget": "OpenBlade",
-                        "linkLabel": "Enable Azure Activity",
-                        "style": "secondary",
-                        "bladeOpenContext": {
-                          "bladeName": "DataConnectorBlade",
-                          "extensionName": "Microsoft_Azure_Security_Insights",
-                          "bladeParameters": [
-                            {
-                              "name": "dataConnectorId",
-                              "source": "static",
-                              "value": "AzureActivity"
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "customWidth": "33",
-                  "name": "EL0"
-                },
-                {
-                  "type": 9,
-                  "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "parameters": [
-                      {
-                        "id": "681060b5-9c30-481d-8bfa-73d595264d0b",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "MDCInitiatives",
-                        "label": "Status",
-                        "type": 1,
-                        "query": "SecurityRecommendation\r\n| limit 1\r\n| summarize count()\r\n| extend Results = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Results",
-                        "crossComponentResources": [
-                          "{Workspace}"
-                        ],
-                        "timeContext": {
-                          "durationMs": 0
-                        },
-                        "timeContextFromParameter": "TimeRange",
-                        "queryType": 0,
-                        "resourceType": "microsoft.operationalinsights/workspaces"
-                      }
-                    ],
-                    "style": "formHorizontal",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "35",
-                  "name": "parameters - 3 - Copy - Copy"
-                },
-                {
-                  "type": 11,
-                  "content": {
-                    "version": "LinkItem/1.0",
-                    "style": "list",
-                    "links": [
-                      {
-                        "id": "e98a1f9f-051b-4ecf-9ffc-ca278a9c010c",
-                        "linkTarget": "OpenBlade",
-                        "linkLabel": "Enable Defender for Cloud Initiatives",
-                        "style": "secondary",
-                        "bladeOpenContext": {
-                          "bladeName": "EnvironmentSettingsBlade",
-                          "extensionName": "Microsoft_Azure_Security",
-                          "bladeParameters": [
-                            {
-                              "name": "dataConnectorId",
-                              "source": "static",
-                              "value": "AzureActivity"
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "customWidth": "33",
-                  "name": "EL0 - Copy"
+                  "name": "Azure Monitor Visualization"
                 }
               ],
               "exportParameters": true
