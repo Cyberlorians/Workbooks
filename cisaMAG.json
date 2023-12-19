@@ -1,0 +1,32 @@
+[
+{
+        "GraphEndpoint": "domains",
+        "GraphUri": "https://graph.microsoft.us/v1.0/domains"
+},
+{
+        "GraphEndpoint": "partners",
+        "GraphUri": "https://graph.microsoft.us/v1.0/policies/crossTenantAccessPolicy/partners"
+},
+        {
+        "GraphEndpoint": "authenitcationMethodsPolicy",
+        "GraphUri": "https://graph.microsoft.us/v1.0/policies/authenticationMethodsPolicy"
+},
+        {
+        "GraphEndpoint": "authenticationStrengthPolicies",
+        "GraphUri": "https://graph.microsoft.us/v1.0/policies/authenticationStrengthPolicies"
+        },
+        {
+        "GraphEndpoint": "deviceConfigurations",
+        "GraphUri": "https://graph.microsoft.us/v1.0/deviceManagement/deviceConfigurations"
+        },
+        {
+        "GraphEndpoint": "devices",
+        "GraphUri": "https://graph.microsoft.us/v1.0/devices?$select=displayName,deviceId,operatingSystemVersion,operatingSystem,profileType,trustType,isManaged,accountEnabled,approximateLastSignInDateTime,registrationDateTime"
+        },
+        {
+        "GraphEndpoint": "accessPackages",
+        "GraphUri": "https://graph.microsoft.us/v1.0/identityGovernance/entitlementManagement/accessPackages?$expand=catalog"
+        }
+        
+        
+]
