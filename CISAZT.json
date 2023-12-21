@@ -29,7 +29,7 @@
         },
          {
         "GraphEndpoint": "authenticationContextClassReferences",
-        "GraphUri": " https://graph.microsoft.com/v1.0/identity/conditionalAccess/authenticationContextClassReferences"
+        "GraphUri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/authenticationContextClassReferences"
         }
              
         
