@@ -30,7 +30,12 @@
          {
         "GraphEndpoint": "authenticationContextClassReferences",
         "GraphUri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/authenticationContextClassReferences"
+        },
+        {
+        "GraphEndpoint": "policies",
+        "GraphUri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/policies"
         }
-             
+
+                   
         
 ]
