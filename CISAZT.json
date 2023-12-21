@@ -26,7 +26,11 @@
         {
         "GraphEndpoint": "accessPackages",
         "GraphUri": "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages?$expand=catalog"
+        },
+         {
+        "GraphEndpoint": "authenticationContextClassReferences",
+        "GraphUri": " https://graph.microsoft.com/v1.0/identity/conditionalAccess/authenticationContextClassReferences"
         }
-        
+             
         
 ]
