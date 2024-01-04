@@ -5,6 +5,9 @@
       "type": 9,
       "content": {
         "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "value::all"
+        ],
         "parameters": [
           {
             "id": "18302244-0cfb-46d8-92e2-554fa9974c38",
@@ -32,7 +35,8 @@
             "resourceType": "microsoft.resourcegraph/resources",
             "value": [
               "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
-            ]
+            ],
+            "label": ""
           },
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
@@ -92,24 +96,13 @@
             },
             "value": {
               "durationMs": 7776000000
-            }
-          },
-          {
-            "id": "a3725545-c81e-4150-be1c-d7fd5c02da1f",
-            "version": "KqlParameterItem/1.0",
-            "name": "Tenant",
-            "label": "Tenant Choice",
-            "type": 2,
-            "isRequired": true,
-            "typeSettings": {
-              "additionalResourceOptions": []
             },
-            "jsonData": "[\"Public\",\"Government\"]",
-            "value": "Public"
+            "label": ""
           }
         ],
-        "style": "pills",
-        "queryType": 8
+        "style": "above",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
       },
       "name": "parameters - 22 - Copy"
     },
@@ -192,7 +185,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "\n\n# [CISA Zero Trust Maturity Model](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)\n---\n\nZero trust provides a collection of concepts and ideas designed to minimize uncertainty in enforcing accurate, least privilege per-request access decisions in information systems and services in the face of a network viewed as compromised. The goal is to prevent unauthorized access to data and services and make access control enforcement as granular as possible. Zero trust presents a shift from a location-centric model to a more data-centric approach for fine-grained security controls between users, systems, data and assets that change over time; for these reasons. This provides the visibility needed to support the development, implementation, enforcement, and evolution of security policies. More fundamentally, zero trust may require a change in an organization’s philosophy and culture around cybersecurity.\" For more information, see the💡[CISA Zero Maturity Model](https://www.cisa.gov/zero-trust-maturity-model) - This workbook follows the CISA Zero Trust Maturity Model. It enables the following:\n\n\n"
+                    "json": "\n\n# [CISA Zero Trust Maturity Model](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)\n---\n\nZero trust provides a collection of concepts and ideas designed to minimize uncertainty in enforcing accurate, least privilege per-request access decisions in information systems and services in the face of a network viewed as compromised. The goal is to prevent unauthorized access to data and services and make access control enforcement as granular as possible. Zero trust presents a shift from a location-centric model to a more data-centric approach for fine-grained security controls between users, systems, data and assets that change over time; for these reasons. This provides the visibility needed to support the development, implementation, enforcement, and evolution of security policies. More fundamentally, zero trust may require a change in an organization’s philosophy and culture around cybersecurity.\" For more information, see the💡[CISA Zero Maturity Model](https://www.cisa.gov/zero-trust-maturity-model) - This workbook follows the CISA Zero Trust Maturity Model. \n\nThe President’s Executive Order 14028 \"Improving the Nation's Cybersecurity\" (issued May 12, 2021 requires agencies to enhance cybersecurity and software supply chain integrity. OMB subsequently issued M 22-09 (issued January 26, 2022), directing federal agencies to adopt a zero-trust approach to cyber security and to meet specific cybersecurity standards and objectives by the end of Fiscal Year (FY) 2024. This memorandum more specifically calls for agencies to comply with Zero Trust requirements and guidelines of the CISA Zero Trust Maturity Model (ZTMM) issued in April of 2023.\n\n  * Identity - Agency staff use enterprise-managed identities to access the applications they use in their work. Phishing-resistant Multi Factor Authentication (MFA) protects those personnel from sophisticated online attacks.\n  * Devices - The Federal Government has a complete inventory of every device it operates and authorizes for Government use, and can prevent, detect, and respond to incidents on those devices.\n  *  Networks - Agencies encrypt all DNS requests and HTTP traffic within their environment and begin executing a plan to break down their perimeters into isolated environments.\n  *  Application & Workloads - Agencies treat all applications as internet-connected, routinely subject their applications to rigorous empirical testing, and welcome external vulnerability reports.\n  *  Data - Agencies are on a clear, shared path to deploy protections that make use of thorough data categorization. Agencies are taking advantage of cloud security services to monitor access to their sensitive data and have implemented enterprise-wide logging and information sharing.\n"
                   },
                   "name": "Workbook Overview"
                 }
@@ -577,6 +570,7 @@
                     "groupType": "editable",
                     "title": "1.1 Authentication",
                     "expandable": true,
+                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -1250,7 +1244,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "## Microsoft Portals Commercial \r\n🔀 [Entra - Authentication Methods](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AdminAuthMethods/fromNav/) (1) <br>\r\n🔀 [Entra - User Registration Details](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/UserRegistrationDetails/fromNav/) <br>\r\n🔀 [Entra - Authentication Methods Activity](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AuthMethodsActivity/fromNav/)<br>\r\n\r\n\r\n\r\n"
+                                "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Entra - Authentication Methods](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AdminAuthMethods/fromNav/) (1) <br>\r\n🔀 [Entra - Authentication Methods Insights](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AuthMethodsActivity/fromNav/) (2) <br>\r\n🔀 [Entra - Conditional Access Policies](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Policies/fromNav/) (3) <br>\r\n🔀 [Entra - User Registration Details](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/UserRegistrationDetails/fromNav/) (4) <br>\r\n🔀 [Entra - Authentitcation Strengths](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AuthStrengths/fromNav/) (5) <br>\r\n🔀 [Entra - Protected Actions](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/RolesManagementMenuBlade/~/ProtectedActions) (6) <br>\r\n\r\n\r\n\r\n\r\n"
                               },
                               "customWidth": "100",
                               "name": "LT-1"
@@ -1269,7 +1263,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "## Microsoft Portals Government \r\n🔀 [Entra - Authentication Methods](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AdminAuthMethods/fromNav/) (1) <br>\r\n🔀 [Entra - User Registration Details](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/UserRegistrationDetails/fromNav/) <br>\r\n🔀 [Entra - Authentication Methods Activity](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AuthMethodsActivity/fromNav/)<br>\r\n\r\n\r\n"
+                                "json": "## Microsoft Portals Government \r\n🔀 [Entra - Authentication Methods](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AdminAuthMethods/fromNav/) (1) <br>\r\n🔀 [Entra - Authentication Methods Insights](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AuthMethodsActivity/fromNav/) (2) <br>\r\n🔀 [Entra - Conditional Access Policies](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Policies/fromNav/) (3) <br>\r\n🔀 [Entra - User Registration Details](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/UserRegistrationDetails/fromNav/) (4) <br>\r\n🔀 [Entra - Authentitcation Strengths](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/AuthStrengths/fromNav/) (5) <br>\r\n🔀 [Entra - Protected Actions](https://entra.microsoft.us/#view/Microsoft_AAD_IAM/RolesManagementMenuBlade/~/ProtectedActions) (6) <br>\r\n\r\n"
                               },
                               "customWidth": "100",
                               "name": "LT-1"
@@ -1282,7 +1276,7 @@
                       {
                         "type": 1,
                         "content": {
-                          "json": "## Resources\r\n💡 [Microsoft Cloud Identity Mind Map](https://idpowertoys.com/assets/mindmaps/azureadv1.pdf)<br>\r\n💡 [Microsoft Cloud Identity Quick Wins](https://securitysentinel.substack.com/p/quick-wins-to-strengthen-your-azure)<br>\r\n💡 [Microsoft Cloud Identity for Enterprise Architects](https://www.microsoft.com/en-us/download/details.aspx?id=54431)<br>\r\n💡 [Identity Security Monitoring](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/IdentitySecurityMonitoring.md#identity-security-monitoring-in-a-hybrid-environment)<br>\r\n💡 [Collect Azure Active Directory (Azure AD) Logs](https://learn.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-integrate-activity-logs-with-log-analytics#send-logs-to-azure-monitor)<br>\r\n💡 [Enable User Entity Behavorial Analytics](https://learn.microsoft.com/en-us/azure/sentinel/enable-entity-behavior-analytics#how-to-enable-user-and-entity-behavior-analytics)<br>\r\n💡 [Deploy Microsoft Defender for Identity](https://learn.microsoft.com/en-us/defender-for-identity/deploy-defender-identity)<br>\r\n💡 [Secure with Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/secure-with-azure-ad-introduction)<br>\r\n💡 [AAD Recommendations with Explanations](https://www.cloudpartner.fi/?p=14204)<br>\r\n💡 [AAD Hybrid Identity](https://learn.microsoft.com/en-us/azure/active-directory/hybrid/connect/plan-hybrid-identity-design-considerations-overview?WT.mc_id=DT-MVP-5001664)<br>\r\n💡 [Azure AD Reports](https://learn.microsoft.com/en-us/azure/active-directory/reports-monitoring/overview-reports?WT.mc_id=DT-MVP-5001664)<br>\r\n💡 [B2B Collaboration](https://learn.microsoft.com/en-us/azure/active-directory/external-identities/what-is-b2b?WT.mc_id=DT-MVP-5001664)<br>\r\n\r\n\r\n"
+                          "json": "## Resources\r\n💡[Manage emergency access accounts in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access) (1) <br>\r\n💡[Available AuthN Methods in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods) (2) <br>\r\n💡[Manage Authentication Methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage) (3) <br>\r\n💡[Conditional Access Templates - MFA](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-policy-common?tabs=secure-foundation) (4) <br>\r\n💡[Microsoft Entra Certificate-based Authn](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-certificate-based-authentication) (5) <br>\r\n💡[Enable Passwordless Security Key SignIn](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-authentication-passwordless-security-key) (6) <br>\r\n💡[Windows Hello for Business Deployment](https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/deploy/requirements) (7) <br>\r\n💡[Conditional Access AuthN Strength](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths) (8) <br>\r\n💡[Continuous Access Evaluation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation) (9) <br>\r\n💡[Authentication Contexts](https://learn.microsoft.com/en-us/entra/identity-platform/developer-guide-conditional-access-authentication-context) (10) <br>\r\n💡[Protected Actions](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/protected-actions-overview)(11)<br>\r\n\r\n\r\n\r\n"
                         },
                         "customWidth": "33",
                         "name": "text - 9"
@@ -1290,202 +1284,6 @@
                     ]
                   },
                   "name": "1.1ActResources"
-                },
-                {
-                  "type": 1,
-                  "content": {
-                    "json": "## Entra Migration State & Authentication Methods with Status:"
-                  },
-                  "customWidth": "31",
-                  "name": "text - 6",
-                  "styleSettings": {
-                    "margin": "17px"
-                  }
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s contains \"authenticationMethods\"\r\n//| mv-apply todynamic(authenticationMethodConfigurations_s) on ( extend id_s)\r\n//| extend id_ = tostring(authenticationMethodConfigurations_s.id)\r\n//| extend state_ = tostring(authenticationMethodConfigurations_s.state)\r\n| extend mig = policyMigrationState_s;\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| distinct ['Migration State'] = mig",
-                    "size": 4,
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "visualization": "tiles",
-                    "gridSettings": {
-                      "formatters": [
-                        {
-                          "columnMatch": "Migration State",
-                          "formatter": 18,
-                          "formatOptions": {
-                            "thresholdsOptions": "icons",
-                            "thresholdsGrid": [
-                              {
-                                "operator": "==",
-                                "thresholdValue": "migrationComplete",
-                                "representation": "Blank",
-                                "text": "{0}{1}"
-                              },
-                              {
-                                "operator": "Default",
-                                "thresholdValue": null,
-                                "representation": "unknown",
-                                "text": "{0}{1}"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    "tileSettings": {
-                      "titleContent": {
-                        "formatter": 5
-                      },
-                      "subtitleContent": {
-                        "columnMatch": "Migration State",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "icons",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "migrationComplete",
-                              "text": "Completed"
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": "Blank",
-                              "text": "{0}{1}"
-                            }
-                          ]
-                        }
-                      },
-                      "showBorder": false
-                    }
-                  },
-                  "customWidth": "20",
-                  "showPin": false,
-                  "name": "query - 7"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s contains \"authenticationMethods\"\r\n| mv-apply todynamic(authenticationMethodConfigurations_s) on ( extend id_s)\r\n| extend id_ = tostring(authenticationMethodConfigurations_s.id)\r\n| extend state_ = tostring(authenticationMethodConfigurations_s.state)\r\n| extend mig = policyMigrationState_s;\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| distinct ['Authentication Methods'] = id_, ['Authentication State'] = state_, ['Migration State'] = mig",
-                    "size": 4,
-                    "noDataMessage": "LogicApp is not ingesting or AzureDiagnostics",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "visualization": "tiles",
-                    "tileSettings": {
-                      "titleContent": {
-                        "columnMatch": "Authentication Methods",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "colors",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "Sms",
-                              "representation": "gray",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "Fido2",
-                              "representation": "green",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "MicrosoftAuthenticator",
-                              "representation": "blue",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "TemporaryAccessPass",
-                              "representation": "green",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "X509Certificate",
-                              "representation": "green",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "Email",
-                              "representation": "gray",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "Voice",
-                              "representation": "gray",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "SoftwareOath",
-                              "representation": "blue",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "HardwareOath",
-                              "representation": "blue",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": null,
-                              "text": "{0}"
-                            }
-                          ]
-                        }
-                      },
-                      "subtitleContent": {
-                        "columnMatch": "Authentication State",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "icons",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "enabled",
-                              "representation": "",
-                              "text": "Enabled"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "disabled",
-                              "representation": "Disable",
-                              "text": "Disabled"
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": null,
-                              "text": "{0}{1}"
-                            }
-                          ]
-                        }
-                      },
-                      "showBorder": true,
-                      "size": "auto"
-                    }
-                  },
-                  "customWidth": "90",
-                  "showPin": false,
-                  "name": "Entra - Authentication Methods"
                 },
                 {
                   "type": 12,
@@ -1500,15 +1298,130 @@
                           "groupType": "editable",
                           "title": "Initial Maturity Status",
                           "expandable": true,
-                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Initial Maturity** - Agency authenticates identity using MFA, which may include passwords as one factor and requires validation of multiple entity attributes (e.g., locale or activity).\r\n\r\n**Guidance**\r\n\r\n* Single Factor Auth with Multi-Factor Auth enforcement is applicable. Verify Authentication Methods in the tenant. See Portals link (1).\r\n* Viewing user registration details in the tenant solidifies the verification of what methods are in existence in the tenant. See Portals link (2). ",
+                                "json": "**Initial Maturity** - Agency authenticates identity using MFA, which may include passwords as one factor and requires validation of multiple entity attributes (e.g., locale or activity).\r\n\r\n**Guidance**\r\n\r\n* Entra ID uses passwords as its default user authentication method and all user identities require a password credential.  Microsoft recommends against the exclusive use of passwords as a credential and by default, enables the registration and utilization of multifactor authentication for privileged roles and when users have risky sign-ins. *Some users may use passwords, such as break glass. In the event your environment does, configure monitoring* (Resource **1**).\r\n* Entra ID tenants support a variety of multifactor authentication methods (Portals **1** & Resources **2 & 3**), such as the Microsoft Authenticator app, OATH hardware tokens, FIDO2 security keys, digital certificates, and others. Viewing insights on those methods can be seen in (Portals **2**).  Organizations can enable the use of multifactor authentication via authentication method policies, and multifactor authentication can be enforced via Entra ID conditional access policies (Portals **3** & Resources **4**). Single Factor Auth with Multi-Factor Auth enforcement is applicable at this stage.\r\n* Viewing user registration details in the tenant solidifies the verification of what methods are in existence in the tenant (Portals **4**).",
                                 "style": "info"
                               },
                               "name": "text - 0"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s contains \"authenticationMethods\"\r\n| mv-apply todynamic(authenticationMethodConfigurations_s) on ( extend id_s)\r\n| extend id_ = tostring(authenticationMethodConfigurations_s.id)\r\n| extend state_ = tostring(authenticationMethodConfigurations_s.state)\r\n| extend mig = policyMigrationState_s;\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| distinct ['Authentication Methods'] = id_, ['Authentication State'] = state_, ['Migration State'] = mig",
+                                "size": 4,
+                                "noDataMessage": "LogicApp is not ingesting or AzureDiagnostics",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "visualization": "tiles",
+                                "tileSettings": {
+                                  "titleContent": {
+                                    "columnMatch": "Authentication Methods",
+                                    "formatter": 18,
+                                    "formatOptions": {
+                                      "thresholdsOptions": "colors",
+                                      "thresholdsGrid": [
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "Sms",
+                                          "representation": "gray",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "Fido2",
+                                          "representation": "green",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "MicrosoftAuthenticator",
+                                          "representation": "blue",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "TemporaryAccessPass",
+                                          "representation": "green",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "X509Certificate",
+                                          "representation": "green",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "Email",
+                                          "representation": "gray",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "Voice",
+                                          "representation": "gray",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "SoftwareOath",
+                                          "representation": "blue",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "HardwareOath",
+                                          "representation": "blue",
+                                          "text": "{0}{1}"
+                                        },
+                                        {
+                                          "operator": "Default",
+                                          "thresholdValue": null,
+                                          "representation": null,
+                                          "text": "{0}"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "subtitleContent": {
+                                    "columnMatch": "Authentication State",
+                                    "formatter": 18,
+                                    "formatOptions": {
+                                      "thresholdsOptions": "icons",
+                                      "thresholdsGrid": [
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "enabled",
+                                          "representation": "",
+                                          "text": "Enabled"
+                                        },
+                                        {
+                                          "operator": "==",
+                                          "thresholdValue": "disabled",
+                                          "representation": "Disable",
+                                          "text": "Disabled"
+                                        },
+                                        {
+                                          "operator": "Default",
+                                          "thresholdValue": null,
+                                          "representation": null,
+                                          "text": "{0}{1}"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "showBorder": true,
+                                  "size": "auto"
+                                }
+                              },
+                              "customWidth": "90",
+                              "showPin": false,
+                              "name": "Entra - Authentication Methods"
                             },
                             {
                               "type": 3,
@@ -1643,6 +1556,38 @@
                               "customWidth": "70",
                               "showPin": true,
                               "name": "Application MFA Count Summary"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "SigninLogs\r\n| where ResultType == 50074 //MFA failed \r\n| project UserDisplayName, Identity,UserPrincipalName, ResultDescription,  AppDisplayName, AppId, ResourceDisplayName, IPAddress,['Region'] =tostring(LocationDetails.countryOrRegion), ['State'] =tostring(LocationDetails.state), ['City'] =tostring(LocationDetails.city)\r\n| summarize FailedSigninCount = count() by UserPrincipalName, ResultDescription, City, State, Region, IPAddress, AppDisplayName",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "SignIn Failures Casued by MFA Challenge",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ],
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "UserPrincipalName",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "UserPrincipalName"
+                                    ]
+                                  }
+                                }
+                              },
+                              "showPin": true,
+                              "name": "SignIn Failures Casued by MFA Challenge"
                             }
                           ]
                         },
@@ -1659,7 +1604,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Advanced Maturity** -  Agency begins to authenticate all identity using phishing-resistant MFA and attributes, including initial implementation of password-less MFA via FIDO2 or PIV. \r\n\r\n**Guidance** - Passwordless soltuions consist of the following: \"Windows Hello for Business\" \"Passwordless phone sign-in\", \"FIDO2 security key\", \"X.509 Certificate\".",
+                                "json": "**Advanced Maturity** -  Agency begins to authenticate all identity using phishing-resistant MFA and attributes, including initial implementation of password-less MFA via FIDO2 or PIV. \r\n\r\n**Guidance** \r\n\r\n* Entra ID natively supports a number of phishing-resistant multifactor authentication methods, such as certificate-based authentication (enabling the use of PIVs), FIDO2 security keys, and Windows Hello for Business. These methods can be enabled via Entra authentication methods policies, and device configuration policies (Portals **1** & Resources **5, 6 & 7**).\r\n* If an organization wants to enforce the use of specific authentication methods to authenticate to Entra ID integrated applications, they can utilize the authentication strengths control in Entra ID conditional access (Portals **1** & Resources **8**)",
                                 "style": "info"
                               },
                               "name": "text - 10"
@@ -1717,6 +1662,66 @@
                               },
                               "showPin": true,
                               "name": "Passwordless vs Password Authentication Summarization"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s has \"authenticationStrengthPolicies\"\r\n| mv-apply todynamic(value_s) on ( extend id_s)\r\n| extend Name = tostring(value_s.displayName)\r\n| extend Type = tostring(value_s.policyType)\r\n| extend AuthNMethods = tostring(parse_json(tostring(value_s.allowedCombinations)))\r\n| extend CreatedOn = tostring(value_s.createdDateTime);\r\n//| distinct CreatedOn, Name, Type, AuthNMethods;\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| distinct CreatedOn, Name, Type, AuthNMethods",
+                                "size": 0,
+                                "title": "Tenant AuthN Strengths (click to see coorelating SignInLogs)",
+                                "noDataMessage": "verify automation ingestion OR adjust timerange",
+                                "timeContextFromParameter": "TimeRange",
+                                "exportFieldName": "Name",
+                                "exportParameterName": "SelectedName",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "customWidth": "50",
+                              "name": "Tenant AuthN Strengths"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "SigninLogs \r\n//| mv-expand ConditionalAccessPolicies\r\n| extend AuthNStrength = tostring(parse_json(AuthenticationDetails)[0].authenticationStepRequirement)\r\n| where AuthNStrength == \"{SelectedName}\"\r\n| extend PolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n//| where Result <> \"notEnabled\"\r\n//| where Result <> \"notApplied\"\r\n//| distinct TimeGenerated, UserPrincipalName, AuthNStrength, PolicyName, Result\r\n| distinct TimeGenerated, UserPrincipalName, AppDisplayName, ClientAppUsed\r\n| sort by TimeGenerated desc\r\n",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "SignIn logs based off AuthN Strength Name",
+                                "noDataMessage": "verify automation & connector ingestion OR you may not have any SignIn events",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "TimeGenerated",
+                                      "formatter": 5
+                                    },
+                                    {
+                                      "columnMatch": "UserPrincipalName",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "rowLimit": 1000,
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "UserPrincipalName"
+                                    ]
+                                  }
+                                }
+                              },
+                              "customWidth": "50",
+                              "conditionalVisibility": {
+                                "parameterName": "SelectedName",
+                                "comparison": "isNotEqualTo",
+                                "value": ""
+                              },
+                              "showPin": true,
+                              "name": "SignIn logs based off AuthN Strength Name"
                             }
                           ]
                         },
@@ -1729,12 +1734,11 @@
                           "groupType": "editable",
                           "title": "Optimal Maturity Status",
                           "expandable": true,
-                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Optimal Maturity** -  Agency continuously validates identity with phishing-resistant MFA, not just when access is initially granted. <p> Conditional Access with AuthN Strength continuously evaluating.\r\n\r\n**Guidance** - ",
+                                "json": "**Optimal Maturity** -  Agency continuously validates identity with phishing-resistant MFA, not just when access is initially granted. \r\n\r\n**Guidance** \r\n\r\n* Microsoft Entra ID Authentication strength is a Conditional Access control that allows administrators to specify which combination of authentication methods can be used to access a resource (Portals **5** & Resources **8**).\r\n* Microsoft Entra ID supports Continuous Access Evaluation (CAE) is an industry standard based on the latest Open ID Connect Continuous Access Evaluation Profile (CAEP). CAE lets Entra ID tell relying-party applications when they should stop respecting valid tokens for a user, such as when a user’s account Is disabled, password is reset, network location changes, or user risk increases.  Applications must have support for CAE to utilize these capabilities (Resources **9**).\r\n* Microsoft Entra ID supports the use of authentication contexts to granular define and apply conditional policies based on sensitive actions or access to data.  Conditional Access authentication contexts can be used to protect sensitive SharePoint sites, Teams, Microsoft Defender for Cloud Apps protected applications, PIM role activation, and custom applications (Resources **10**).\r\n* Use Microsoft Entra Conditional Access Protected Actions to add additional protections for critical Entra ID permissions like managing Conditional Access policies and cross-tenant access settings (Portals **6** & Resources **11**).",
                                 "style": "info"
                               },
                               "name": "text - 10 - Copy"
@@ -1745,9 +1749,11 @@
                                 "version": "KqlItem/1.0",
                                 "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s has \"authenticationStrengthPolicies\"\r\n| mv-apply todynamic(value_s) on ( extend id_s)\r\n| extend Name = tostring(value_s.displayName)\r\n| extend Type = tostring(value_s.policyType)\r\n| extend AuthNMethods = tostring(parse_json(tostring(value_s.allowedCombinations)))\r\n| extend CreatedOn = tostring(value_s.createdDateTime);\r\n//| distinct CreatedOn, Name, Type, AuthNMethods;\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| distinct CreatedOn, Name, Type, AuthNMethods",
                                 "size": 0,
+                                "showAnalytics": true,
                                 "title": "Tenant AuthN Strengths (click to see coorelating SignInLogs)",
-                                "noDataMessage": "LogicApp is not ingesting",
+                                "noDataMessage": "verify automation ingestion OR adjust timerange",
                                 "timeContextFromParameter": "TimeRange",
+                                "showRefreshButton": true,
                                 "exportFieldName": "Name",
                                 "exportParameterName": "SelectedName",
                                 "queryType": 0,
@@ -1757,14 +1763,14 @@
                                 ]
                               },
                               "customWidth": "50",
-                              "showPin": false,
+                              "showPin": true,
                               "name": "Tenant AuthN Strengths"
                             },
                             {
                               "type": 3,
                               "content": {
                                 "version": "KqlItem/1.0",
-                                "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend AuthNStrength = tostring(parse_json(AuthenticationDetails)[0].authenticationStepRequirement)\r\n| where AuthNStrength == \"{SelectedName}\"\r\n| extend PolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result <> \"notEnabled\"\r\n| where Result <> \"notApplied\"\r\n| distinct TimeGenerated, UserPrincipalName, AuthNStrength, PolicyName, Result\r\n",
+                                "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend AuthNStrength = tostring(parse_json(AuthenticationDetails)[0].authenticationStepRequirement)\r\n| where AuthNStrength has \"{SelectedName}\"\r\n| extend PolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend EnforcedGrant = tostring(parse_json(tostring(ConditionalAccessPolicies.enforcedGrantControls))[0])\r\n| distinct  UserPrincipalName, AuthNStrength, PolicyName, Result\r\n",
                                 "size": 0,
                                 "showAnalytics": true,
                                 "title": "Coorelating AuthN Strengths w/ Conditional Access",
@@ -1775,11 +1781,14 @@
                                 "gridSettings": {
                                   "formatters": [
                                     {
-                                      "columnMatch": "TimeGenerated",
-                                      "formatter": 5
+                                      "columnMatch": "UserPrincipalName",
+                                      "formatter": 0,
+                                      "formatOptions": {
+                                        "customColumnWidthSetting": "200px"
+                                      }
                                     },
                                     {
-                                      "columnMatch": "PolicyName",
+                                      "columnMatch": "Result",
                                       "formatter": 5
                                     }
                                   ],
@@ -1787,8 +1796,9 @@
                                   "hierarchySettings": {
                                     "treeType": 1,
                                     "groupBy": [
-                                      "PolicyName"
-                                    ]
+                                      "Result"
+                                    ],
+                                    "expandTopLevel": false
                                   }
                                 }
                               },
@@ -1808,6 +1818,52 @@
                     ]
                   },
                   "name": "U11MaturityGroup"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend PolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['CAE Token'] = tostring(parse_json(AuthenticationProcessingDetails)[2].key)\r\n| where ['CAE Token'] == 'Is CAE Token'\r\n| extend ['CAE Token Enabled'] = tostring(parse_json(AuthenticationProcessingDetails)[2].value)\r\n| where UserPrincipalName == \"cbauser01@cranesmeadows.com\"\r\n| where PolicyName == \"CA011-CAE\"\r\n| extend ['Enforced CAE Control'] = tostring(parse_json(tostring(ConditionalAccessPolicies.enforcedSessionControls))[0])\r\n| distinct UserPrincipalName, PolicyName, Result, ['CAE Token'], ['CAE Token Enabled'], ['Enforced CAE Control']",
+                    "size": 0,
+                    "showAnalytics": true,
+                    "title": "Continous Access Evalation Results w/ Conditional Access",
+                    "timeContextFromParameter": "TimeRange",
+                    "showRefreshButton": true,
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces",
+                    "crossComponentResources": [
+                      "{Workspace}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "UserPrincipalName",
+                          "formatter": 5
+                        }
+                      ],
+                      "hierarchySettings": {
+                        "treeType": 1,
+                        "groupBy": [
+                          "UserPrincipalName"
+                        ]
+                      },
+                      "sortBy": [
+                        {
+                          "itemKey": "Enforced CAE Control",
+                          "sortOrder": 1
+                        }
+                      ]
+                    },
+                    "sortBy": [
+                      {
+                        "itemKey": "Enforced CAE Control",
+                        "sortOrder": 1
+                      }
+                    ]
+                  },
+                  "customWidth": "50",
+                  "showPin": true,
+                  "name": "Continous Access Evalation Results w/ Conditional Access"
                 }
               ]
             },
@@ -1845,7 +1901,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "## Microsoft Portals Commercial \r\n🔀 [Commerical Tenant Example](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/DiagnosticSettings) <br>\r\n\r\n"
+                                "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Commerical Tenant Example](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/DiagnosticSettings) <br>\r\n\r\n"
                               },
                               "customWidth": "100",
                               "name": "LT-1"
@@ -1899,14 +1955,30 @@
                           "groupType": "editable",
                           "title": "Initial Maturity Status",
                           "expandable": true,
+                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Initial Maturity** - Agency has a combination of self-managed identity stores and hosted identity store(s) (e.g., cloud or other agency) with minimal integration between the store(s) (e.g., Single Sign\u0002on.)\r\n\r\n**Guidance** - ",
+                                "json": "**Initial Maturity** - Agency has a combination of self-managed identity stores and hosted identity store(s) (e.g., cloud or other agency) with minimal integration between the store(s) (e.g., Single Sign\u0002on.)\r\n\r\n**Guidance** \r\n* If your organization uses Active Directory Domain Services, you can synchronize normal users (Tier2 user accounts, non-administrative) to Entra ID with Entra Connect Sync or Entra Connect Cloud Sync. It is recommended to not sync privileged Active Directory accounts (Tier0 & Tier1) or assign privileged cloud roles to any synchronized accounts.\r\n* Entra ID can automatically create, update and remove user, roles, and groups in SaaS applications, as well as custom or on-premises’ applications.  This allows you to utilize Entra ID as your centralized identity source for your applications and minimize the use of application/service-based identities and users\r\n* Entra ID can provide single sign-on  to your federated applications.  Single sign-on is an authentication method that allows users to use their Entra ID credentials to authenticate other applications and services.   These applications can be modern SaaS application, custom line-of-business application, or on-premises applications.  This allows you to use Entra’s rich authentication and zero trust capabilities to enable secure and simple access to your applications\r\n",
                                 "style": "info"
                               },
                               "name": "text - 0"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "AADProvisioningLogs\r\n| extend SourceIdentity = parse_json(SourceIdentity)\r\n| extend TargetIdentity = parse_json(TargetIdentity)\r\n| extend ServicePrincipal = parse_json(ServicePrincipal)\r\n| project TimeGenerated, tostring(ServicePrincipal.Id), tostring(ServicePrincipal.Name), ModifiedProperties, JobId, Action, ['SourceType'] = SourceIdentity.identityType, ['TargetType'] = TargetIdentity.identityType\r\n| sort by TimeGenerated desc",
+                                "size": 0,
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "name": "query - 1"
                             }
                           ]
                         },
@@ -1919,11 +1991,12 @@
                           "groupType": "editable",
                           "title": "Advanced Maturity Status",
                           "expandable": true,
+                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Advanced Maturity** -  Agency begins to securely consolidate and integrate some self-managed and hosted identity stores.\r\n\r\n**Guidance** - ",
+                                "json": "**Advanced Maturity** -  Agency begins to securely consolidate and integrate some self-managed and hosted identity stores.\r\n\r\n**Guidance** \r\n* Use Entra application provisioning to provision users to SCIM, SQL, LDAP, PowerShell, and web services based applications. Use API-driven provisioning app to provision users to disparate Active Directory instances. ",
                                 "style": "info"
                               },
                               "name": "text - 10"
@@ -1939,6 +2012,7 @@
                           "groupType": "editable",
                           "title": "Optimal Maturity Status",
                           "expandable": true,
+                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
@@ -2138,7 +2212,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Entra Privileged Identity Management - Assignments](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/members/resourceId//resourceType/tenant/provider/aadroles) (1) <br>\r\n🔀 [Entra Privileged Identity Management - Access Reviews](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/AccessReviews/resourceId//resourceType/tenant/provider/aadroles)) (2) <br>\r\n🔀 [Entra Privileged Identity Management - Group Discovery](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/aadgroup) (3) <br>\r\n🔀 [Entra Privileged Identity Management - Group Assignments](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner) (4) <br>\r\n"
+                                "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Entra Privileged Identity Management - Assignments](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/members/resourceId//resourceType/tenant/provider/aadroles) (1) <br>\r\n🔀 [Entra Privileged Identity Management - Access Reviews](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/AccessReviews/resourceId//resourceType/tenant/provider/aadroles)) (2) <br>\r\n🔀 [Entra Privileged Identity Management - Group Discovery](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/aadgroup) (3) <br>\r\n🔀 [Entra Privileged Identity Management - Group Assignments](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/azurerbac) (4) <br>\r\n🔀 [Entra Identity Governance - Access Packages](https://entra.microsoft.com/#view/Microsoft_AAD_ERM/DashboardBlade/~/elmEntitlement/fromNav/Identity) (5)<br>"
                               },
                               "customWidth": "100",
                               "name": "LT-1"
@@ -2157,7 +2231,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "## Microsoft Portals Government \r\n🔀 [Entra Privileged Identity Management - Assignments](https://entra.microsoft.us/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/members/resourceId//resourceType/tenant/provider/aadroles) (1) <br>\r\n🔀 [Entra Privileged Identity Management - Access Reviews](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/AccessReviews/resourceId//resourceType/tenant/provider/aadroles) (2) <br>\r\n🔀 [Entra Privileged Identity Management - Group Discovery](https://entra.microsoft.us/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/aadgroup) (3) <br>\r\n🔀 [Entra Privileged Identity Management - Group Assignments](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner) (4) <br>\r\n"
+                                "json": "## Microsoft Portals Government \r\n🔀 [Entra Privileged Identity Management - Assignments](https://entra.microsoft.us/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/members/resourceId//resourceType/tenant/provider/aadroles) (1) <br>\r\n🔀 [Entra Privileged Identity Management - Access Reviews](https://entra.microsoft.com/#view/Microsoft_Azure_PIMCommon/ResourceMenuBlade/~/AccessReviews/resourceId//resourceType/tenant/provider/aadroles) (2) <br>\r\n🔀 [Entra Privileged Identity Management - Group Discovery](https://entra.microsoft.us/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/aadgroup) (3) <br>\r\n🔀 [Entra Privileged Identity Management - Group Assignments](https://entra.microsoft.us/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/azurerbac) (4) <br>\r\n🔀 [Entra Identity Governance - Access Packages](https://entra.microsoft.us/#view/Microsoft_AAD_ERM/DashboardBlade/~/elmEntitlement/fromNav/Identity) (5)<br>\r\n"
                               },
                               "customWidth": "100",
                               "name": "LT-1"
@@ -2170,7 +2244,7 @@
                       {
                         "type": 1,
                         "content": {
-                          "json": "## Resources\r\n💡 [Assign eligibility for a group in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner?WT.mc_id=Portal-fx) (1)<br>\r\n💡 [Configure Microsoft Entra role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings) (x1)<br>\r\n💡 [Configure Microsoft Entra Group settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-role-settings) (x2)\r\n<br>\r\n💡 [Configure Microsoft Entra Azure resource role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-resource-roles-configure-role-settings) (x3) <br>\r\n"
+                          "json": "## Resources\r\n💡[Assign eligibility for Entra Role](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-add-role-to-user) (1) <br>\r\n💡[Assign eligibility for a group in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner?WT.mc_id=Portal-fx) (2)<br>\r\n💡[Create an access review for PIM](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-create-roles-and-resource-roles-review) (3) <br>\r\n💡[Configure Microsoft Entra role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings) (4)<br>\r\n💡[Configure Microsoft Entra Group settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-role-settings) (5)\r\n<br>\r\n💡[Configure Microsoft Entra Azure resource role settings in Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-resource-roles-configure-role-settings) (6) <br>\r\n💡[Time-based access](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings#activation-maximum-duration) (7) <br>\r\n💡[Manage access to resources in entitlement management](https://learn.microsoft.com/en-us/entra/id-governance/entitlement-management-access-package-first) (8) <br>\r\n💡[Assign a role using Microsoft Graph API](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-add-role-to-user#assign-a-role-using-microsoft-graph-api) (9) <br>\r\n💡[Assign a role using ARM API](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-resource-roles-assign-roles#assign-a-role-using-arm-api) (10) <br>"
                         },
                         "customWidth": "33",
                         "name": "text - 9"
@@ -2192,12 +2266,11 @@
                           "groupType": "editable",
                           "title": "Initial Maturity Status",
                           "expandable": true,
-                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Initial Maturity** - Agency authorizes access, including for privileged access requests, that expires with automated review.\r\n\r\n**Guidance**\r\n\r\n* Review Current \"Active and Permanent Assignments\" for both Roles and Groups. No User or Group shall be in *Active* and *Permanent Assignments*, this is deemed *NOT* Zero Trust. Exception to rule would be any break glass accounts. See portals link **(1)**. <br>\r\n* Create (Privileged Identity Management) PIM Access Reviews. Access reviews allow reviewers to attest to whether users still need to be in a role. See portals link (2).<br>\r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
+                                "json": "**Initial Maturity** - Agency authorizes access, including for privileged access requests, that expires with automated review.\r\n\r\n**Guidance**\r\n\r\n* Review Current \"Active and Permanent Assignments\" for both Roles and Groups. No User or Group shall be in *Active* and *Permanent Assignments*, this is deemed *NOT* Zero Trust. Exception to rule would be any break glass accounts (Portals **1** & Resources **1 & 2**). <br>\r\n* Create (Privileged Identity Management) PIM Access Reviews. Access reviews allow reviewers to attest to whether users still need to be in a role (Portals **2** & Resources **3**).<br>\r\n",
                                 "style": "info"
                               },
                               "name": "text - 0"
@@ -2221,6 +2294,13 @@
                                     {
                                       "columnMatch": "TimeGenerated",
                                       "formatter": 5
+                                    },
+                                    {
+                                      "columnMatch": "Group Name",
+                                      "formatter": 0,
+                                      "formatOptions": {
+                                        "customColumnWidthSetting": "200px"
+                                      }
                                     }
                                   ]
                                 }
@@ -2257,12 +2337,11 @@
                           "groupType": "editable",
                           "title": "Advanced Maturity Status",
                           "expandable": true,
-                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Advanced Maturity** -  Agency authorizes need-based and session-based access, including for privileged access request, that is tailored to actions and resources.\r\n\r\n**Guidance** \r\n\r\n* In Microsoft Entra ID, you can use Privileged Identity Management (PIM) to manage just-in-time (need-based) membership in the group or just-in-time ownership of the group. Groups can be used to provide access to Microsoft Entra roles, Azure roles, and various other scenarios. *DO NOT add active, permanent members to these roles*. To Discover Groups, see portals link (3) and to manage Group eligibility, review [Resources (1)](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/groups-assign-member-owner?WT.mc_id=Portal-fx).\r\n* In Privileged Identity Management (PIM) in Microsoft Entra ID, role settings define role assignment properties. These properties include multifactor authentication and approval requirements for activation, assignment maximum duration, and notification settings. Referring to session based policies you should have default or more strict session based eligible assignments based on roles and assignment. See resources link (x1) for Entra ID roles, resources link for (x3) for azure resource settings and resources link (x2) for groups settings.\r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
+                                "json": "**Advanced Maturity** -  Agency authorizes need-based and session-based access, including for privileged access request, that is tailored to actions and resources.\r\n\r\n**Guidance** \r\n\r\n* In Microsoft Entra ID, you can use Privileged Identity Management (PIM) to manage just-in-time (need-based) role membership or just-in-time membership of a group. These properties include multifactor authentication and approval requirements for activation, assignment maximum duration, and notification settings. Groups can be used to provide access to Microsoft Entra roles, Azure roles, and various other scenarios  (Resources **4, 5 & 6**). *DO NOT add active, permanent members to these roles*. To Discover Groups & Azure Resrouces (Portals **3 & 4**).\r\n* Session based policies you should have default or more strict session based eligible assignments based on roles and assignment. I.e., Time-bound eligible, with a specific start and end date for assignment (Resources **7**). <br>\r\n",
                                 "style": "info"
                               },
                               "name": "text - 10"
@@ -2407,7 +2486,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Optimal Maturity** -  Agency uses automation to authorize just-in-time and just-enough access tailored to individual actions and individual resource needs.\r\n\r\n**Guidance** \r\n\r\n* Organizations can leverage Access Packages to automate the onboarding of users to groups that are themselves onboarded to Privileged Identity Management for just-in-time access.\r\n* Access Packages can authorize just-enough access for granting access with least privilege always in mind. \r\n* Other methods availble for JIT & JEA are Microsoft Graph and Azure Resource Graph. Leveraging these Graphs the organization is able to call the API endpoint for automation. \r\n* Visuals below will display based off ingestion and TimeRange by their titles given.",
+                                "json": "**Optimal Maturity** -  Agency uses automation to authorize just-in-time and just-enough access tailored to individual actions and individual resource needs.\r\n\r\n**Guidance** \r\n\r\n* Organizations can leverage Access Packages to automate the onboarding of users to groups that are themselves onboarded to Privileged Identity Management for just-in-time access. Access Packages can authorize just-enough access for granting access with least privilege always in mind  (Portals **5** & Resrouces **8**).\r\n* Other methods availble for JIT & JEA are Microsoft Graph and Azure Resource Graph. Leveraging these Graphs the organization is able to call the API endpoint for automation (Resources **9** & **10**).\r\n",
                                 "style": "info"
                               },
                               "name": "text - 10"
@@ -2416,10 +2495,31 @@
                               "type": 3,
                               "content": {
                                 "version": "KqlItem/1.0",
-                                "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s has \"accessPackages\"\r\n| mv-apply todynamic(value_s) on ( extend id_s)\r\n| extend ['Access Package Name'] = tostring(value_s.displayName)\r\n| extend ['Access Package Description']  = tostring(value_s.description)\r\n| extend ['State']  = tostring(parse_json(tostring(value_s.catalog)).state)\r\n| extend ['Externally Visible']  = tostring(parse_json(tostring(value_s.catalog)).isExternallyVisible);\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| distinct ['Access Package Name'], ['Access Package Description'], ['State'], ['Externally Visible']",
+                                "query": "let period = AzureDiagnostics\r\n| where resource_workflowName_s == \"CISAZT\"\r\n| sort by TimeGenerated asc\r\n| where status_s == \"Succeeded\"\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| summarize Count = count() by PeriodStart\r\n| top 1 by PeriodStart desc; \r\nlet two = CISAZT_CL\r\n| extend PeriodStart = bin(TimeGenerated, 10m)\r\n| where _odata_context_s has \"accessPackages\"\r\n| mv-apply todynamic(value_s) on ( extend id_s)\r\n| extend ['Access Package Name'] = tostring(value_s.displayName)\r\n| extend ['Access Package Description']  = tostring(value_s.description)\r\n| extend ['State']  = tostring(parse_json(tostring(value_s.catalog)).state)\r\n| extend ['Externally Visible']  = tostring(parse_json(tostring(value_s.catalog)).isExternallyVisible);\r\nperiod\r\n| join kind=inner two on PeriodStart\r\n| extend Id = tostring(value_s.id)\r\n| distinct Id, ['Access Package Name'], ['Access Package Description'], ['State'], ['Externally Visible']\r\n",
                                 "size": 0,
                                 "showAnalytics": true,
                                 "title": "Current Tenant Access Packages",
+                                "timeContextFromParameter": "TimeRange",
+                                "exportFieldName": "Id",
+                                "exportParameterName": "SelectedId",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ]
+                              },
+                              "customWidth": "50",
+                              "showPin": true,
+                              "name": "Current Tenant Access Packages"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "AuditLogs\r\n| where TargetResources has '{SelectedId}'\r\n| extend InitiatedBy = tostring(parse_json(tostring(InitiatedBy.user)).displayName)\r\n| project ActivityDateTime, InitiatedBy, ActivityDisplayName, Result\r\n| sort by ActivityDateTime desc",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Coorelated Access Package Requests w/ Audit Logs",
                                 "timeContextFromParameter": "TimeRange",
                                 "queryType": 0,
                                 "resourceType": "microsoft.operationalinsights/workspaces",
@@ -2427,8 +2527,13 @@
                                   "{Workspace}"
                                 ]
                               },
+                              "customWidth": "50",
+                              "conditionalVisibility": {
+                                "parameterName": "SelectedId",
+                                "comparison": "isNotEqualTo"
+                              },
                               "showPin": true,
-                              "name": "Current Tenant Access Packages"
+                              "name": "Coorelated Access Package Requests w/ Audit Logs"
                             }
                           ]
                         },
@@ -3323,6 +3428,7 @@
                     "groupType": "editable",
                     "title": "2.2 Asset & Supply Chain Risk Management",
                     "expandable": true,
+                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -3413,6 +3519,7 @@
                     "groupType": "editable",
                     "title": "2.3 Resource Access",
                     "expandable": true,
+                    "expanded": true,
                     "loadType": "always",
                     "items": [
                       {
@@ -4099,7 +4206,7 @@
                       {
                         "type": 1,
                         "content": {
-                          "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Microsoft Entra ID - Device Inventory](https://entra.microsoft.com/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId/Overview) (1) <br>\r\n🔀 [Microsoft Entra Connect](https://entra.microsoft.com/#view/Microsoft_AAD_Connect_Provisioning/AADConnectMenuBlade/~/GetStarted) (2) <br>\r\n🔀 [Microsoft XDR - Device Inventory](https://security.microsoft.com/devices) (3) <br>\r\n🔀 [Microsoft Endpoint - Device Inventory](https://endpoint.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) (4) <br>\r\n🔀 [Microsoft Endpoint - Compliance](https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesComplianceMenu/~/policies) (5) <br>\r\n🔀 [Entra ID - Conditional Access](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/CaTemplates.ReactView) (6) <br>\r\n\r\n"
+                          "json": "## Microsoft Portals Commercial & GCC\r\n🔀 [Microsoft Entra ID - Device Inventory](https://entra.microsoft.com/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId/Overview) (1) <br>\r\n🔀 [Microsoft Entra Connect](https://entra.microsoft.com/#view/Microsoft_AAD_Connect_Provisioning/AADConnectMenuBlade/~/GetStarted) (2) <br>\r\n🔀 [Microsoft XDR - Device Inventory](https://security.microsoft.com/devices) (3) <br>\r\n🔀 [Microsoft Endpoint - Device Inventory](https://endpoint.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) (4) <br>\r\n🔀 [Microsoft Endpoint - Compliance](https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesComplianceMenu/~/policies) (5) <br>\r\n🔀 [Entra ID - Conditional Access](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/CaTemplates.ReactView) (6) <br>\r\n🔀 [Microsoft Endpoint - EDR](https://intune.microsoft.com/#view/Microsoft_Intune_Workflows/SecurityManagementMenu/~/edr) (7) <br>\r\n🔀 [Defender for Cloud - Server Protection](https://portal.azure.com/?feature.msaljs=true#view/Microsoft_Azure_Security/SecurityMenuBlade/~/26) (8) <br>\r\n🔀 [Microsoft XDR - Secure Score](https://security.microsoft.com/securescore) (9)<br>\r\n🔀 [Microsoft Defender Vulnerability Management](https://security.microsoft.com/tvm_dashboard) (10)<br>\r\n\r\n"
                         },
                         "name": "LT-1"
                       }
@@ -4111,7 +4218,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Microsoft Portals Government\r\n🔀 [Microsoft Entra ID - Device Inventory](https://entra.microsoft.us/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId/Overview) (1) <br>\r\n🔀 [Microsoft Entra Connect](https://entra.microsoft.us/#view/Microsoft_AAD_Connect_Provisioning/AADConnectMenuBlade/~/GetStarted) (2) <br>\r\n🔀 [Microsoft XDR - Device Inventory](https://security.microsoft.us/devices) (3) <br>\r\n🔀 [Microsoft Endpoint - Device Inventory](https://endpoint.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) (4) <br>\r\n🔀 [Microsoft Endpoint - Compliance](https://intune.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesComplianceMenu/~/policies) (5) <br>\r\n🔀 [Entra ID - Conditional Access](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/CaTemplates.ReactView) (6) <br>\r\n\r\n\r\n"
+                    "json": "## Microsoft Portals Government\r\n🔀 [Microsoft Entra ID - Device Inventory](https://entra.microsoft.us/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/Devices/menuId/Overview) (1) <br>\r\n🔀 [Microsoft Entra Connect](https://entra.microsoft.us/#view/Microsoft_AAD_Connect_Provisioning/AADConnectMenuBlade/~/GetStarted) (2) <br>\r\n🔀 [Microsoft XDR - Device Inventory](https://security.microsoft.us/devices) (3) <br>\r\n🔀 [Microsoft Endpoint - Device Inventory](https://endpoint.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/overview) (4) <br>\r\n🔀 [Microsoft Endpoint - Compliance](https://intune.microsoft.us/#view/Microsoft_Intune_DeviceSettings/DevicesComplianceMenu/~/policies) (5) <br>\r\n🔀 [Entra ID - Conditional Access](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/CaTemplates.ReactView) (6) <br>\r\n🔀 [Microsoft Endpoint - EDR](https://intune.microsoft.us/#view/Microsoft_Intune_Workflows/SecurityManagementMenu/~/edr) (7) <br>\r\n🔀 [Defender for Cloud - Server Protection](https://portal.azure.us/?feature.msaljs=true#view/Microsoft_Azure_Security/SecurityMenuBlade/~/26) (8) <br>\r\n🔀 [Microsoft XDR - Secure Score](https://security.microsoft.us/securescore) (9)<br>\r\n🔀 [Microsoft Defender Vulnerability Management](https://security.microsoft.us/tvm_dashboard) (10)<br>\r\n\r\n\r\n\r\n"
                   },
                   "customWidth": "33",
                   "name": "text - 9"
@@ -4119,7 +4226,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Resources\r\n\r\n💡[Microsoft Graph - Device Inventory](https://learn.microsoft.com/en-us/graph/api/device-list?view=graph-rest-1.0&tabs=http) (1) <br>\r\n💡[Entra Connect & Comparisons](https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/what-is-cloud-sync#comparison-between-azure-ad-connect-and-cloud-sync) (2) <br>\r\n💡[Microsoft XDR - Device Inventory](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/machines-view-overview?view=o365-worldwide) (3) <br>\r\n💡[Microsoft Intune - Co-Management](https://learn.microsoft.com/en-us/mem/configmgr/comanage/overview) (4) <br>\r\n💡[Microsoft Intune - Compliance](https://learn.microsoft.com/en-us/mem/intune/protect/device-compliance-get-started) (5) <br>\r\n💡[Entra ID - Deploy Compliant Device Policy](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-compliant-device-admin) (6) <br>"
+                    "json": "## Resources\r\n\r\n💡[Microsoft Graph - Device Inventory](https://learn.microsoft.com/en-us/graph/api/device-list?view=graph-rest-1.0&tabs=http) (1) <br>\r\n💡[Entra Connect & Comparisons](https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/what-is-cloud-sync#comparison-between-azure-ad-connect-and-cloud-sync) (2) <br>\r\n💡[Microsoft XDR - Device Inventory](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/machines-view-overview?view=o365-worldwide) (3) <br>\r\n💡[Microsoft Intune - Co-Management](https://learn.microsoft.com/en-us/mem/configmgr/comanage/overview) (4) <br>\r\n💡[Microsoft Intune - Compliance](https://learn.microsoft.com/en-us/mem/intune/protect/device-compliance-get-started) (5) <br>\r\n💡[Entra ID - Deploy Compliant Device Policy](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-compliant-device-admin) (6) <br>\r\n💡[Configure Microsoft Defender for Endpoint in Intune](https://learn.microsoft.com/en-us/mem/intune/protect/advanced-threat-protection-configure) (7) <br>\r\n💡[MDC Integration w/ EDR](https://learn.microsoft.com/en-us/azure/defender-for-cloud/integration-defender-for-endpoint) (8) <br>\r\n💡[Microsoft Secure Score](https://learn.microsoft.com/en-us/microsoft-365/security/defender/microsoft-secure-score-whats-new?view=o365-worldwide) (9) <br>\r\n💡[Microsoft Defender Vulnerability Managemnt](https://learn.microsoft.com/en-us/microsoft-365/security/defender-vulnerability-management/defender-vulnerability-management?view=o365-worldwide) (10) <br>\r\n💡[Device-Based Conditional Access Policies](https://blog.admindroid.com/must-know-device-based-conditional-access-policies-in-microsoft-365/) (11) <br>"
                   },
                   "customWidth": "33",
                   "name": "text - 6"
@@ -4445,7 +4552,7 @@
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Advanced Maturity** -  Agency has verified insights (i.e., an administrator can inspect and verify the data on device) on initial access to device and enforces compliance for most devices and virtual assets. Agency uses automated methods to manage devices and virtual assets, approve software, and identify vulnerabilities and install patches. \r\n\r\n**Guidance** - Any device attempting to connect to the network will be detected; only those devices that are compliant (e.g., anti-virus is up to date, approved configuration) will receive access to requested network. <br>\r\n* Manage devices with Microsoft Intune. Configure OS, software and device compliance policies (Portals **5**) & (Resources **5**). Require compliant device within Entra Conditional Access policies (Portals **6**) & (Resources **6**).\r\n ",
+                                "json": "**Advanced Maturity** -  Agency has verified insights (i.e., an administrator can inspect and verify the data on device) on initial access to device and enforces compliance for most devices and virtual assets. Agency uses automated methods to manage devices and virtual assets, approve software, and identify vulnerabilities and install patches. \r\n\r\n**Guidance** - Any device attempting to connect to the network will be detected; only those devices that are compliant (e.g., anti-virus is up to date, approved configuration) will receive access to requested network. <br>\r\n* Manage devices with Microsoft Intune. Configure OS, software and device compliance policies (Portals **5** & Resources **5**). Require compliant device within Entra Conditional Access policies (Portals **6** & Resources **6**).\r\n ",
                                 "style": "info"
                               },
                               "name": "text - 10"
@@ -4573,6 +4680,46 @@
                               },
                               "showPin": true,
                               "name": "Intune Last Contact"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend deviceState = case(DeviceDetail[\"trustType\"] == \"\", \"Unmanaged\", DeviceDetail[\"trustType\"])\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| summarize arg_max(TimeGenerated, *) by DeviceName\r\n| summarize count() by deviceState",
+                                "size": 2,
+                                "showAnalytics": true,
+                                "title": "Device State by Conditional Access Policies",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ],
+                                "visualization": "piechart"
+                              },
+                              "customWidth": "50",
+                              "showPin": true,
+                              "name": "Device State by Conditional Access Policies"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend device = tostring(DeviceDetail[\"operatingSystem\"])\r\n| summarize count() by UserPrincipalName, device\r\n| summarize count() by device",
+                                "size": 2,
+                                "showAnalytics": true,
+                                "title": "Device Platform by Conditional Access",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ],
+                                "visualization": "piechart"
+                              },
+                              "customWidth": "50",
+                              "showPin": true,
+                              "name": "Device Platform by Conditional Access"
                             }
                           ]
                         },
@@ -4585,15 +4732,86 @@
                           "groupType": "editable",
                           "title": "Optimal Maturity Status",
                           "expandable": true,
-                          "expanded": true,
                           "items": [
                             {
                               "type": 1,
                               "content": {
-                                "json": "**Optimal Maturity** -  Agency continuously verifies insights and enforces compliance throughout the lifetime of devices and virtual assets. Agency integrates device, software, configuration, and vulnerability management across all agency environments, including for virtual assets.\r\n\r\n**Guidance** ",
+                                "json": "**Optimal Maturity** -  Agency continuously verifies insights and enforces compliance throughout the lifetime of devices and virtual assets. Agency integrates device, software, configuration, and vulnerability management across all agency environments, including for virtual assets.\r\n\r\n**Guidance** \r\n\r\n* Manage devices with Microsoft Intune and deploy Microsoft Defender for Endpoint (Portals **7** & Resources **7**). \r\n* Protect your servers with Defender for Cloud's integrated EDR solution (Portals **8** & Resources **8**).\r\n* Following the Secure Score recommendations can protect your organization from threats. From a centralized dashboard in the Microsoft XDR portal, organizations can monitor and work on the security of their Microsoft 365 identities, apps, and devices (Portals **9** & Resources **9**).\r\n* Defender Vulnerability Management delivers asset visibility, intelligent assessments, and built-in remediation tools for Windows, macOS, Linux, Android, iOS, and network devices (Portals **10** & Resources **10**).\r\n* Continually verify deployment and use of Entra Conditional Access policies around device signals (Portals **6** & Resources **6 & 11**).\r\n\r\n",
                                 "style": "info"
                               },
                               "name": "text - 10 - Copy"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "IntuneDevices\r\n| join DeviceInfo on $left.DeviceId and DeviceName\r\n| where SourceSystem contains \"Intune\"\r\n| where ManagedBy contains \"MDE\"\r\n| summarize arg_max(TimeGenerated, *) by DeviceName\r\n| project DeviceName, DeviceId, SourceSystem, ManagedBy\r\n",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Intune Devices Onboarded to Defender for Endpoint",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "visualization": "table"
+                              },
+                              "customWidth": "50",
+                              "showPin": true,
+                              "name": "Intune Devices Onboarded to Defender for Endpoint"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "securityresources\r\n| where type == \"microsoft.security/pricings\"\r\n| where name == \"VirtualMachines\"\r\n| extend DefenderPlan= split(properties, \",\")[3]\r\n| where DefenderPlan contains 'P'\r\n| join resources on subscriptionId\r\n| where type1 == 'microsoft.compute/virtualmachines/extensions' or type1 == 'microsoft.hybridcompute/machines/extensions' or type1 == 'microsoft.compute/virtualmachinescalesets/machines/extensions' \r\n| where name1 contains 'MDE'\r\n| project DeviceName = tostring(split(id1, \"/\")[8]), DefenderPlan, ['Extension Name'] =tostring(name1), subscriptionId, ['Location'] = tostring(location1), ['Resource Group'] = tostring(resourceGroup1)\r\n\r\n",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Defender for Servers Coverage w/ Defender for Cloud",
+                                "queryType": 1,
+                                "resourceType": "microsoft.resourcegraph/resources",
+                                "crossComponentResources": [
+                                  "value::all"
+                                ],
+                                "visualization": "table",
+                                "gridSettings": {
+                                  "formatters": [
+                                    {
+                                      "columnMatch": "subscriptionId",
+                                      "formatter": 5
+                                    }
+                                  ],
+                                  "hierarchySettings": {
+                                    "treeType": 1,
+                                    "groupBy": [
+                                      "subscriptionId"
+                                    ]
+                                  }
+                                }
+                              },
+                              "customWidth": "50",
+                              "showPin": true,
+                              "name": "Defender for Servers Coverage w/ Defender for Cloud"
+                            },
+                            {
+                              "type": 3,
+                              "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "//Create a pivot table showing all conditional access policy outcomes over the last 30 days\r\nSigninLogs\r\n| extend CA = parse_json(ConditionalAccessPolicies)\r\n| mv-expand bagexpansion=array CA\r\n| evaluate bag_unpack(CA)\r\n| extend\r\n    ['CA Outcome']=tostring(column_ifexists('result', \"\")),\r\n    ['CA Policy Name'] = column_ifexists('displayName', \"\")\r\n| evaluate pivot(['CA Outcome'], count(), ['CA Policy Name'])",
+                                "size": 0,
+                                "showAnalytics": true,
+                                "title": "Continually Verify Device Signal Conditional Access Policies",
+                                "timeContextFromParameter": "TimeRange",
+                                "queryType": 0,
+                                "resourceType": "microsoft.operationalinsights/workspaces",
+                                "crossComponentResources": [
+                                  "{Workspace}"
+                                ],
+                                "gridSettings": {
+                                  "rowLimit": 1000,
+                                  "filter": true
+                                }
+                              },
+                              "showPin": true,
+                              "name": "Continually Verify Device Signal Conditional Access Policies"
                             }
                           ]
                         },
@@ -12375,7 +12593,7 @@
                         {
                           "seriesName": "ZeroTrust Failure",
                           "label": "Failure",
-                          "color": "red"
+                          "color": "redBright"
                         }
                       ]
                     },
@@ -12477,18 +12695,6 @@
               "value": "true"
             },
             "name": "Zero Trust Maturity Status Tracker"
-          },
-          {
-            "type": 1,
-            "content": {
-              "json": "The President’s Executive Order 14028 \"Improving the Nation's Cybersecurity\" (issued May 12, 2021  requires agencies to enhance cybersecurity and software supply chain integrity.  OMB subsequently issued M 22-09 (issued January 26, 2022), directing federal agencies to adopt a zero-trust approach to cyber security and to meet specific cybersecurity standards and objectives by the end of Fiscal Year (FY) 2024.   This memorandum more specifically calls for agencies to comply with Zero Trust requirements and guidelines of the CISA Zero Trust Maturity Model (ZTMM) issued in April of 2023.  \r\n\r\n* Identity - Agency staff use enterprise-managed identities to access the applications they use in their work. Phishing-resistant Multi Factor Authentication (MFA) protects those personnel from sophisticated online attacks.\r\n\r\n* Devices - The Federal Government has a complete inventory of every device it operates and authorizes for Government use, and can prevent, detect, and respond to incidents on those devices.\r\n\r\n* Networks - Agencies encrypt all DNS requests and HTTP traffic within their environment and begin executing a plan to break down their perimeters into isolated environments.\r\n\r\n* Application & Workloads - Agencies treat all applications as internet-connected, routinely subject their applications to rigorous empirical testing, and welcome external vulnerability reports.\r\n\r\n* Data - Agencies are on a clear, shared path to deploy protections that make use of thorough data categorization. Agencies are taking advantage of cloud security services to monitor access to their sensitive data and have implemented enterprise-wide logging and information sharing.\r\n\r\n![Image Name](https://azure.microsoft.com/svghandler/azure-sentinel?width=600&height=315) \r\n![](https://github.com/Cyberlorians/uploadedimages/blob/main/cisaztprojectchange?width=600&height=315)\r\n\r\n"
-            },
-            "conditionalVisibility": {
-              "parameterName": "isess1Visible",
-              "comparison": "isEqualTo",
-              "value": "true"
-            },
-            "name": "text - 5"
           },
           {
             "type": 12,
