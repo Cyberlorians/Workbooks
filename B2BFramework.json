@@ -1,0 +1,335 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## YELLER PAGES\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections."
+      },
+      "name": "text - 2"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "value::all"
+        ],
+        "parameters": [
+          {
+            "id": "18302244-0cfb-46d8-92e2-554fa9974c38",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 5,
+            "description": "Select at least one workspace that contains continuous export data based on the selected subscriptions",
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "CAPTime",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": [
+              "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
+            ]
+          },
+          {
+            "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            },
+            "value": {
+              "durationMs": 7776000000
+            }
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 22 - Copy"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "A Federated domain in Entra ID is a domain that is configured to use federation technologies, such as Active Directory Federation Services (AD FS), to authenticate users. A Managed domain, on the other hand, is a domain that is managed by Entra ID and uses Entra ID for authentication.",
+              "style": "info"
+            },
+            "customWidth": "40",
+            "name": "Domains-Text"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "List SKUs purchased for Tenant.",
+              "style": "info"
+            },
+            "customWidth": "22",
+            "name": "TenantSKU-Text"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "When you deploy features like Microsoft Entra multifactor authentication in your organization, review the available authentication methods. Choose the methods that meet or exceed your requirements in terms of security, usability, and availability. Where possible, use authentication methods with the highest level of security.\r\nFurther information, see [here](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods).\r\n\r\nPlease migrate to new Authenticatin Methods listed [here](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-methods-manage).",
+              "style": "info"
+            },
+            "customWidth": "38",
+            "name": "AuthNMethods-Text"
+          }
+        ]
+      },
+      "name": "Group01"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "B2BFramework_CL\n| where _odata_context_s has \"domains\"\n| mv-apply todynamic(value_s) on\n(\nwhere isnotempty(value_s.id)\n| extend domainName=tostring(value_s.id)\n| extend authenticationType=tostring(value_s.authenticationType)\n| extend isDefault=tostring(value_s.isDefault)\n| extend isVerified_ = tostring(value_s.isVerified)\n)\n| distinct ['Registered Domains'] = domainName, ['AuthenticationType'] = authenticationType, ['Default Domain'] = isDefault, ['Verified Domain'] = isVerified_",
+        "size": 1,
+        "showAnalytics": true,
+        "title": "Register Domains & Federation Type",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Default Domain",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "==",
+                    "thresholdValue": "true",
+                    "representation": "Check",
+                    "text": "DEFAULT"
+                  },
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "Close",
+                    "text": ""
+                  }
+                ]
+              }
+            }
+          ],
+          "rowLimit": 1000
+        },
+        "sortBy": []
+      },
+      "customWidth": "40",
+      "showPin": true,
+      "name": "Register Domains & Federation Type"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "B2BFramework_CL\r\n| where _odata_context_s has \"subscribedSkus\"\r\n| mv-apply todynamic(value_s) on  ( extend value_s)\r\n//| extend tenant = tostring(value_s.tenantId)\r\n| extend SKU = tostring(value_s.skuPartNumber)\r\n| extend Units = tostring(parse_json(tostring(value_s.prepaidUnits)).enabled)\r\n| distinct SKU, Units",
+        "size": 0,
+        "showAnalytics": true,
+        "title": "Tenant SKUs",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "customWidth": "22",
+      "showPin": true,
+      "name": "Tenant SKUs"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "B2BFramework_CL\r\n| where _odata_context_s contains \"authenticationMethods\"\r\n| mv-apply todynamic(authenticationMethodConfigurations_s) on (extend id_s)\r\n| extend id_ = tostring(authenticationMethodConfigurations_s.id)\r\n| extend state_ = tostring(authenticationMethodConfigurations_s.state)\r\n| extend mig = policyMigrationState_s\r\n| extend IncludedTarget = tostring(parse_json(tostring(authenticationMethodConfigurations_s.includeTargets))[0].targetType)\r\n| extend Target = tostring(parse_json(tostring(authenticationMethodConfigurations_s.includeTargets))[0].id)\r\n| distinct\r\n   ['Authentication Methods'] = id_,\r\n   ['Authentication State'] = state_,\r\n    Target\r\n| sort by ['Authentication State']  desc\r\n\r\n",
+        "size": 0,
+        "showAnalytics": true,
+        "title": "Supported Authentication Methods",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Target",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "==",
+                    "thresholdValue": "all_users",
+                    "text": "{0}{1}"
+                  },
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "resource",
+                    "text": "Scoped Group"
+                  }
+                ],
+                "compositeBarSettings": {
+                  "labelText": "",
+                  "columnSettings": []
+                }
+              }
+            }
+          ]
+        },
+        "sortBy": [],
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "Authentication Methods",
+            "formatter": 1,
+            "numberFormat": {
+              "unit": 0,
+              "options": {
+                "style": "percent"
+              }
+            }
+          },
+          "showBorder": false,
+          "size": "auto"
+        }
+      },
+      "customWidth": "38",
+      "showPin": true,
+      "name": "Supported Authentication Methods"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "Select TenantID to view the coorelation and Sign-In logs with that Tenant. ",
+        "style": "info"
+      },
+      "name": "text - 8"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "B2BFramework_CL\r\n| where _odata_context_s has \"partners\"\r\n| mv-apply todynamic(value_s) on  ( extend value_s)\r\n| extend tenant = tostring(value_s.tenantId)\r\n| extend inboundAllowed_ = tostring(parse_json(tostring(value_s.automaticUserConsentSettings)).inboundAllowed)\r\n| extend outboundAllowed_ = tostring(parse_json(tostring(value_s.automaticUserConsentSettings)).outboundAllowed)\r\n| extend b2bCollaborationInbound_ = tostring(value_s.b2bCollaborationInbound)\r\n| extend b2bCollaborationOutbound_ = tostring(value_s.b2bCollaborationOutbound)\r\n| extend b2bDirectConnectInbound_ = tostring(value_s.b2bDirectConnectInbound)\r\n| extend b2bDirectConnectOutbound_ = tostring(value_s.b2bDirectConnectOutbound)\r\n| extend inboundTrust_ = tostring(value_s.inboundTrust)\r\n| extend isServiceProvider_ = tostring(value_s.isServiceProvider)\r\n| distinct  ['Tenant'] = tenant, ['Inbound User Consent'] = inboundAllowed_, ['Outbound User Consent'] = outboundAllowed_, ['B2B-Collab-In'] =b2bCollaborationInbound_, ['B2B-Collab-Out'] = b2bCollaborationOutbound_, ['B2B-Direct-In'] = b2bDirectConnectInbound_, ['B2B-Direct-Out'] = b2bDirectConnectOutbound_, ['Inbound Trust'] = inboundTrust_",
+        "size": 0,
+        "title": "B2B Collaboration Settings",
+        "timeContextFromParameter": "TimeRange",
+        "exportFieldName": "Tenant",
+        "exportParameterName": "tenant",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ]
+      },
+      "name": "B2B Collaboration Settings"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\r\n| where HomeTenantId == \"{tenant}\"\r\n| extend detail_ = tostring(parse_json(AuthenticationContextClassReferences)[0].detail)\r\n| extend additionalDetails_ = tostring(Status.additionalDetails)\r\n| project TimeGenerated, HomeTenantId, UserPrincipalName, UserType, CrossTenantAccessType, AppDisplayName, additionalDetails_\r\n",
+        "size": 0,
+        "title": "Coorelated B2B Collaboration Settings",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "HomeTenantId",
+              "formatter": 5
+            }
+          ],
+          "hierarchySettings": {
+            "treeType": 1,
+            "groupBy": [
+              "HomeTenantId"
+            ]
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "SelectedTenant",
+        "comparison": "isEqualTo"
+      },
+      "name": "Coorelated B2B Collaboration Settings"
+    }
+  ],
+  "fallbackResourceIds": [
+    "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinel-cyberlorians"
+  ],
+  "fromTemplateId": "https://sentinelus.hosting.portal.azure.net/sentinelus/Content/1.0.02435.3113-230901-161733/Scenarios/Ecosystem/Content/Workbooks/CustomWorkbook.json",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
