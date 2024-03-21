@@ -10,7 +10,7 @@
                 "ControlName": "Default Authorization Settings",
                 "Description": "Manages authorization settings in Azure AD",
                 "GraphEndpoint": "authorizationPolicy",
-                "GraphUri": "https://graph.microsoft.us/beta/policies/authorizationPolicy",
+                "GraphUri": "https://graph.microsoft.us/v1.0/policies/authorizationPolicy",
                 "GraphDocsUrl": "https://learn.microsoft.us/en-us/graph/api/resources/authorizationpolicy",
                 "MitreTactic": [],
                 "MitreTechnique": [],
