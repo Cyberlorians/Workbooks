@@ -64,7 +64,7 @@
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": null
+            "value": "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/Sentinel-Cyberlorians"
           },
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
@@ -236,7 +236,10 @@
             "timeContextFromParameter": "CAPTime",
             "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces"
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "success"
+            ]
           }
         ],
         "style": "pills",
@@ -249,6 +252,49 @@
         "value": "cap1"
       },
       "name": "parameters - 22 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\n| project CAResult\n| summarize count() by CAResult",
+        "size": 1,
+        "title": "Conditional Access 'Signin' Summaries - Per Tenant, Wholistically",
+        "timeContextFromParameter": "CAPTime",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "visualization": "tiles",
+        "tileSettings": {
+          "showBorder": false,
+          "titleContent": {
+            "columnMatch": "CAResult",
+            "formatter": 1
+          },
+          "leftContent": {
+            "columnMatch": "count_",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "auto"
+            },
+            "numberFormat": {
+              "unit": 17,
+              "options": {
+                "maximumSignificantDigits": 3,
+                "maximumFractionDigits": 2
+              }
+            }
+          }
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap1"
+      },
+      "name": "query - 3"
     },
     {
       "type": 12,
@@ -595,59 +641,25 @@
       "name": "CAPChangesGroup"
     },
     {
-      "type": 3,
+      "type": 1,
       "content": {
-        "version": "KqlItem/1.0",
-        "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\n| project CAResult\n| summarize count() by CAResult",
-        "size": 1,
-        "title": "Conditional Access 'Signin' Summaries",
-        "timeContextFromParameter": "CAPTime",
-        "queryType": 0,
-        "resourceType": "microsoft.operationalinsights/workspaces",
-        "crossComponentResources": [
-          "{Workspace}"
-        ],
-        "visualization": "tiles",
-        "tileSettings": {
-          "showBorder": false,
-          "titleContent": {
-            "columnMatch": "CAResult",
-            "formatter": 1
-          },
-          "leftContent": {
-            "columnMatch": "count_",
-            "formatter": 12,
-            "formatOptions": {
-              "palette": "auto"
-            },
-            "numberFormat": {
-              "unit": 17,
-              "options": {
-                "maximumSignificantDigits": 3,
-                "maximumFractionDigits": 2
-              }
-            }
-          }
-        }
+        "json": "**Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n**Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n**NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n**NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n**Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n**Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n**Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n**Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
+        "style": "info"
       },
-      "conditionalVisibility": {
-        "parameterName": "Tab",
-        "comparison": "isEqualTo",
-        "value": "cap1"
-      },
-      "name": "query - 3"
+      "name": "text - 9"
     },
     {
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust,ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result\r\n| union \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust, ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result)\r\n| order by TimeGenerated desc",
+        "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust,ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result, ResultDescription\r\n| union \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust, ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result, ResultDescription)\r\n| order by TimeGenerated desc",
         "size": 0,
         "showAnalytics": true,
         "title": "Conditional Access Status",
         "timeContextFromParameter": "CAPTime",
         "exportParameterName": "Detail",
         "exportDefaultValue": "{ \"Name\":\"\", \"Type\":\"*\", \"Parent\":\"*\"}",
+        "showExportToExcel": true,
         "exportToExcelOptions": "all",
         "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces",
@@ -664,28 +676,25 @@
               }
             },
             {
-              "columnMatch": "TimeGenerated",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "25ch"
-              }
-            },
-            {
               "columnMatch": "Category",
               "formatter": 5
             },
             {
               "columnMatch": "UserPrincipalName",
-              "formatter": 5,
-              "formatOptions": {
-                "customColumnWidthSetting": "35ch"
-              }
+              "formatter": 5
             },
             {
               "columnMatch": "AzureADApplication",
               "formatter": 0,
               "formatOptions": {
                 "customColumnWidthSetting": "25ch"
+              }
+            },
+            {
+              "columnMatch": "Grant",
+              "formatter": 0,
+              "formatOptions": {
+                "customColumnWidthSetting": "18ch"
               }
             },
             {
@@ -703,19 +712,15 @@
               }
             },
             {
-              "columnMatch": "NamedNetwork",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "20ch"
-              }
-            },
-            {
               "columnMatch": "PolicyName",
               "formatter": 5
             },
             {
               "columnMatch": "Result",
-              "formatter": 5
+              "formatter": 5,
+              "formatOptions": {
+                "customColumnWidthSetting": "500px"
+              }
             },
             {
               "columnMatch": "$gen_group",
@@ -723,24 +728,10 @@
               "formatOptions": {
                 "customColumnWidthSetting": "70ch"
               }
-            },
-            {
-              "columnMatch": "CA Policy Name",
-              "formatter": 5
-            },
-            {
-              "columnMatch": "CAResult",
-              "formatter": 5
-            },
-            {
-              "columnMatch": "GrantControls",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "18ch"
-              }
             }
           ],
           "rowLimit": 5000,
+          "filter": true,
           "hierarchySettings": {
             "treeType": 1,
             "groupBy": [
@@ -794,6 +785,7 @@
         "value": "cap1"
       },
       "customWidth": "100",
+      "showPin": true,
       "name": "query - 10 - Copy - Copy",
       "styleSettings": {
         "margin": "25"
