@@ -124,122 +124,6 @@
             "value": {
               "durationMs": 604800000
             }
-          },
-          {
-            "id": "7ffbab18-9e02-4840-a27f-e89207b0636a",
-            "version": "KqlParameterItem/1.0",
-            "name": "UserPrincipalName",
-            "type": 1,
-            "description": "Type username prefix and any search will be found",
-            "timeContext": {
-              "durationMs": 0
-            },
-            "timeContextFromParameter": "CAPTime",
-            "defaultValue": "value::all"
-          },
-          {
-            "id": "75142a7d-ca45-427e-a349-a7d217191be2",
-            "version": "KqlParameterItem/1.0",
-            "name": "CategorySignIn",
-            "type": 2,
-            "multiSelect": true,
-            "quote": "'",
-            "delimiter": ",",
-            "typeSettings": {
-              "additionalResourceOptions": [
-                "value::all"
-              ],
-              "showDefault": false
-            },
-            "jsonData": "[\"SignInLogs\",\"NonInteractiveUserSignInLogs\"]",
-            "defaultValue": "value::all",
-            "value": [
-              "SignInLogs"
-            ]
-          },
-          {
-            "id": "b506d8e1-ce7a-4af8-b94c-65bbd3e70534",
-            "version": "KqlParameterItem/1.0",
-            "name": "AzureADApplication",
-            "type": 2,
-            "multiSelect": true,
-            "quote": "'",
-            "delimiter": ",",
-            "query": "SigninLogs | union AADNonInteractiveUserSignInLogs\r\n| extend AzureADApplication = AppDisplayName\r\n| where isnotempty(AzureADApplication)\r\n| distinct AzureADApplication\r\n| sort by AzureADApplication asc ",
-            "crossComponentResources": [
-              "{Workspace}"
-            ],
-            "typeSettings": {
-              "additionalResourceOptions": [
-                "value::all"
-              ],
-              "showDefault": false
-            },
-            "timeContext": {
-              "durationMs": 0
-            },
-            "timeContextFromParameter": "CAPTime",
-            "defaultValue": "value::all",
-            "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces"
-          },
-          {
-            "id": "e14cf77f-6d3d-46f2-a0bf-fe18d731e51f",
-            "version": "KqlParameterItem/1.0",
-            "name": "PolicyName",
-            "type": 2,
-            "multiSelect": true,
-            "quote": "'",
-            "delimiter": ",",
-            "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend displayName_ = tostring(ConditionalAccessPolicies.displayName)\r\n| distinct displayName_\r\n| sort by displayName_ asc\r\n",
-            "crossComponentResources": [
-              "{Workspace}"
-            ],
-            "typeSettings": {
-              "additionalResourceOptions": [
-                "value::all"
-              ],
-              "showDefault": false
-            },
-            "timeContext": {
-              "durationMs": 0
-            },
-            "timeContextFromParameter": "CAPTime",
-            "defaultValue": "value::all",
-            "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces",
-            "value": [
-              "value::all"
-            ]
-          },
-          {
-            "id": "b4ddb6f0-8afb-4f3c-aca9-c3d3847e019b",
-            "version": "KqlParameterItem/1.0",
-            "name": "Report",
-            "type": 2,
-            "multiSelect": true,
-            "quote": "'",
-            "delimiter": ",",
-            "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| distinct CAResult",
-            "crossComponentResources": [
-              "{Workspace}"
-            ],
-            "typeSettings": {
-              "additionalResourceOptions": [
-                "value::all"
-              ],
-              "showDefault": false
-            },
-            "timeContext": {
-              "durationMs": 0
-            },
-            "timeContextFromParameter": "CAPTime",
-            "defaultValue": "value::all",
-            "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces",
-            "value": [
-              "success"
-            ]
           }
         ],
         "style": "pills",
@@ -251,7 +135,7 @@
         "comparison": "isEqualTo",
         "value": "cap1"
       },
-      "name": "parameters - 22 - Copy"
+      "name": "Param1"
     },
     {
       "type": 3,
@@ -259,7 +143,7 @@
         "version": "KqlItem/1.0",
         "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\n| project CAResult\n| summarize count() by CAResult",
         "size": 1,
-        "title": "Conditional Access 'Signin' Summaries - Per Tenant, Wholistically",
+        "title": "Wholistic view of Conditional Access Policies \"SignIn Summaries\"",
         "timeContextFromParameter": "CAPTime",
         "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces",
@@ -294,7 +178,151 @@
         "comparison": "isEqualTo",
         "value": "cap1"
       },
-      "name": "query - 3"
+      "name": "Wholistic view of Conditional Access Policies \"SignIn Summaries\""
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "**Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n**Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n**NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n**NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n**Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n**Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n**Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n**Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
+        "style": "info"
+      },
+      "name": "text - 9"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
+        "parameters": [
+          {
+            "id": "5661e089-4c2b-4633-b9ef-7339ec47f776",
+            "version": "KqlParameterItem/1.0",
+            "name": "UserPrincipalName",
+            "type": 1,
+            "description": "Type username prefix and any search will be found",
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "CAPTime",
+            "defaultValue": "value::all"
+          },
+          {
+            "id": "e2e96f5b-7529-4fd3-9807-9c3ec1af4968",
+            "version": "KqlParameterItem/1.0",
+            "name": "CategorySignIn",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "jsonData": "[\"SignInLogs\",\"NonInteractiveUserSignInLogs\"]",
+            "defaultValue": "value::all",
+            "value": [
+              "SignInLogs"
+            ]
+          },
+          {
+            "id": "e78b0eee-e189-42f6-8d60-d43479f28cc2",
+            "version": "KqlParameterItem/1.0",
+            "name": "AzureADApplication",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SigninLogs | union AADNonInteractiveUserSignInLogs\r\n| extend AzureADApplication = AppDisplayName\r\n| where isnotempty(AzureADApplication)\r\n| distinct AzureADApplication\r\n| sort by AzureADApplication asc ",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "CAPTime",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "e59aca5d-8ba3-489b-ae99-2bb8f794fd62",
+            "version": "KqlParameterItem/1.0",
+            "name": "PolicyName",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend displayName_ = tostring(ConditionalAccessPolicies.displayName)\r\n| distinct displayName_\r\n| sort by displayName_ asc\r\n",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "CAPTime",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "001:MDCA - Monitor"
+            ]
+          },
+          {
+            "id": "5fd9d558-1102-4f9f-8fdc-c1006ebc3ef0",
+            "version": "KqlParameterItem/1.0",
+            "name": "Report",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| distinct CAResult",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "CAPTime",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "notEnabled"
+            ]
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap1"
+      },
+      "name": "Param2"
     },
     {
       "type": 12,
@@ -641,14 +669,6 @@
       "name": "CAPChangesGroup"
     },
     {
-      "type": 1,
-      "content": {
-        "json": "**Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n**Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n**NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n**NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n**Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n**Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n**Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n**Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
-        "style": "info"
-      },
-      "name": "text - 9"
-    },
-    {
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
@@ -684,13 +704,6 @@
               "formatter": 5
             },
             {
-              "columnMatch": "AzureADApplication",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "25ch"
-              }
-            },
-            {
               "columnMatch": "Grant",
               "formatter": 0,
               "formatOptions": {
@@ -717,13 +730,10 @@
             },
             {
               "columnMatch": "Result",
-              "formatter": 5,
-              "formatOptions": {
-                "customColumnWidthSetting": "500px"
-              }
+              "formatter": 5
             },
             {
-              "columnMatch": "$gen_group",
+              "columnMatch": "-- Group By --",
               "formatter": 0,
               "formatOptions": {
                 "customColumnWidthSetting": "70ch"
