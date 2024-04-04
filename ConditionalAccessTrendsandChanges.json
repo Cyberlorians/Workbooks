@@ -309,7 +309,7 @@
             "queryType": 0,
             "resourceType": "microsoft.operationalinsights/workspaces",
             "value": [
-              "notEnabled"
+              "value::all"
             ]
           }
         ],
@@ -673,7 +673,7 @@
       "content": {
         "version": "KqlItem/1.0",
         "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust,ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result, ResultDescription\r\n| union \r\n(AADNonInteractiveUserSignInLogs \r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend NamedNetwork = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| extend ClientOS = tostring(parse_json(DeviceDetail).operatingSystem)\r\n| extend DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend Managed = tostring(parse_json(DeviceDetail).isManaged)\r\n| extend Trust = tostring(parse_json(DeviceDetail).trustType)\r\n| where AzureADApplication in ({AzureADApplication})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({PolicyName})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where Category in ({CategorySignIn}) or '*' in ({CategorySignIn})\r\n| project  TimeGenerated, Category, UserPrincipalName, AzureADApplication, Grant = ConditionalAccessPolicies.enforcedGrantControls,ClientOS, DeviceName, Managed, Trust, ClientIP = IPAddress, Location, NamedNetwork, ['PolicyName'], Result, ResultDescription)\r\n| order by TimeGenerated desc",
-        "size": 0,
+        "size": 2,
         "showAnalytics": true,
         "title": "Conditional Access Status",
         "timeContextFromParameter": "CAPTime",
@@ -692,37 +692,12 @@
               "columnMatch": "$gen_group",
               "formatter": 0,
               "formatOptions": {
-                "customColumnWidthSetting": "70ch"
+                "customColumnWidthSetting": "50ch"
               }
-            },
-            {
-              "columnMatch": "Category",
-              "formatter": 5
             },
             {
               "columnMatch": "UserPrincipalName",
               "formatter": 5
-            },
-            {
-              "columnMatch": "Grant",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "18ch"
-              }
-            },
-            {
-              "columnMatch": "ClientIP",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "15ch"
-              }
-            },
-            {
-              "columnMatch": "Location",
-              "formatter": 0,
-              "formatOptions": {
-                "customColumnWidthSetting": "13ch"
-              }
             },
             {
               "columnMatch": "PolicyName",
@@ -733,10 +708,10 @@
               "formatter": 5
             },
             {
-              "columnMatch": "-- Group By --",
+              "columnMatch": "$gen_group",
               "formatter": 0,
               "formatOptions": {
-                "customColumnWidthSetting": "70ch"
+                "customColumnWidthSetting": "50ch"
               }
             }
           ],
@@ -749,11 +724,21 @@
               "PolicyName",
               "UserPrincipalName"
             ],
-            "expandTopLevel": false,
-            "finalBy": "Category"
-          }
+            "expandTopLevel": false
+          },
+          "sortBy": [
+            {
+              "itemKey": "AzureADApplication",
+              "sortOrder": 1
+            }
+          ]
         },
-        "sortBy": [],
+        "sortBy": [
+          {
+            "itemKey": "AzureADApplication",
+            "sortOrder": 1
+          }
+        ],
         "tileSettings": {
           "showBorder": false,
           "titleContent": {
