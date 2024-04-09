@@ -220,7 +220,7 @@
             "queryType": 0,
             "resourceType": "microsoft.operationalinsights/workspaces",
             "value": [
-              "value::all"
+              "success"
             ]
           }
         ],
@@ -516,7 +516,7 @@
     {
       "type": 1,
       "content": {
-        "json": "Below are the report types of Conditional Access. The layout of the results are meant as data points to take to the [whatif - tool](https://learn.microsoft.com/en-us/entra/identity/conditional-access/what-if-tool). Utilize the tool in Commerical [whatif](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade) or Government [whatif](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade).  For further insights, click on any resulted, TimeGenerated, to view the output.\r\n\r\n**Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n**Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n**NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n**NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n**Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n**Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n**Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n**Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
+        "json": "Below are the report types of Conditional Access. The layout of the results are meant as data points to take to the [whatif - tool](https://learn.microsoft.com/en-us/entra/identity/conditional-access/what-if-tool). Utilize the tool in Commerical [whatif](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade) or Government [whatif](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade).  For further insights, expand the results and select an item to view the detailed output.\r\n\r\n**Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n**Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n**NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n**NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n**Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n**Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n**Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n**Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
         "style": "info"
       },
       "conditionalVisibility": {
@@ -1025,7 +1025,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where TimeGenerated == \"{Time2}\"\r\n| where Result == \"{result2}\"\r\n| where ['PolicyName'] == \"{pol2}\"\r\n| extend AuthDetails = parse_json(AuthenticationDetails)\r\n| mv-expand AuthDetails\r\n| extend AuthNMethod = tostring(AuthDetails.authenticationMethod), AuthNStepReq = tostring(AuthDetails.authenticationStepRequirement), AuthNStepResultDetails = tostring(AuthDetails.authenticationStepResultDetail), Succession = tostring(AuthDetails.succeeded)\r\n| project TimeGenerated, ['PolicyName'], UserPrincipalName, AuthNMethod, AuthNStepReq, AuthNStepResultDetails, Succession, Result, ResultType, ResultDescription\r\n| sort by TimeGenerated desc",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] == \"{pol2}\"\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result == \"{result2}\"\r\n| where TimeGenerated == \"{Time2}\"\r\n| extend AuthDetails = parse_json(AuthenticationDetails)\r\n| mv-expand AuthDetails\r\n| extend AuthNMethod = tostring(AuthDetails.authenticationMethod), AuthNStepReq = tostring(AuthDetails.authenticationStepRequirement), AuthNStepResultDetails = tostring(AuthDetails.authenticationStepResultDetail), Succession = tostring(AuthDetails.succeeded)\r\n| project TimeGenerated, ['PolicyName'], UserPrincipalName, AuthNMethod, AuthNStepReq, AuthNStepResultDetails, Succession, Result, ResultType, ResultDescription\r\n| sort by TimeGenerated desc",
               "size": 1,
               "showAnalytics": true,
               "title": "Conditional Access Results Correlation By SelectedTime",
@@ -1153,7 +1153,8 @@
       "content": {
         "version": "KqlItem/1.0",
         "query": "SigninLogs\r\n| project TimeGenerated, ConditionalAccessPolicies, UserPrincipalName, AppDisplayName\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend CAPolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| where CAResult == \"failure\"\r\n| summarize\r\n    ['List of Failed Application']=make_set(AppDisplayName),\r\n    ['Count of Failed Application']=dcount(AppDisplayName)\r\n    by UserPrincipalName, bin(TimeGenerated, 1h)\r\n| where ['Count of Failed Application'] >= 5",
-        "size": 0,
+        "size": 2,
+        "showAnalytics": true,
         "title": "Conditional Access Block to 5+ Apps within 1 Hour",
         "timeContextFromParameter": "Time",
         "queryType": 0,
@@ -1161,7 +1162,6 @@
         "crossComponentResources": [
           "{Workspace}"
         ],
-        "visualization": "table",
         "tileSettings": {
           "showBorder": false,
           "titleContent": {
@@ -1189,7 +1189,8 @@
         "comparison": "isEqualTo",
         "value": "cap1"
       },
-      "name": "query - 6"
+      "showPin": true,
+      "name": "Conditional Access Block to 5+ Apps within 1 Hour"
     }
   ],
   "fallbackResourceIds": [
