@@ -245,9 +245,10 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend AzureADApplication = AppDisplayName\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where AzureADApplication in ({Application})\n| where ['PolicyName'] in ({Policy})\n| where Result in ({Report}) or '*' in ({Report})\n| project Result\n| summarize count() by Result\n\n",
+              "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where ['PolicyName'] in ({Policy})\n| extend AzureADApplication = AppDisplayName\n| where AzureADApplication in ({Application})\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| where Result in ({Report}) or '*' in ({Report})\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\n| project Result\n| summarize count() by Result\n\n",
               "size": 2,
-              "title": "\"SignIn Summaries\" By Application & Report",
+              "showAnalytics": true,
+              "title": "\"SignIn Summaries\" By Parameters Set",
               "timeContextFromParameter": "Time",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -296,15 +297,16 @@
               "comparison": "isEqualTo",
               "value": "cap1"
             },
-            "name": "\"SignIn Summaries\" By Application & Report"
+            "showPin": true,
+            "name": "\"SignIn Summaries\" By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| summarize count() by Location\r\n",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by Location\r\n",
               "size": 3,
-              "title": "\"SignIn Summaries\" For Location By Policy & Report",
+              "title": "\"SignIn Summaries\" By Parameters Set",
               "timeContextFromParameter": "Time",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -315,12 +317,10 @@
               "mapSettings": {
                 "locInfo": "CountryRegion",
                 "locInfoColumn": "Location",
+                "latitude": "Location",
+                "longitude": "Location",
                 "sizeSettings": "Location",
                 "sizeAggregation": "Sum",
-                "minSize": 15,
-                "maxSize": 30,
-                "defaultSize": 15,
-                "opacity": 1,
                 "labelSettings": "Location",
                 "legendMetric": "count_",
                 "legendAggregation": "Sum",
@@ -328,96 +328,181 @@
                   "nodeColorField": "Location",
                   "colorAggregation": "Sum",
                   "type": "heatmap",
-                  "heatmapPalette": "orangeDark"
-                },
-                "numberFormatSettings": {
-                  "unit": 0,
-                  "options": {
-                    "style": "decimal",
-                    "useGrouping": false
-                  }
+                  "heatmapPalette": "magenta"
                 }
               }
             },
             "customWidth": "75",
-            "showPin": false,
-            "name": "\"SignIn Summaries\" For Location By Policy & Report",
-            "styleSettings": {
-              "margin": "40",
-              "padding": "0"
-            }
+            "showPin": true,
+            "name": "\"SignIn Summaries\" By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend deviceState = case(DeviceDetail[\"trustType\"] == \"\", \"Unmanaged\", DeviceDetail[\"trustType\"])\r\n| summarize count() by deviceState\r\n",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| extend device = tostring(DeviceDetail[\"operatingSystem\"])\r\n| where isnotempty(device)\r\n| summarize count() by UserPrincipalName, device\r\n| summarize count() by device",
               "size": 3,
-              "title": "Device State - Total",
+              "showAnalytics": true,
+              "title": "Device Platform - By Parameters Set",
               "timeContextFromParameter": "Time",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
                 "{Workspace}"
               ],
-              "visualization": "piechart"
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "device",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
             },
             "customWidth": "25",
-            "name": "query - 7"
+            "showPin": true,
+            "name": "Device Total - By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend device = tostring(DeviceDetail[\"operatingSystem\"])\r\n| summarize count() by UserPrincipalName, device\r\n| summarize count() by device",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| extend deviceState = case(DeviceDetail[\"trustType\"] == \"\", \"Unmanaged\", DeviceDetail[\"trustType\"])\r\n| summarize count() by deviceState\r\n",
               "size": 3,
-              "title": "Device Platform - Total",
+              "showAnalytics": true,
+              "title": "Device State - By Parameters Set",
               "timeContextFromParameter": "Time",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
                 "{Workspace}"
               ],
-              "visualization": "piechart"
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "deviceState",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
             },
             "customWidth": "25",
-            "name": "query - 8"
+            "showPin": true,
+            "name": "Device State - By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| summarize count() by RiskLevelDuringSignIn",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by RiskLevelDuringSignIn",
               "size": 3,
-              "title": "Sign-in Risk - Total",
+              "showAnalytics": true,
+              "title": "Sign-in Risk - By Parameters Set",
               "timeContextFromParameter": "Time",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
                 "{Workspace}"
               ],
-              "visualization": "piechart"
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "RiskLevelDuringSignIn",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
             },
             "customWidth": "25",
-            "name": "query - 9"
+            "showPin": true,
+            "name": "SignIn-Risk - By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| summarize count() by ClientAppUsed",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by ClientAppUsed",
               "size": 3,
-              "title": "Client App - Total",
+              "showAnalytics": true,
+              "title": "Client App - By Parameters Set",
               "timeContextFromParameter": "Time",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
                 "{Workspace}"
               ],
-              "visualization": "piechart"
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "ClientAppUsed",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
             },
             "customWidth": "25",
-            "name": "query - 8"
+            "showPin": true,
+            "name": "Client App Used - By Parameters Set"
           }
         ]
       },
