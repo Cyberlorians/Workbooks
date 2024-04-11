@@ -122,7 +122,6 @@
         "groupType": "editable",
         "title": "Conditional Access Security",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 12,
@@ -133,7 +132,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What is an Emergency Account (break glass) and do organizations need to [manage](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) emergency access? \r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n#### Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) for automation of an Exclusion group being added to all policies. It is suggested to set recurrence  every 1-5m in corporate orgs.\r\n",
+                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What is an Emergency Account (break glass) and do organizations need to [manage](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) emergency access? \r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n",
                     "style": "info"
                   },
                   "conditionalVisibility": {
@@ -230,7 +229,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n*Managing emergency accounts is the Identity teams responsiblity and they are to be sure these accounts are excluded from Conditional Access to mitigate any type of lockouts due to configuration mistakes from other admins or threat actors. To mitigate this, automation can be deployed.\r\n\r\n#### **Step:3** - Create an Entra Security group called 'Exclude - BG'. *Disclaimer - the identity team can change this name but be sure to add the proper group name in the automation variable.*\r\n\r\n#### **Step:4** - Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md).\r\n\r\n\r\n#### **Step:5** - After completion and a successful run of [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md). It is important to track changes to the Emergency group. In the below parameter labeled 'Enter Exclusion Group'",
+                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n#### Managing emergency accounts is the Identity teams responsiblity and they are to be sure these accounts are excluded from Conditional Access to mitigate any type of lockouts due to configuration mistakes from other admins or threat actors. To mitigate this, automation can be deployed.\r\n\r\n#### **Step:3** - Create an Entra Security group called 'Exclude - BG'. *Disclaimer - the identity team can change this name but be sure to add the proper group name in the automation variable.*\r\n\r\n#### **Step:4** - Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md).\r\n\r\n\r\n#### **Step:5** - After completion and a successful run of [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md). It is important to track changes to the Emergency group. In the below parameter labeled 'Enter Exclusion Group' \r\n\r\n#### **Disclaimer** - there should only be TWO emergency accounts nested in the exlcusion group. If there are more, document the temporary need and/or remove any other accounts*",
                     "style": "info"
                   },
                   "name": "Conditional Access Emergency Account - Managing Emergency accounts with Automation"
@@ -281,6 +280,27 @@
                       "{Workspace}"
                     ],
                     "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "Actor",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "OperationName",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "GroupID",
+                          "formatter": 5
+                        }
+                      ],
+                      "hierarchySettings": {
+                        "treeType": 1,
+                        "groupBy": [
+                          "Actor",
+                          "OperationName"
+                        ]
+                      },
                       "sortBy": [
                         {
                           "itemKey": "TimeGenerated",
@@ -295,28 +315,44 @@
                       }
                     ]
                   },
+                  "customWidth": "50",
                   "conditionalVisibility": {
                     "parameterName": "Tab",
                     "comparison": "isEqualTo",
                     "value": "cap3"
                   },
-                  "name": "Conditional Access Exclusion Group Changes - click to view CA updates"
+                  "name": "Conditional Access Exclusion Group Auditing"
                 },
                 {
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "AuditLogs\r\n    | where OperationName in (\"Update conditional access policy\")\r\n    | extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n   //| mv-expand tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)).excludeGroups)))\r\n| extend Exclude = todynamic(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)))))\r\n| extend Policy = tostring(Policy.displayName)\r\n| extend ['Group Added to Exlusion'] = tostring(parse_json(tostring(Exclude.excludeGroups))[0])\r\n| where ['Group Added to Exlusion'] contains ('{guid}')\r\n| project  TimeGenerated, Policy, ['Group Added to Exlusion'], OperationName\r\n| sort by TimeGenerated desc",
+                    "query": "let GroupIDs = AuditLogs\r\n| extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| where GroupName contains ('{ExclusionGroup}')\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| project GroupID, GroupName;\r\nAuditLogs\r\n| where OperationName in (\"Update conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| extend Exclude = todynamic(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)))))\r\n| extend Policy = tostring(Policy.displayName)\r\n| extend ['Group Added to Exclusion'] = tostring(parse_json(tostring(Exclude.excludeGroups))[0])\r\n| where ['Group Added to Exclusion'] in (GroupIDs)\r\n| join kind=inner GroupIDs on $left['Group Added to Exclusion'] == $right.GroupID\r\n| project TimeGenerated, Policy, GroupName, ['Group Added to Exclusion'], OperationName\r\n| sort by TimeGenerated desc",
                     "size": 0,
                     "title": "Verifying AutoExclude Exclusions",
                     "timeContextFromParameter": "TimeRange",
                     "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
+                    "resourceType": "microsoft.operationalinsights/workspaces",
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "Group Added to Exclusion",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "OperationName",
+                          "formatter": 5
+                        }
+                      ],
+                      "hierarchySettings": {
+                        "treeType": 1,
+                        "groupBy": [
+                          "OperationName"
+                        ]
+                      }
+                    }
                   },
-                  "conditionalVisibility": {
-                    "parameterName": "guid",
-                    "comparison": "isNotEqualTo"
-                  },
+                  "customWidth": "50",
                   "name": "Verifying AutoExclude Exclusions"
                 }
               ]
@@ -344,8 +380,15 @@
         "groupType": "editable",
         "title": "Conditional Access Monitoring",
         "expandable": true,
-        "expanded": true,
         "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## Conditional Access - Monitoring\r\n\r\n#### Below are visuals on change history, top editors and corrleations. If [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) was deployed. It will be shown as 'NonHumanActor'. NonHumanActor is any other automation used for Conditonal Access policies, such as, 'Microsoft Managed Policy Manager'.\r\n\r\n####  **Microsoft Sentinel** customers. You may chose to create your own Analytic Rules based off the KQL logic to 'Audit'; Create, Update & Delete Conditional Access Policies. For a short cut, please review and deploy [Conditional Access w/ Microsoft Sentinel](####  **Microsoft Sentinel** customers. It is advised to create an Analytical Rule for tracking the usage of the emergency accounts. Please review this [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/).\r\n\r\n",
+              "style": "info"
+            },
+            "name": "text - 4"
+          },
           {
             "type": 3,
             "content": {
