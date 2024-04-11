@@ -271,7 +271,7 @@
                     "version": "KqlItem/1.0",
                     "query": "AuditLogs\r\n    //| where OperationName == \"Add member to group\"\r\n    | where OperationName contains_cs \"group\"\r\n    | extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n    | extend Target = tostring(TargetResources[0].userPrincipalName)\r\n    | extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n    //| where GroupName has \"Exclude\" //enter exlusion group name\r\n    | where GroupName contains ('{ExclusionGroup}')\r\n    | extend GroupID = tostring(TargetResources[1].id)\r\n    | project TimeGenerated, Actor, OperationName, Target, GroupName, GroupID",
                     "size": 1,
-                    "title": "Conditional Access Exclusion Group Changes - click to view CA updates",
+                    "title": "Conditional Access Exclusion Group Auditing",
                     "timeContextFromParameter": "TimeRange",
                     "exportFieldName": "GroupID",
                     "exportParameterName": "guid",
@@ -330,7 +330,7 @@
                     "version": "KqlItem/1.0",
                     "query": "let GroupIDs = AuditLogs\r\n| extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| where GroupName contains ('{ExclusionGroup}')\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| project GroupID, GroupName;\r\nAuditLogs\r\n| where OperationName in (\"Update conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| extend Exclude = todynamic(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)))))\r\n| extend Policy = tostring(Policy.displayName)\r\n| extend ['Group Added to Exclusion'] = tostring(parse_json(tostring(Exclude.excludeGroups))[0])\r\n| where ['Group Added to Exclusion'] in (GroupIDs)\r\n| join kind=inner GroupIDs on $left['Group Added to Exclusion'] == $right.GroupID\r\n| project TimeGenerated, Policy, GroupName, ['Group Added to Exclusion'], OperationName\r\n| sort by TimeGenerated desc",
                     "size": 0,
-                    "title": "Verifying AutoExclude Exclusions",
+                    "title": "Verifying Exclusion Group Addition to Contional Access Policies",
                     "timeContextFromParameter": "TimeRange",
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces",
@@ -354,7 +354,7 @@
                     }
                   },
                   "customWidth": "50",
-                  "name": "Verifying AutoExclude Exclusions"
+                  "name": "Verifying Exclusion Group Addition to Contional Access Policies"
                 }
               ]
             },
