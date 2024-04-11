@@ -133,7 +133,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account \r\n\r\n#### What is break glass and why [manage](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) emergency access? \r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n#### Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) for automation of an Exclusion group being added to all policies. It is suggested to set recurrence  every 1-5m in corporate orgs.\r\n",
+                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What is an Emergency Account (break glass) and do organizations need to [manage](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) emergency access? \r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n#### Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) for automation of an Exclusion group being added to all policies. It is suggested to set recurrence  every 1-5m in corporate orgs.\r\n",
                     "style": "info"
                   },
                   "conditionalVisibility": {
@@ -141,15 +141,15 @@
                     "comparison": "isEqualTo",
                     "value": "cap3"
                   },
-                  "name": "text - 13"
+                  "name": "Conditional Access Emergency Account - Creation"
                 },
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account \r\n\r\n#### **Step:2** - Monitor SignIn events of the Emergency accounts and create alert rules. Follow guidance for an [Alert Rule](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#create-an-alert-rule) in Azure Monitor.\r\n####  **Microsoft Sentinel** customers. It is advised to create an Analytical Rule for tracking the usage of the emergency accounts. Please review this [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/).\r\n\r\n*Enter any UPN or UserID values in the parameters below. The reason for 2x (UserPrincipalName) OR (UserId) is due to the guidance of having only two accounts.*",
+                    "json": "## Conditional Access Emergency Account - Monitor SignIn\r\n\r\n#### **Step:2** - Monitor SignIn events of the Emergency accounts and create alert rules. Follow guidance for an [Alert Rule](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#create-an-alert-rule) in Azure Monitor.\r\n####  **Microsoft Sentinel** customers. It is advised to create an Analytical Rule for tracking the usage of the emergency accounts. Please review this [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/).\r\n\r\n*Enter any UPN or UserID values in the parameters below. The reason for 2x (UserPrincipalName) OR (UserId) is due to the guidance of having only two accounts.*",
                     "style": "info"
                   },
-                  "name": "text - 7"
+                  "name": "onditional Access Emergency Account - Monitor SignIn"
                 },
                 {
                   "type": 9,
@@ -168,7 +168,6 @@
                         "value": ""
                       },
                       {
-                        "id": "6beb74d1-eeb0-4507-bcbb-7e37f96187a9",
                         "version": "KqlParameterItem/1.0",
                         "name": "UPN2",
                         "type": 1,
@@ -176,10 +175,10 @@
                         "timeContext": {
                           "durationMs": 86400000
                         },
-                        "value": ""
+                        "value": "",
+                        "id": "7ee36d59-2e33-4fb7-bd55-d8d6c15387e2"
                       },
                       {
-                        "id": "6beb74d1-eeb0-4507-bcbb-7e37f96187a9",
                         "version": "KqlParameterItem/1.0",
                         "name": "UserID1",
                         "type": 1,
@@ -187,17 +186,18 @@
                         "timeContext": {
                           "durationMs": 86400000
                         },
-                        "value": ""
+                        "value": "",
+                        "id": "aba3d160-5f40-453a-957f-75ddc7b04d72"
                       },
                       {
-                        "id": "6beb74d1-eeb0-4507-bcbb-7e37f96187a9",
                         "version": "KqlParameterItem/1.0",
                         "name": "UserID2",
                         "type": 1,
                         "description": "Enter UserID Value",
                         "timeContext": {
                           "durationMs": 86400000
-                        }
+                        },
+                        "id": "8efd981b-6c68-4b80-9d94-fc31a1480ac6"
                       }
                     ],
                     "style": "above",
@@ -215,7 +215,7 @@
                     "size": 0,
                     "showAnalytics": true,
                     "title": "Emergency Accounts, SignIn Events",
-                    "noDataMessage": "Please enter UPN or UserId values",
+                    "noDataMessage": "Please enter UPN or UserId values to track Emergency Account SignIns",
                     "timeContextFromParameter": "TimeRange",
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces",
@@ -230,10 +230,10 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Managing Emergency accounts\r\n\r\n#### Once successful deployment of [Auto Exclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) and recurrence. It is important to track changes to the Emergency group. In the below parameter labeled 'Enter Exclusion Group'\r\n",
+                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n*Managing emergency accounts is the Identity teams responsiblity and they are to be sure these accounts are excluded from Conditional Access to mitigate any type of lockouts due to configuration mistakes from other admins or threat actors. To mitigate this, automation can be deployed.\r\n\r\n#### **Step:3** - Create an Entra Security group called 'Exclude - BG'. *Disclaimer - the identity team can change this name but be sure to add the proper group name in the automation variable.*\r\n\r\n#### **Step:4** - Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md).\r\n\r\n\r\n#### **Step:5** - After completion and a successful run of [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md). It is important to track changes to the Emergency group. In the below parameter labeled 'Enter Exclusion Group'",
                     "style": "info"
                   },
-                  "name": "text - 2"
+                  "name": "Conditional Access Emergency Account - Managing Emergency accounts with Automation"
                 },
                 {
                   "type": 9,
@@ -251,7 +251,7 @@
                         "timeContext": {
                           "durationMs": 86400000
                         },
-                        "value": "Exclude"
+                        "value": "Exclude - BG"
                       }
                     ],
                     "style": "above",
@@ -344,6 +344,7 @@
         "groupType": "editable",
         "title": "Conditional Access Monitoring",
         "expandable": true,
+        "expanded": true,
         "items": [
           {
             "type": 3,
