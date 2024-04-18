@@ -8,6 +8,15 @@
         "style": "toolbar",
         "links": [
           {
+            "id": "6b252f77-3ecc-44e6-9592-35c795e57ef6",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Overview",
+            "subTarget": "o",
+            "style": "link",
+            "icon": "Alert"
+          },
+          {
             "id": "18289c31-463f-48ea-b452-4244b147912f",
             "cellValue": "Tab",
             "linkTarget": "parameter",
@@ -31,568 +40,191 @@
       "name": "links - 1"
     },
     {
-      "type": 9,
+      "type": 1,
       "content": {
-        "version": "KqlParameterItem/1.0",
-        "crossComponentResources": [
-          "value::all"
-        ],
-        "parameters": [
-          {
-            "id": "38660ba6-7173-4395-8c08-b477161f5bfc",
-            "version": "KqlParameterItem/1.0",
-            "name": "Workspace",
-            "type": 5,
-            "isRequired": true,
-            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
-            "crossComponentResources": [
-              "value::all"
-            ],
-            "typeSettings": {
-              "additionalResourceOptions": [],
-              "showDefault": false
-            },
-            "timeContext": {
-              "durationMs": 0
-            },
-            "timeContextFromParameter": "TimeRange",
-            "queryType": 1,
-            "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/Sentinel-Cyberlorians"
-          },
-          {
-            "id": "e327ae2b-6659-4d53-98d7-7326e30a893a",
-            "version": "KqlParameterItem/1.0",
-            "name": "TimeRange",
-            "type": 4,
-            "isRequired": true,
-            "typeSettings": {
-              "selectableValues": [
-                {
-                  "durationMs": 86400000
-                },
-                {
-                  "durationMs": 259200000
-                },
-                {
-                  "durationMs": 604800000
-                },
-                {
-                  "durationMs": 1209600000
-                },
-                {
-                  "durationMs": 2592000000
-                },
-                {
-                  "durationMs": 5184000000
-                },
-                {
-                  "durationMs": 7776000000
-                }
-              ],
-              "allowCustom": true
-            },
-            "timeContext": {
-              "durationMs": 86400000
-            },
-            "value": {
-              "durationMs": 2592000000
-            }
-          }
-        ],
-        "style": "above",
-        "queryType": 1,
-        "resourceType": "microsoft.resourcegraph/resources"
+        "json": "Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM)\r\n---\r\n \r\nThe Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM) Workbook serves as a robust tool tailored for administrators aiming to gain comprehensive insights into their organization’s conditional access policies. Here are the key features offered by this workbook:\r\n\r\n1. **Dynamic Reporting:** Stay updated with real-time reporting on tenant-defined conditional access policies. This feature allows administrators to track policy application, success rates, and potential failures. Entra ID 'AuditLogs' & 'SigninLogs' are required to ingest into the workspace for visualization. *See **visualization requirements** for enablement.*\r\n\r\n2. **Log Analytics Integration for Microsoft Graph Conditional Access Policy Insights:** Deploy the [(CA-SISM) Ingestion Logic App](https://github.com/Cyberlorians/Articles/blob/main/CA-SISM-Conditional%20Access%20Summaries%2C%20Insights%2C%20Security%20%26%20Monitoring.md) logic app to ingest the graph data into the Log Analytics workspace for CA Insights. *See **visualization requirements** for enablement.*\r\n\r\n3. **Insights and Summaries:** By analyzing sign-in activities, administrators can delve deep into the application of conditional access policies, identify any gaps, and assess overall effectiveness.\r\n\r\n4. **Report-Only Policy Data:** Access specific data related to report-only policies, enabling administrators to evaluate policy impact without affecting user access.\r\n\r\n5. **In-Depth Insights:** Gain visibility into trends related to device platforms, device state, sign-in risk, and client app usage. These insights empower administrators to make informed decisions based on real-world data.\r\n\r\n6. **What If Analysis:** Utilize detailed data from the workbook to conduct What If analyses. This feature allows administrators to simulate policy changes and validate individual results before implementation.\r\n\r\n7. **Emergency Account Monitoring:** A dedicated section enables administrators to define up to two emergency accounts for monitoring and reporting on sign-ins. This ensures that these accounts remain unaffected by any conditional access policies that might block them.\r\n\r\nIn essence, the Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM) Workbook streamlines policy validation, enhances security measures, and ensures the safeguarding of emergency accounts. It stands as an indispensable resource for maintaining a robust and effective conditional access configuration."
       },
       "conditionalVisibility": {
         "parameterName": "Tab",
         "comparison": "isEqualTo",
-        "value": "cap3"
+        "value": "o"
       },
-      "name": "parameters - TimeRange",
-      "styleSettings": {
-        "margin": "0",
-        "padding": "0"
-      }
+      "name": "Overview"
     },
     {
       "type": 12,
       "content": {
         "version": "NotebookGroup/1.0",
         "groupType": "editable",
-        "title": "Conditional Access Security",
-        "expandable": true,
-        "expanded": true,
+        "title": "Visualization Requirements ",
         "items": [
           {
-            "type": 12,
+            "type": 9,
             "content": {
-              "version": "NotebookGroup/1.0",
-              "groupType": "editable",
-              "items": [
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
                 {
+                  "id": "23ba579d-c894-43be-9fe1-d1b04bc34d7a",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "AuditLogs",
+                  "label": "Status",
                   "type": 1,
-                  "content": {
-                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What does the term \"Emergency Account\" (also known as \"Break Glass\") mean, and why is it important for organizations to have a way to manage emergency access? Review [manage emergency access](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) and proceed with creation.\r\n\r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n",
-                    "style": "info"
+                  "query": "AuditLogs\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
+                  "timeContext": {
+                    "durationMs": 2592000000
                   },
-                  "conditionalVisibility": {
-                    "parameterName": "Tab",
-                    "comparison": "isEqualTo",
-                    "value": "cap3"
-                  },
-                  "name": "Conditional Access Emergency Account - Creation"
-                },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
+              ],
+              "style": "formHorizontal",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "35",
+            "name": "Azure Active Directory"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "list",
+              "links": [
                 {
-                  "type": 1,
-                  "content": {
-                    "json": "## Conditional Access Emergency Account - Monitor SignIn\r\n\r\n#### **Step:2** - Monitor SignIn events of the emergency accounts and create alert rules. Follow guidance for an [Alert Rule](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#create-an-alert-rule) in Azure Monitor.\r\n\r\n#### If you're using Microsoft Sentinel, it's recommended that you set up an Analytical Rule to monitor how emergency accounts are being used. You can find more information about this in a [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/) that you should review.\r\n\r\n#### To monitor SignIn events, enter the full UserPrincipalName or UserID values for the emergency accounts in the parameters below. Note that you should only have two of these accounts, which is why the parameter allows for 2x(UserPrincipalName) or 2x(UserId).",
-                    "style": "info"
-                  },
-                  "name": "onditional Access Emergency Account - Monitor SignIn"
-                },
-                {
-                  "type": 9,
-                  "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "parameters": [
-                      {
-                        "id": "6beb74d1-eeb0-4507-bcbb-7e37f96187a9",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "UPN1",
-                        "type": 1,
-                        "description": "Enter UPN Value",
-                        "timeContext": {
-                          "durationMs": 86400000
-                        },
-                        "value": ""
-                      },
-                      {
-                        "version": "KqlParameterItem/1.0",
-                        "name": "UPN2",
-                        "type": 1,
-                        "description": "Enter UPN Value",
-                        "timeContext": {
-                          "durationMs": 86400000
-                        },
-                        "value": "",
-                        "id": "7ee36d59-2e33-4fb7-bd55-d8d6c15387e2"
-                      },
-                      {
-                        "version": "KqlParameterItem/1.0",
-                        "name": "UserID1",
-                        "type": 1,
-                        "description": "Enter UserID Value",
-                        "timeContext": {
-                          "durationMs": 86400000
-                        },
-                        "value": "",
-                        "id": "aba3d160-5f40-453a-957f-75ddc7b04d72"
-                      },
-                      {
-                        "version": "KqlParameterItem/1.0",
-                        "name": "UserID2",
-                        "type": 1,
-                        "description": "Enter UserID Value",
-                        "timeContext": {
-                          "durationMs": 86400000
-                        },
-                        "id": "8efd981b-6c68-4b80-9d94-fc31a1480ac6"
-                      }
-                    ],
-                    "style": "above",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "customWidth": "50",
-                  "name": "parameters - 6"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "// Search for a single UserPrincipalName\r\nSigninLogs\r\n| where UserPrincipalName ==  ('{UPN1}') or UserPrincipalName ==  ('{UPN2}') or UserId == ('{UserID1}') or UserId == ('{UserID2}') \r\n| distinct TimeGenerated, UserPrincipalName, UserId\r\n| sort by TimeGenerated desc",
-                    "size": 0,
-                    "showAnalytics": true,
-                    "title": "Emergency Accounts, SignIn Events",
-                    "noDataMessage": "Please enter UPN or UserId values to track Emergency Account SignIns",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ]
-                  },
-                  "customWidth": "50",
-                  "showPin": true,
-                  "name": "Emergency Accounts, SignIn Events"
-                },
-                {
-                  "type": 1,
-                  "content": {
-                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n#### The Identity team is responsible for managing emergency accounts, and they should ensure that these accounts are excluded from Conditional Access policies to prevent lockouts caused by configuration errors or malicious actors. One way to achieve this is by using automation tools.\r\n\r\n#### **Step:3** - Create an Entra Security group called 'Exclude - BG'. \r\n*Please note that the Identity team has the ability to change the name of the security group, but it's important to make sure that the correct group name is added to the automation variable.*\r\n\r\n#### **Step:4** - Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md).\r\n\r\n\r\n#### **Step:5** - Once you have completed and successfully run the [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) tool, it's important to monitor any changes made to the Emergency group. To do this, use the parameter labeled 'Enter Exclusion Group' in the tool.\r\n\r\n#### **Disclaimer:** There should only be two emergency accounts included in the exclusion group. If there are additional accounts, you should document the temporary need for those accounts or remove them from the group.",
-                    "style": "info"
-                  },
-                  "name": "Conditional Access Emergency Account - Managing Emergency accounts with Automation"
-                },
-                {
-                  "type": 9,
-                  "content": {
-                    "version": "KqlParameterItem/1.0",
-                    "parameters": [
-                      {
-                        "id": "05ef3b6b-055a-4744-98b7-e569dc827d15",
-                        "version": "KqlParameterItem/1.0",
-                        "name": "ExclusionGroup",
-                        "label": "Enter Exclusion Group",
-                        "type": 1,
-                        "description": "Enter the exclusion group from your access policies",
-                        "isRequired": true,
-                        "timeContext": {
-                          "durationMs": 86400000
-                        },
-                        "value": "Exclude - BG"
-                      }
-                    ],
-                    "style": "above",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces"
-                  },
-                  "conditionalVisibility": {
-                    "parameterName": "Tab",
-                    "comparison": "isEqualTo",
-                    "value": "cap3"
-                  },
-                  "name": "parameters - 12"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "AuditLogs\r\n    //| where OperationName == \"Add member to group\"\r\n    | where OperationName contains_cs \"group\"\r\n    | extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n    | extend Target = tostring(TargetResources[0].userPrincipalName)\r\n    | extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n    //| where GroupName has \"Exclude\" //enter exlusion group name\r\n    | where GroupName contains ('{ExclusionGroup}')\r\n    | extend GroupID = tostring(TargetResources[1].id)\r\n    | project TimeGenerated, Actor, OperationName, Target, GroupName, GroupID",
-                    "size": 1,
-                    "title": "Conditional Access Exclusion Group Auditing",
-                    "timeContextFromParameter": "TimeRange",
-                    "exportFieldName": "GroupID",
-                    "exportParameterName": "guid",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "crossComponentResources": [
-                      "{Workspace}"
-                    ],
-                    "gridSettings": {
-                      "formatters": [
-                        {
-                          "columnMatch": "Actor",
-                          "formatter": 5
-                        },
-                        {
-                          "columnMatch": "OperationName",
-                          "formatter": 5
-                        },
-                        {
-                          "columnMatch": "GroupID",
-                          "formatter": 5
-                        }
-                      ],
-                      "hierarchySettings": {
-                        "treeType": 1,
-                        "groupBy": [
-                          "Actor",
-                          "OperationName"
-                        ]
-                      },
-                      "sortBy": [
-                        {
-                          "itemKey": "Target",
-                          "sortOrder": 1
-                        }
-                      ]
-                    },
-                    "sortBy": [
-                      {
-                        "itemKey": "Target",
-                        "sortOrder": 1
-                      }
-                    ]
-                  },
-                  "customWidth": "50",
-                  "conditionalVisibility": {
-                    "parameterName": "Tab",
-                    "comparison": "isEqualTo",
-                    "value": "cap3"
-                  },
-                  "name": "Conditional Access Exclusion Group Auditing"
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "let GroupIDs = AuditLogs\r\n| extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| where GroupName contains ('{ExclusionGroup}')\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| project GroupID, GroupName;\r\nAuditLogs\r\n| where OperationName in (\"Update conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| extend Exclude = todynamic(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)))))\r\n| extend Policy = tostring(Policy.displayName)\r\n| extend ['Group Added to Exclusion'] = tostring(parse_json(tostring(Exclude.excludeGroups))[0])\r\n| where ['Group Added to Exclusion'] in (GroupIDs)\r\n| join kind=inner GroupIDs on $left['Group Added to Exclusion'] == $right.GroupID\r\n| project TimeGenerated, Policy, GroupName, ['Group Added to Exclusion'], OperationName\r\n| sort by TimeGenerated desc",
-                    "size": 0,
-                    "title": "Verifying Exclusion Group Addition to Contional Access Policies",
-                    "timeContextFromParameter": "TimeRange",
-                    "queryType": 0,
-                    "resourceType": "microsoft.operationalinsights/workspaces",
-                    "gridSettings": {
-                      "formatters": [
-                        {
-                          "columnMatch": "Group Added to Exclusion",
-                          "formatter": 5
-                        },
-                        {
-                          "columnMatch": "OperationName",
-                          "formatter": 5
-                        }
-                      ],
-                      "hierarchySettings": {
-                        "treeType": 1,
-                        "groupBy": [
-                          "OperationName"
-                        ]
-                      }
-                    }
-                  },
-                  "customWidth": "50",
-                  "name": "Verifying Exclusion Group Addition to Contional Access Policies"
+                  "id": "7c97e893-29f3-4d4c-a379-f220bb82518c",
+                  "linkTarget": "OpenBlade",
+                  "linkLabel": "Enable EntraID AuditLogs",
+                  "style": "link",
+                  "bladeOpenContext": {
+                    "bladeName": "DiagnosticSettingsMenuBlade",
+                    "extensionName": "Microsoft_AAD_IAM",
+                    "bladeJsonParameters": "{\n  \"menuId\": \"General\"\n}"
+                  }
                 }
               ]
             },
-            "conditionalVisibility": {
-              "parameterName": "Tab",
-              "comparison": "isEqualTo",
-              "value": "cap3"
-            },
-            "name": "Emergency Account Tracking"
-          }
-        ]
-      },
-      "conditionalVisibility": {
-        "parameterName": "Tab",
-        "comparison": "isEqualTo",
-        "value": "cap3"
-      },
-      "name": "Conditional Access Security"
-    },
-    {
-      "type": 12,
-      "content": {
-        "version": "NotebookGroup/1.0",
-        "groupType": "editable",
-        "title": "Conditional Access Monitoring",
-        "expandable": true,
-        "expanded": true,
-        "items": [
-          {
-            "type": 1,
-            "content": {
-              "json": "## Conditional Access - Monitoring\r\n\r\n#### Below are visuals on change history, top editors and corrleations. If [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) was deployed. It will be shown as 'NonHumanActor'. NonHumanActor is any other automation used for Conditonal Access policies, such as, 'Microsoft Managed Policy Manager'.\r\n\r\n####  **Microsoft Sentinel** customers. You may chose to create your own Analytic Rules based off the KQL logic to 'Audit'; Create, Update & Delete Conditional Access Policies. For a short cut, please review and deploy [Conditional Access w/ Microsoft Sentinel](####  **Microsoft Sentinel** customers. It is advised to create an Analytical Rule for tracking the usage of the emergency accounts. Please review this [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/).\r\n\r\n",
-              "style": "info"
-            },
-            "name": "text - 4"
+            "customWidth": "50",
+            "name": "signin",
+            "styleSettings": {
+              "margin": "2px"
+            }
           },
           {
-            "type": 3,
+            "type": 9,
             "content": {
-              "version": "KqlItem/1.0",
-              "query": "AuditLogs\r\n| where OperationName in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| summarize count() by OperationName, bin(TimeGenerated, 1d)",
-              "size": 0,
-              "title": "Conditional Access Change History",
-              "timeContextFromParameter": "TimeRange",
-              "queryType": 0,
-              "resourceType": "microsoft.operationalinsights/workspaces",
-              "crossComponentResources": [
-                "{Workspace}"
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "730334ea-67c5-43db-9cf4-7ae0e7c6403f",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "SigninLogs",
+                  "label": "Status",
+                  "type": 1,
+                  "query": "SigninLogs \r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
+                  "timeContext": {
+                    "durationMs": 2592000000
+                  },
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
               ],
-              "visualization": "barchart",
-              "chartSettings": {
-                "seriesLabelSettings": [
-                  {
-                    "seriesName": "Update conditional access policy",
-                    "color": "blue"
-                  },
-                  {
-                    "seriesName": "Add conditional access policy",
-                    "color": "green"
-                  },
-                  {
-                    "seriesName": "Delete conditional access policy",
-                    "color": "redBright"
+              "style": "formHorizontal",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "35",
+            "name": "Azure Active Directory - Copy"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "list",
+              "links": [
+                {
+                  "id": "c2a6ea84-0a48-422a-9520-8d542739425e",
+                  "linkTarget": "OpenBlade",
+                  "linkLabel": "Enable EntraID SigninLogs",
+                  "style": "link",
+                  "bladeOpenContext": {
+                    "bladeName": "DiagnosticSettingsMenuBlade",
+                    "extensionName": "Microsoft_AAD_IAM",
+                    "bladeJsonParameters": "{\n  \"menuId\": \"General\"\n}"
                   }
-                ]
-              }
+                }
+              ]
             },
             "customWidth": "50",
-            "conditionalVisibility": {
-              "parameterName": "Tab",
-              "comparison": "isEqualTo",
-              "value": "cap3"
-            },
-            "name": "query - changehistory",
+            "name": "signin - Copy",
             "styleSettings": {
-              "showBorder": true
+              "margin": "2px"
             }
           },
           {
-            "type": 3,
+            "type": 9,
             "content": {
-              "version": "KqlItem/1.0",
-              "query": "AuditLogs\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| mv-expand InitiatedBy\r\n| project HumanActor=tostring(InitiatedBy.user.userPrincipalName), NonHumanActor=Identity, OperationName\r\n| summarize Total=count() by HumanActor, NonHumanActor, OperationName\r\n| order by Total desc\r\n",
-              "size": 1,
-              "title": "Conditional Access Top Editors",
-              "timeContextFromParameter": "TimeRange",
-              "exportFieldName": "modifiedBy",
-              "exportParameterName": "modifiedBy",
-              "exportDefaultValue": "*",
-              "queryType": 0,
-              "resourceType": "microsoft.operationalinsights/workspaces",
-              "crossComponentResources": [
-                "{Workspace}"
-              ],
-              "gridSettings": {
-                "formatters": [
-                  {
-                    "columnMatch": "count_",
-                    "formatter": 1,
-                    "formatOptions": {
-                      "aggregation": "Count"
-                    }
-                  }
-                ]
-              },
-              "sortBy": [],
-              "tileSettings": {
-                "titleContent": {
-                  "columnMatch": "modifiedBy",
-                  "formatter": 1
-                },
-                "leftContent": {
-                  "columnMatch": "count_",
-                  "formatter": 12,
-                  "formatOptions": {
-                    "palette": "auto"
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "c802aca5-70c2-4359-9631-b5667a26bc4c",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "GraphApiCall",
+                  "label": "Status",
+                  "type": 1,
+                  "query": "TenantCAPols_CL\r\n| limit 1\r\n| summarize count()\r\n| extend Result = iff(count_ ==0, \"❌ Not Connected\", \"✅ Connected\")\r\n| project Result",
+                  "timeContext": {
+                    "durationMs": 2592000000
                   },
-                  "numberFormat": {
-                    "unit": 17,
-                    "options": {
-                      "maximumSignificantDigits": 3,
-                      "maximumFractionDigits": 2
-                    }
-                  }
-                },
-                "showBorder": false,
-                "size": "full"
-              }
-            },
-            "customWidth": "45",
-            "conditionalVisibility": {
-              "parameterName": "Tab",
-              "comparison": "isEqualTo",
-              "value": "cap3"
-            },
-            "name": "Conditional Access Top Editors",
-            "styleSettings": {
-              "showBorder": true
-            }
-          },
-          {
-            "type": 3,
-            "content": {
-              "version": "KqlItem/1.0",
-              "query": "AuditLogs\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| project TimeGenerated, Operation=OperationName, Policy=TargetResources[0].displayName, HumanActor=InitiatedBy.user.userPrincipalName, NonHumanActor=Identity, CorrelationId \r\n| order by TimeGenerated desc",
-              "size": 0,
-              "title": "Conditional Access Change Log (click for comparison)",
-              "timeContextFromParameter": "TimeRange",
-              "exportFieldName": "CorrelationId",
-              "exportParameterName": "SelectedCorrelationId",
-              "queryType": 0,
-              "resourceType": "microsoft.operationalinsights/workspaces",
-              "crossComponentResources": [
-                "{Workspace}"
+                  "queryType": 0,
+                  "resourceType": "microsoft.operationalinsights/workspaces"
+                }
               ],
-              "gridSettings": {
-                "filter": true
-              }
+              "style": "formHorizontal",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
             },
-            "conditionalVisibility": {
-              "parameterName": "Tab",
-              "comparison": "isEqualTo",
-              "value": "cap3"
-            },
-            "name": "Conditional Access Change Log (click for comparison)",
-            "styleSettings": {
-              "showBorder": true
-            }
+            "customWidth": "35",
+            "name": "Azure Active Directory - Copy - Copy"
           },
           {
-            "type": 3,
+            "type": 11,
             "content": {
-              "version": "KqlItem/1.0",
-              "query": "let OldPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].oldValue))\r\n| project Policy\r\n| extend version=\"OldVersion\"\r\n;\r\nlet NewPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| project Policy\r\n| extend version=\"NewVersion\"\r\n;\r\nunion OldPolicy, NewPolicy\r\n| order by version asc\r\n| extend grantControls = todynamic(\"\")\r\n| extend sessionControls = todynamic(\"\")\r\n| evaluate bag_unpack(Policy, columnsConflict='replace_source')\r\n| evaluate bag_unpack(conditions, columnsConflict='replace_source')\r\n| evaluate bag_unpack(grantControls, columnsConflict='replace_source')\r\n| evaluate bag_unpack(sessionControls, columnsConflict='replace_source')\r\n| project-away id",
-              "size": 0,
-              "showAnalytics": true,
-              "title": "Conditional Access Change Comparison",
-              "timeContextFromParameter": "TimeRange",
-              "queryType": 0,
-              "resourceType": "microsoft.operationalinsights/workspaces",
-              "visualization": "table",
-              "tileSettings": {
-                "showBorder": false,
-                "titleContent": {
-                  "columnMatch": "TenantId",
-                  "formatter": 1
-                },
-                "leftContent": {
-                  "columnMatch": "DurationMs",
-                  "formatter": 12,
-                  "formatOptions": {
-                    "palette": "auto"
+              "version": "LinkItem/1.0",
+              "style": "list",
+              "links": [
+                {
+                  "id": "e1db847c-ceab-4150-bb30-cb4f98b91094",
+                  "cellValue": "https://github.com/Cyberlorians/Articles/blob/main/CA-SISM-Conditional%20Access%20Summaries%2C%20Insights%2C%20Security%20%26%20Monitoring.md",
+                  "linkTarget": "Url",
+                  "linkLabel": "Enable Graph Conditional Access API Ingestion (CA-SISM)",
+                  "style": "link",
+                  "templateRunContext": {
+                    "componentIdSource": "cell",
+                    "templateUriSource": "static",
+                    "templateUri": "",
+                    "templateParameters": [],
+                    "titleSource": "static",
+                    "descriptionSource": "static",
+                    "runLabelSource": "static"
                   },
-                  "numberFormat": {
-                    "unit": 17,
-                    "options": {
-                      "maximumSignificantDigits": 3,
-                      "maximumFractionDigits": 2
-                    }
+                  "bladeOpenContext": {
+                    "bladeName": "DataConnectorBlade",
+                    "extensionName": "Microsoft_Azure_Security_Insights",
+                    "bladeParameters": [
+                      {
+                        "name": "dataConnectorId",
+                        "source": "static",
+                        "value": "AzureActiveDirectory"
+                      }
+                    ]
                   }
                 }
-              },
-              "graphSettings": {
-                "type": 0,
-                "topContent": {
-                  "columnMatch": "TenantId",
-                  "formatter": 1
-                },
-                "centerContent": {
-                  "columnMatch": "DurationMs",
-                  "formatter": 1,
-                  "numberFormat": {
-                    "unit": 17,
-                    "options": {
-                      "maximumSignificantDigits": 3,
-                      "maximumFractionDigits": 2
-                    }
-                  }
-                }
-              },
-              "mapSettings": {
-                "locInfo": "LatLong"
-              }
+              ]
             },
-            "conditionalVisibilities": [
-              {
-                "parameterName": "SelectedCorrelationId",
-                "comparison": "isNotEqualTo"
-              },
-              {
-                "parameterName": "Tab",
-                "comparison": "isEqualTo",
-                "value": "cap3"
-              }
-            ],
-            "name": "Conditional Access Change Comparison",
+            "customWidth": "50",
+            "name": "signin - Copy - Copy",
             "styleSettings": {
-              "showBorder": true
+              "margin": "2px"
             }
           }
         ]
@@ -600,17 +232,15 @@
       "conditionalVisibility": {
         "parameterName": "Tab",
         "comparison": "isEqualTo",
-        "value": "cap3"
+        "value": "o"
       },
-      "name": "Conditional Access Monitoring"
+      "customWidth": "50",
+      "name": "Visualization Requirements "
     },
     {
       "type": 9,
       "content": {
         "version": "KqlParameterItem/1.0",
-        "crossComponentResources": [
-          "value::all"
-        ],
         "parameters": [
           {
             "id": "18302244-0cfb-46d8-92e2-554fa9974c38",
@@ -638,7 +268,8 @@
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
             "version": "KqlParameterItem/1.0",
-            "name": "Time",
+            "name": "Time01",
+            "label": "Time",
             "type": 4,
             "isRequired": true,
             "typeSettings": {
@@ -691,7 +322,7 @@
               ]
             },
             "value": {
-              "durationMs": 7776000000
+              "durationMs": 1209600000
             }
           },
           {
@@ -727,13 +358,10 @@
             "timeContext": {
               "durationMs": 0
             },
-            "timeContextFromParameter": "Time",
+            "timeContextFromParameter": "Time01",
             "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces",
-            "value": [
-              "value::all"
-            ]
+            "resourceType": "microsoft.operationalinsights/workspaces"
           },
           {
             "id": "81b4afa7-4b18-48fa-832b-472d57272577",
@@ -756,12 +384,10 @@
             "timeContext": {
               "durationMs": 0
             },
-            "timeContextFromParameter": "Time",
+            "timeContextFromParameter": "Time01",
+            "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces",
-            "value": [
-              "value::all"
-            ]
+            "resourceType": "microsoft.operationalinsights/workspaces"
           },
           {
             "id": "b7cbfc9c-e9a9-4ce5-9a5f-95889b873e83",
@@ -784,17 +410,69 @@
             "timeContext": {
               "durationMs": 0
             },
-            "timeContextFromParameter": "Time",
+            "timeContextFromParameter": "Time01",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "version": "KqlParameterItem/1.0",
+            "name": "Region",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Region = Location\r\n| distinct Region\r\n",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "Time01",
             "defaultValue": "value::all",
             "queryType": 0,
             "resourceType": "microsoft.operationalinsights/workspaces",
+            "id": "ad20f50b-10dc-40da-a775-fa0bddeba9fe",
             "value": [
               "value::all"
             ]
+          },
+          {
+            "version": "KqlParameterItem/1.0",
+            "name": "Location",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| evaluate bag_unpack(LocationDetails)\r\n| extend Region = Location\r\n| where Region in ({Region}) or '*' in ({Region})\r\n| distinct state",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "Time01",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "id": "bb86ad3f-bed2-40a0-a4de-a3caa66e3d36"
           }
         ],
         "style": "above",
-        "queryType": 1,
+        "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces"
       },
       "conditionalVisibility": {
@@ -816,11 +494,11 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where ['PolicyName'] in ({Policy})\n| extend AzureADApplication = AppDisplayName\n| where AzureADApplication in ({Application})\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| where Result in ({Report}) or '*' in ({Report})\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\n| project Result\n| summarize count() by Result\n\n",
+              "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where ['PolicyName'] in ({Policy})\n| extend AzureADApplication = AppDisplayName\n| where AzureADApplication in ({Application})\n| evaluate bag_unpack(LocationDetails)\n| where state in ({Location}) or '*' in ({Location})\n| extend Region = Location\n| where Region in ({Region}) or '*' in ({Region})\n| where Result in ({Report}) or '*' in ({Report})\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\n| project Result\n| summarize count() by Result\n\n",
               "size": 2,
               "showAnalytics": true,
-              "title": "\"SignIn Summaries\" By Parameters Set",
-              "timeContextFromParameter": "Time",
+              "title": "Report Summaries By Parameters Set",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -869,16 +547,16 @@
               "value": "cap1"
             },
             "showPin": true,
-            "name": "\"SignIn Summaries\" By Parameters Set"
+            "name": "Report Summaries By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by Location\r\n",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location}) or '*' in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region}) or '*' in ({Region})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by Location\r\n",
               "size": 3,
-              "title": "\"SignIn Summaries\" By Parameters Set",
-              "timeContextFromParameter": "Time",
+              "title": "Region Summaries By Parameters Set",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -903,19 +581,83 @@
                 }
               }
             },
-            "customWidth": "75",
+            "customWidth": "50",
             "showPin": true,
-            "name": "\"SignIn Summaries\" By Parameters Set"
+            "name": "Region Summaries By Parameters Set"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| extend device = tostring(DeviceDetail[\"operatingSystem\"])\r\n| where isnotempty(device)\r\n| summarize count() by UserPrincipalName, device\r\n| summarize count() by device",
+              "query": "SigninLogs\n| mv-expand ConditionalAccessPolicies\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where ['PolicyName'] in ({Policy})\n| extend AzureADApplication = AppDisplayName\n| where AzureADApplication in ({Application})\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| where Result in ({Report}) or '*' in ({Report})\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\n| evaluate bag_unpack(LocationDetails)\n| where state in ({Location}) or '*' in ({Location})\n| extend Region = Location\n| where Region in ({Region}) or '*' in ({Region})\n| project city, state\n| summarize count() by city, state\n",
+              "size": 2,
+              "showAnalytics": true,
+              "title": "Location Summaries By Parameters Set",
+              "timeContextFromParameter": "Time01",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "city",
+                  "formatter": 1
+                },
+                "subtitleContent": {
+                  "columnMatch": "state",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  }
+                },
+                "showBorder": false,
+                "sortCriteriaField": "city",
+                "sortOrderField": 1,
+                "size": "full"
+              },
+              "graphSettings": {
+                "type": 0,
+                "topContent": {
+                  "columnMatch": "Result",
+                  "formatter": 1
+                },
+                "centerContent": {
+                  "columnMatch": "count_",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              }
+            },
+            "customWidth": "25",
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap1"
+            },
+            "showPin": true,
+            "name": "Location Summaries By Parameters Set"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| extend device = tostring(DeviceDetail[\"operatingSystem\"])\r\n| where isnotempty(device)\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location}) or '*' in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region}) or '*' in ({Region})\r\n| summarize count() by UserPrincipalName, device\r\n| summarize count() by device",
               "size": 0,
               "showAnalytics": true,
               "title": "Device Platform - By Parameters Set",
-              "timeContextFromParameter": "Time",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -953,11 +695,11 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| extend deviceState = case(DeviceDetail[\"trustType\"] == \"\", \"Unmanaged\", DeviceDetail[\"trustType\"])\r\n| summarize count() by deviceState\r\n",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| extend deviceState = case(DeviceDetail[\"trustType\"] == \"\", \"Unmanaged\", DeviceDetail[\"trustType\"])\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location}) or '*' in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region}) or '*' in ({Region})\r\n| summarize count() by deviceState\r\n",
               "size": 0,
               "showAnalytics": true,
               "title": "Device State - By Parameters Set",
-              "timeContextFromParameter": "Time",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -995,11 +737,11 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by RiskLevelDuringSignIn",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location}) or '*' in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region}) or '*' in ({Region})\r\n| summarize count() by RiskLevelDuringSignIn",
               "size": 0,
               "showAnalytics": true,
               "title": "Sign-in Risk - By Parameters Set",
-              "timeContextFromParameter": "Time",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -1037,11 +779,11 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| summarize count() by ClientAppUsed",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location}) or '*' in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region}) or '*' in ({Region})\r\n| summarize count() by ClientAppUsed",
               "size": 0,
               "showAnalytics": true,
               "title": "Client App - By Parameters Set",
-              "timeContextFromParameter": "Time",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -1093,6 +835,64 @@
         "expandable": true,
         "items": [
           {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "TenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n| extend PolicyId = tostring(id_g)\r\n//| extend Conditions = Policies.conditions\r\n//| mv-expand Conditions\r\n| extend State = case(\r\n    tostring(state_s) == \"enabled\", \"On\",\r\n    tostring(state_s) == \"disabled\", \"Off\",\r\n    tostring(state_s) == \"enabledForReportingButNotEnforced\", \"Report-only\",\r\n    \"Unknown\"\r\n)\r\n//| extend GrantControls = Policies.grantControls\r\n| extend CreatedTimeDate = createdDateTime_t\r\n| extend ModifiedTimeDate = modifiedDateTime_t\r\n| extend UsersInclude = conditions_users_includeUsers_s\r\n| extend UsersExclude = conditions_users_excludeUsers_s\r\n| extend GroupsInclude = conditions_users_includeGroups_s\r\n| extend GroupsExclude = conditions_users_excludeGroups_s\r\n| extend CloudAppsInclude = conditions_applications_includeApplications_s\r\n| extend CloudAppsExclude = conditions_applications_excludeApplications_s\r\n| extend ClientPlatformsIncludeTmp = column_ifexists(\"conditions_platforms_includePlatforms_s\", \"\")\r\n| extend ClientPlatformsInclude = case(\r\n    \"ExplicitOnly\" == \"ExplicitOnly\", ClientPlatformsIncludeTmp,\r\n    case(\r\n        isnotempty(ClientPlatformsIncludeTmp), ClientPlatformsIncludeTmp, \r\n        todynamic(\"(all)\")\r\n    )\r\n)\r\n| extend ClientPlatformsIncludeTooltip = case(\r\n    ClientPlatformsInclude == \"(all)\", \"This is the implicit configuration. All platforms are included, because the setting has not been configured.\",\r\n    \"\"\r\n)\r\n| extend ClientPlatformsExcludeTmp = column_ifexists(\"conditions_platforms_excludePlatforms_s\", \"[]\")\r\n| extend ClientPlatformsExclude = case(\r\n    \"ExplicitOnly\" == \"ExplicitOnly\", ClientPlatformsExcludeTmp,\r\n    case(\r\n        isnotempty(ClientPlatformsExcludeTmp), ClientPlatformsExcludeTmp,\r\n        todynamic(\"[]\")\r\n    )\r\n)\r\n| extend ClientApps = conditions_clientAppTypes_s\r\n| extend LocationsInclude = case(\r\n    \"ExplicitOnly\" == \"ExplicitOnly\", conditions_locations_includeLocations_s,\r\n    case(\r\n        isnotempty(conditions_locations_includeLocations_s), conditions_locations_includeLocations_s,\r\n        todynamic(\"(all)\")\r\n    )\r\n)\r\n| extend LocationsIncludeTooltip = case(\r\n    LocationsInclude == \"(all)\", \"This is the implicit configuration. All locations are included, because the setting has not been configured.\",\r\n    \"\"\r\n)\r\n| extend LocationsExclude = case(\r\n    \"ExplicitOnly\" == \"ExplicitOnly\", conditions_locations_excludeLocations_s,\r\n    case(\r\n        isnotempty(conditions_locations_excludeLocations_s), conditions_locations_excludeLocations_s,\r\n        todynamic(\"[]\")\r\n    )\r\n)\r\n| extend UserRiskLevels = case(\r\n    \"ExplicitOnly\" == \"ExplicitOnly\", conditions_userRiskLevels_s,\r\n    case(\r\n        array_length(todynamic(conditions_userRiskLevels_s)) != 0, conditions_userRiskLevels_s,\r\n        todynamic(\"(all)\")\r\n    )\r\n)\r\n| extend UserRiskLevelsTooltip = case(\r\n    UserRiskLevels == \"(all)\", \"This is the implicit configuration. All user risk levels are included, because the setting has not been configured.\",\r\n    \"\"\r\n)\r\n| extend SigninRiskLevels = case(\r\n    \"ExplicitOnly\" == \"ExplicitOnly\", conditions_signInRiskLevels_s,\r\n    case(\r\n        array_length(todynamic(conditions_signInRiskLevels_s)) != 0, conditions_signInRiskLevels_s,\r\n        todynamic(\"(all)\")\r\n    )\r\n)\r\n| extend SigninRiskLevelsTooltip = case(\r\n    UserRiskLevels == \"(all)\", \"This is the implicit configuration. All sign-in risk levels are included, because the setting has not been configured.\",\r\n    \"\"\r\n)\r\n| extend GrantControls = grantControls_builtInControls_s\r\n| extend FullPolicyJson = pack_all()\r\n| sort by DisplayName asc\r\n| project ['Policy display name'] = DisplayName, State, ['Cloud apps included'] = CloudAppsInclude, ['Cloud apps excluded'] = CloudAppsExclude, ['Users included'] = UsersInclude, ['Users excluded'] = UsersExclude, ['Groups included'] = GroupsInclude, ['Groups excluded'] = GroupsExclude, ['Client platforms included'] = ClientPlatformsInclude, ['Client platforms excluded'] = ClientPlatformsExclude, ['Client apps'] = ClientApps, ['Locations included'] = LocationsInclude, ['Locations excluded'] = LocationsExclude, ['User risk levels'] = UserRiskLevels, ['Sign-in risk levels'] = SigninRiskLevels, ['Grant controls'] = GrantControls, CreatedTimeDate, ModifiedTimeDate, PolicyId, ['Full policy JSON'] = FullPolicyJson, ClientPlatformsIncludeTooltip, LocationsIncludeTooltip, UserRiskLevelsTooltip, SigninRiskLevelsTooltip\r\n| sort by State\r\n",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Current Conditional Access Policies Configured in the Tenant",
+              "noDataMessage": "See Overview for CA-SISM Ingetsion",
+              "timeContextFromParameter": "Time01",
+              "exportFieldName": "PolicyId",
+              "exportParameterName": "SelectedPolicyId",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "State",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Full policy JSON",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "ClientPlatformsIncludeTooltip",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "LocationsIncludeTooltip",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "UserRiskLevelsTooltip",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "SigninRiskLevelsTooltip",
+                    "formatter": 5
+                  }
+                ],
+                "filter": true,
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "State"
+                  ]
+                }
+              },
+              "sortBy": []
+            },
+            "showPin": true,
+            "name": "Current Conditional Access Policies Configured in the Tenant",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
             "type": 1,
             "content": {
               "json": "## Conditional Access Reporting\r\n\r\n#### The following are the types of reports available for Conditional Access. The results are presented as data points that can be used with the [What If tool](https://learn.microsoft.com/en-us/entra/identity/conditional-access/what-if-tool) in [Commercial](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade) or [Government](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade) environments. For more detailed insights, you can expand the results and select an item to view the detailed output.\r\n\r\n#### **Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n#### **Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n#### **NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n#### **NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n#### **Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n#### **Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n#### **Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n#### **Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
@@ -1113,7 +913,8 @@
               "size": 2,
               "showAnalytics": true,
               "title": "Conditional Access Results - Chose A 'Selected Time' For Detailed Correlation",
-              "timeContextFromParameter": "Time",
+              "noDataMessage": "Signinlogs are not enabled",
+              "timeContextFromParameter": "Time01",
               "showRefreshButton": true,
               "exportedParameters": [
                 {
@@ -1327,7 +1128,7 @@
               "size": 0,
               "showAnalytics": true,
               "title": "Conditional Access Risk Details",
-              "timeContextFromParameter": "Time",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -1383,7 +1184,7 @@
               "size": 2,
               "showAnalytics": true,
               "title": "Conditional Access Block to 5+ Apps within 1 Hour",
-              "timeContextFromParameter": "Time",
+              "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -1427,6 +1228,602 @@
         "value": "cap1"
       },
       "name": "Conditional Access Insights"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "value::all"
+        ],
+        "parameters": [
+          {
+            "id": "38660ba6-7173-4395-8c08-b477161f5bfc",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 5,
+            "description": "Select at least one workspace that contains continuous export data based on the selected subscriptions",
+            "isRequired": true,
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": "/subscriptions/d75e3576-9a3a-4f5b-b112-b5e0088cd2e1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/Sentinel-Cyberlorians"
+          },
+          {
+            "id": "e327ae2b-6659-4d53-98d7-7326e30a893a",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": {
+              "durationMs": 2592000000
+            },
+            "label": "Time"
+          }
+        ],
+        "style": "above",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap3"
+      },
+      "name": "parameters - TimeRange",
+      "styleSettings": {
+        "margin": "0",
+        "padding": "0"
+      }
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": "Conditional Access Security",
+        "expandable": true,
+        "items": [
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What does the term \"Emergency Account\" (also known as \"Break Glass\") mean, and why is it important for organizations to have a way to manage emergency access? Review [manage emergency access](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) and proceed with creation.\r\n\r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n",
+                    "style": "info"
+                  },
+                  "conditionalVisibility": {
+                    "parameterName": "Tab",
+                    "comparison": "isEqualTo",
+                    "value": "cap3"
+                  },
+                  "name": "Conditional Access Emergency Account - Creation"
+                },
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "## Conditional Access Emergency Account - Monitor SignIn\r\n\r\n#### **Step:2** - Monitor SignIn events of the emergency accounts and create alert rules. Follow guidance for an [Alert Rule](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#create-an-alert-rule) in Azure Monitor.\r\n\r\n#### If you're using Microsoft Sentinel, it's recommended that you set up an Analytical Rule to monitor how emergency accounts are being used. You can find more information about this in a [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/) that you should review.\r\n\r\n#### To monitor SignIn events, enter the full UserPrincipalName or UserID values for the emergency accounts in the parameters below. Note that you should only have two of these accounts, which is why the parameter allows for 2x(UserPrincipalName) or 2x(UserId).",
+                    "style": "info"
+                  },
+                  "name": "onditional Access Emergency Account - Monitor SignIn"
+                },
+                {
+                  "type": 9,
+                  "content": {
+                    "version": "KqlParameterItem/1.0",
+                    "parameters": [
+                      {
+                        "id": "6beb74d1-eeb0-4507-bcbb-7e37f96187a9",
+                        "version": "KqlParameterItem/1.0",
+                        "name": "UPN1",
+                        "type": 1,
+                        "description": "Enter UPN Value",
+                        "timeContext": {
+                          "durationMs": 86400000
+                        },
+                        "value": ""
+                      },
+                      {
+                        "version": "KqlParameterItem/1.0",
+                        "name": "UPN2",
+                        "type": 1,
+                        "description": "Enter UPN Value",
+                        "timeContext": {
+                          "durationMs": 86400000
+                        },
+                        "value": "",
+                        "id": "7ee36d59-2e33-4fb7-bd55-d8d6c15387e2"
+                      },
+                      {
+                        "version": "KqlParameterItem/1.0",
+                        "name": "UserID1",
+                        "type": 1,
+                        "description": "Enter UserID Value",
+                        "timeContext": {
+                          "durationMs": 86400000
+                        },
+                        "value": "",
+                        "id": "aba3d160-5f40-453a-957f-75ddc7b04d72"
+                      },
+                      {
+                        "version": "KqlParameterItem/1.0",
+                        "name": "UserID2",
+                        "type": 1,
+                        "description": "Enter UserID Value",
+                        "timeContext": {
+                          "durationMs": 86400000
+                        },
+                        "id": "8efd981b-6c68-4b80-9d94-fc31a1480ac6"
+                      }
+                    ],
+                    "style": "above",
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces"
+                  },
+                  "customWidth": "50",
+                  "name": "parameters - 6"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "// Search for a single UserPrincipalName\r\nSigninLogs\r\n| where UserPrincipalName ==  ('{UPN1}') or UserPrincipalName ==  ('{UPN2}') or UserId == ('{UserID1}') or UserId == ('{UserID2}') \r\n| distinct TimeGenerated, UserPrincipalName, UserId\r\n| sort by TimeGenerated desc",
+                    "size": 0,
+                    "showAnalytics": true,
+                    "title": "Emergency Accounts, SignIn Events",
+                    "noDataMessage": "Please enter UPN or UserId values to track Emergency Account SignIns",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces",
+                    "crossComponentResources": [
+                      "{Workspace}"
+                    ]
+                  },
+                  "customWidth": "50",
+                  "showPin": true,
+                  "name": "Emergency Accounts, SignIn Events"
+                },
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n#### The Identity team is responsible for managing emergency accounts, and they should ensure that these accounts are excluded from Conditional Access policies to prevent lockouts caused by configuration errors or malicious actors. One way to achieve this is by using automation tools.\r\n\r\n#### **Step:3** - Create an Entra Security group called 'Exclude - BG'. \r\n*Please note that the Identity team has the ability to change the name of the security group, but it's important to make sure that the correct group name is added to the automation variable.*\r\n\r\n#### **Step:4** - Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md).\r\n\r\n\r\n#### **Step:5** - After completing and successfully running the [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) tool, it's crucial to monitor any changes made to the Emergency group. In this workbook, utilize the parameter labeled 'Enter Exclusion Group' within the tool. Additionally, consider creating an alert rule in Azure Monitor using the [Exclusion Group Alteration](https://github.com/Cyberlorians/KQL/blob/main/Azure%20Active%20Directory/ExclusionGroupAlteration.kql) KQL, or deploy the Sentinel Analytic Rule [Exclusion Group Alteration](https://github.com/Cyberlorians/Sentinel/blob/main/Analytic%20Rules/ExclusionGroupAlteration.json).\r\n\r\n#### **Disclaimer:** There should only be two emergency accounts included in the exclusion group. If there are additional accounts, you should document the temporary need for those accounts or remove them from the group.",
+                    "style": "info"
+                  },
+                  "name": "Conditional Access Emergency Account - Managing Emergency accounts with Automation"
+                },
+                {
+                  "type": 12,
+                  "content": {
+                    "version": "NotebookGroup/1.0",
+                    "groupType": "editable",
+                    "items": [
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "parameters": [
+                            {
+                              "id": "05ef3b6b-055a-4744-98b7-e569dc827d15",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "ExclusionGroup",
+                              "label": "Enter Exclusion Group",
+                              "type": 1,
+                              "description": "Enter the exclusion group from your access policies",
+                              "isRequired": true,
+                              "timeContext": {
+                                "durationMs": 86400000
+                              },
+                              "value": "Exclude - BG"
+                            }
+                          ],
+                          "style": "above",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "20",
+                        "conditionalVisibility": {
+                          "parameterName": "Tab",
+                          "comparison": "isEqualTo",
+                          "value": "cap3"
+                        },
+                        "name": "parameters - 12"
+                      }
+                    ],
+                    "exportParameters": true
+                  },
+                  "name": "enterexclusiongroupspacer"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "AuditLogs\r\n| where OperationName in (\"Add member to group\", \"Remove member from group\")\r\n| where TargetResources contains ('{ExclusionGroup}')\r\n| extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend Target = tostring(TargetResources[0].userPrincipalName)\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| extend OldValue = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].oldValue)))\r\n| extend NewValue = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| extend Value = coalesce(OldValue, NewValue)\r\n| project TimeGenerated, Actor, OperationName, Target, GroupID, Value",
+                    "size": 1,
+                    "showAnalytics": true,
+                    "title": "Conditional Access Exclusion Group Auditing",
+                    "timeContextFromParameter": "TimeRange",
+                    "exportFieldName": "GroupID",
+                    "exportParameterName": "guid",
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces",
+                    "crossComponentResources": [
+                      "{Workspace}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "Actor",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "OperationName",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "GroupID",
+                          "formatter": 5
+                        }
+                      ],
+                      "hierarchySettings": {
+                        "treeType": 1,
+                        "groupBy": [
+                          "Actor",
+                          "OperationName"
+                        ]
+                      },
+                      "sortBy": [
+                        {
+                          "itemKey": "Target",
+                          "sortOrder": 1
+                        }
+                      ]
+                    },
+                    "sortBy": [
+                      {
+                        "itemKey": "Target",
+                        "sortOrder": 1
+                      }
+                    ]
+                  },
+                  "customWidth": "50",
+                  "conditionalVisibility": {
+                    "parameterName": "Tab",
+                    "comparison": "isEqualTo",
+                    "value": "cap3"
+                  },
+                  "name": "Conditional Access Exclusion Group Auditing"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let GroupIDs = AuditLogs\r\n| extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| where GroupName contains ('{ExclusionGroup}')\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| project GroupID, GroupName;\r\nAuditLogs\r\n| where OperationName in (\"Update conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| extend Exclude = todynamic(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)))))\r\n| extend Policy = tostring(Policy.displayName)\r\n| extend ['Group Added to Exclusion'] = tostring(parse_json(tostring(Exclude.excludeGroups))[0])\r\n| where ['Group Added to Exclusion'] in (GroupIDs)\r\n| join kind=inner GroupIDs on $left['Group Added to Exclusion'] == $right.GroupID\r\n| project TimeGenerated, Policy, GroupName, ['Group Added to Exclusion'], OperationName\r\n| sort by TimeGenerated desc",
+                    "size": 0,
+                    "showAnalytics": true,
+                    "title": "Verifying Exclusion Group Addition to Contional Access Policies",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.operationalinsights/workspaces",
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "Group Added to Exclusion",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "OperationName",
+                          "formatter": 5
+                        }
+                      ],
+                      "hierarchySettings": {
+                        "treeType": 1,
+                        "groupBy": [
+                          "OperationName"
+                        ]
+                      }
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "Verifying Exclusion Group Addition to Contional Access Policies"
+                }
+              ]
+            },
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap3"
+            },
+            "name": "Emergency Account Tracking"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap3"
+      },
+      "name": "Conditional Access Security"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": "Conditional Access Monitoring",
+        "expandable": true,
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## Conditional Access - Monitoring\r\n\r\n#### Below are visuals on change history, top editors and corrleations. If [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) was deployed. It will be shown as 'NonHumanActor'. NonHumanActor is any other automation used for Conditonal Access policies, such as, 'Microsoft Managed Policy Manager'.\r\n\r\n####  **Microsoft Sentinel** customers. You may chose to create your own Analytic Rules based off the KQL logic to 'Audit'; Create, Update & Delete Conditional Access Policies. For a short cut, please review and deploy [Conditional Access w/ Microsoft Sentinel](####  **Microsoft Sentinel** customers. It is advised to create an Analytical Rule for tracking the usage of the emergency accounts. Please review this [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/).\r\n\r\n",
+              "style": "info"
+            },
+            "name": "text - 4"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AuditLogs\r\n| where OperationName in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| summarize count() by OperationName, bin(TimeGenerated, 1d)",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Conditional Access Change History",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "barchart",
+              "chartSettings": {
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "Update conditional access policy",
+                    "color": "blue"
+                  },
+                  {
+                    "seriesName": "Add conditional access policy",
+                    "color": "green"
+                  },
+                  {
+                    "seriesName": "Delete conditional access policy",
+                    "color": "redBright"
+                  }
+                ]
+              }
+            },
+            "customWidth": "50",
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap3"
+            },
+            "showPin": true,
+            "name": "query - changehistory",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AuditLogs\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| mv-expand InitiatedBy\r\n| project HumanActor=tostring(InitiatedBy.user.userPrincipalName), NonHumanActor=Identity, OperationName\r\n| summarize Total=count() by HumanActor, NonHumanActor, OperationName\r\n| order by Total desc\r\n",
+              "size": 1,
+              "showAnalytics": true,
+              "title": "Conditional Access Top Editors",
+              "timeContextFromParameter": "TimeRange",
+              "exportFieldName": "modifiedBy",
+              "exportParameterName": "modifiedBy",
+              "exportDefaultValue": "*",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "count_",
+                    "formatter": 1,
+                    "formatOptions": {
+                      "aggregation": "Count"
+                    }
+                  }
+                ]
+              },
+              "sortBy": [],
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "modifiedBy",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
+            },
+            "customWidth": "45",
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap3"
+            },
+            "showPin": true,
+            "name": "Conditional Access Top Editors",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AuditLogs\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| project TimeGenerated, Operation=OperationName, Policy=TargetResources[0].displayName, HumanActor=InitiatedBy.user.userPrincipalName, NonHumanActor=Identity, CorrelationId \r\n| order by TimeGenerated desc",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Conditional Access Change Log (click for comparison)",
+              "timeContextFromParameter": "TimeRange",
+              "exportFieldName": "CorrelationId",
+              "exportParameterName": "SelectedCorrelationId",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "filter": true
+              }
+            },
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap3"
+            },
+            "showPin": true,
+            "name": "Conditional Access Change Log (click for comparison)",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let OldPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].oldValue))\r\n| project Policy\r\n| extend version=\"OldVersion\"\r\n;\r\nlet NewPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| project Policy\r\n| extend version=\"NewVersion\"\r\n;\r\nunion OldPolicy, NewPolicy\r\n| order by version asc\r\n| extend grantControls = todynamic(\"\")\r\n| extend sessionControls = todynamic(\"\")\r\n| evaluate bag_unpack(Policy, columnsConflict='replace_source')\r\n| evaluate bag_unpack(conditions, columnsConflict='replace_source')\r\n| evaluate bag_unpack(grantControls, columnsConflict='replace_source')\r\n| evaluate bag_unpack(sessionControls, columnsConflict='replace_source')\r\n| project-away id",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Conditional Access Change Comparison",
+              "timeContextFromParameter": "TimeRange",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "visualization": "table",
+              "tileSettings": {
+                "showBorder": false,
+                "titleContent": {
+                  "columnMatch": "TenantId",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "DurationMs",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              },
+              "graphSettings": {
+                "type": 0,
+                "topContent": {
+                  "columnMatch": "TenantId",
+                  "formatter": 1
+                },
+                "centerContent": {
+                  "columnMatch": "DurationMs",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              },
+              "mapSettings": {
+                "locInfo": "LatLong"
+              }
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "SelectedCorrelationId",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "Tab",
+                "comparison": "isEqualTo",
+                "value": "cap3"
+              }
+            ],
+            "name": "Conditional Access Change Comparison",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap3"
+      },
+      "name": "Conditional Access Monitoring"
     }
   ],
   "fallbackResourceIds": [
