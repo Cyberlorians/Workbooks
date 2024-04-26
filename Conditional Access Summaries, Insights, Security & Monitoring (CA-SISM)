@@ -920,7 +920,7 @@
               "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend LocationName = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| where AzureADApplication in ({Application})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({Policy})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| mv-expand DeviceDetail\r\n| extend Browser = tostring(DeviceDetail.browser), DeviceID = tostring(DeviceDetail.deviceId),DevicePlatform = tostring(DeviceDetail.operatingSystem), Managed = tostring(parse_json(DeviceDetail).isManaged), Trust = tostring(parse_json(DeviceDetail).trustType), DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend [\"User risk level\"] = RiskLevelAggregated\r\n| extend [\"Sign-in risk level\"] = RiskLevelDuringSignIn\r\n//| where isnotempty(DevicePlatform) //may have to remove this\r\n| distinct TimeGenerated, UserPrincipalName, AppDisplayName, IP = IPAddress, Country = Location, DevicePlatform, ['PolicyName'], ClientAppUsed, [\"Sign-in risk level\"], [\"User risk level\"], Result, ['Grant Control']= tostring(ConditionalAccessPolicies.enforcedGrantControls)\r\n| sort by TimeGenerated desc\r\n\r\n",
               "size": 2,
               "showAnalytics": true,
-              "title": "Conditional Access Results - Chose A 'Selected Time' For Detailed Correlation",
+              "title": "Analyzing Conditional Access Results for What-If Tool. Select a 'TimeGenerated' For Further Details",
               "noDataMessage": "Signinlogs are not enabled",
               "timeContextFromParameter": "Time01",
               "showRefreshButton": true,
@@ -1053,7 +1053,7 @@
               "value": "cap1"
             },
             "showPin": false,
-            "name": "Conditional Access Results - Chose A 'Selected Time' For Detailed Correlation",
+            "name": "Analyzing Conditional Access Results for What-If Tool. Select a 'TimeGenerated' For Further Details",
             "styleSettings": {
               "margin": "25",
               "showBorder": true
@@ -1132,10 +1132,10 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend ['CA Policy Name'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where RiskLevelDuringSignIn <> \"none\" or RiskState <> \"none\"\r\n| union\r\nAADUserRiskEvents\r\n| project TimeGenerated, UserPrincipalName, RiskDetail, RiskEventType, RiskLevel, RiskState, ['CA Policy Name']\r\n| sort by TimeGenerated desc",
-              "size": 0,
+              "query": "let apipols = TenantCAPols_CL\r\n    | summarize arg_max(TimeGenerated, *) by id_g\r\n    | extend DisplayName = tostring(displayName_s)\r\n    | extend PolicyId = tostring(id_g)\r\n    | sort by DisplayName asc\r\n    | where (parse_json(conditions_userRiskLevels_s) has \"low\" or parse_json(conditions_userRiskLevels_s) has \"medium\" or parse_json(conditions_userRiskLevels_s) has \"high\") or \r\n        (parse_json(conditions_signInRiskLevels_s) has \"low\" or parse_json(conditions_signInRiskLevels_s) has \"medium\" or parse_json(conditions_signInRiskLevels_s) has \"high\")\r\n    | project\r\n        DisplayName,\r\n        PolicyId,\r\n        conditions_userRiskLevels_s,\r\n        conditions_signInRiskLevels_s;\r\nlet auditpols = SigninLogs\r\n    | mv-expand ConditionalAccessPolicies\r\n    | extend Result = tostring(ConditionalAccessPolicies.result)\r\n    | extend CAId = tostring(ConditionalAccessPolicies.id)\r\n    | extend ['CA Policy Name'] = tostring(ConditionalAccessPolicies.displayName)\r\n    | extend [\"User risk level\"] = RiskLevelAggregated\r\n    | extend [\"Sign-in risk level\"] = RiskLevelDuringSignIn\r\n    | where ['CA Policy Name'] contains 'risk';\r\nauditpols\r\n| join kind=inner apipols on $left.CAId == $right.PolicyId\r\n| where [\"Sign-in risk level\"] != \"none\"\r\n| where ['User risk level'] != \"none\"\r\n| distinct\r\n    TimeGenerated,\r\n    UserPrincipalName,\r\n    AppDisplayName,\r\n    IP = IPAddress,\r\n    Country = Location,\r\n    ['CA Policy Name'],\r\n    ClientAppUsed,\r\n    ['Set-UserRiskLevel'] = conditions_userRiskLevels_s,\r\n    ['Set-SignInRiskLevel'] = conditions_signInRiskLevels_s,\r\n    [\"Sign-in risk level\"],\r\n    [\"User risk level\"],\r\n    Result,\r\n    ['Descriptive Outcome'] = ResultDescription\r\n| sort by TimeGenerated desc\r\n",
+              "size": 2,
               "showAnalytics": true,
-              "title": "Conditional Access Risk Details",
+              "title": "Risk Based Conditional Access Tracking w/ SignIn Results",
               "timeContextFromParameter": "Time01",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -1160,6 +1160,10 @@
                     "formatter": 5
                   },
                   {
+                    "columnMatch": "Result",
+                    "formatter": 5
+                  },
+                  {
                     "columnMatch": "$gen_group",
                     "formatter": 0,
                     "formatOptions": {
@@ -1170,11 +1174,24 @@
                 "hierarchySettings": {
                   "treeType": 1,
                   "groupBy": [
+                    "Result",
+                    "CA Policy Name",
                     "UserPrincipalName"
-                  ],
-                  "finalBy": "CA Policy Name"
+                  ]
+                },
+                "sortBy": [
+                  {
+                    "itemKey": "TimeGenerated",
+                    "sortOrder": 2
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "TimeGenerated",
+                  "sortOrder": 2
                 }
-              }
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "Tab",
@@ -1182,7 +1199,7 @@
               "value": "cap1"
             },
             "showPin": true,
-            "name": "Conditional Access Risk Details"
+            "name": "Risk Based Conditional Access Tracking w/ SignIn Results"
           },
           {
             "type": 3,
