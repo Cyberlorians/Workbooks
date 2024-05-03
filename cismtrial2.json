@@ -196,7 +196,7 @@
                   "id": "e1db847c-ceab-4150-bb30-cb4f98b91094",
                   "cellValue": "https://github.com/Cyberlorians/Articles/blob/main/CA-SISM-Conditional%20Access%20Summaries%2C%20Insights%2C%20Security%20%26%20Monitoring.md",
                   "linkTarget": "Url",
-                  "linkLabel": "Enable Graph Conditional Access API Ingestion (CA-SISM)",
+                  "linkLabel": "Enable Tenant Conditional Access Policies - Graph Ingestion",
                   "style": "link",
                   "templateRunContext": {
                     "componentIdSource": "cell",
@@ -833,12 +833,11 @@
         "groupType": "editable",
         "title": "Conditional Access Insights",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 1,
             "content": {
-              "json": "## Conditional Access Insights\r\n\r\n#### Conditional Access Policies can get complex, particularly within a workbook. Please utilize the provided KQL query to access a comprehensive log analytics readout of all policies in its raw format.\r\n```\r\nTenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n```\r\n\r\n#### To generate a PowerPoint presentation containing all policies, please utilize Merill Fernando's, [Identity Power Toys - Conditional Access Documenter](https://idpowertoys.merill.net/ca).\r\n\r\n\r\n\r\n",
+              "json": "## Conditional Access Insights\r\n\r\n#### Conditional Access Policies can become intricate, especially when dealing with a workbook. Here, you can examine the current policies of the tenant in a comprehensible format. Make sure to implement [Tenant Conditional Access Policies - Graph Ingestion](https://github.com/Cyberlorians/Articles/blob/main/TenantCAPols.md) and use the provided KQL query to access a detailed log analytics report of all policies in their original form.\r\n\r\n```\r\nTenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n```\r\n\r\n#### To generate a PowerPoint presentation containing all policies, please utilize Merill Fernando's, [Identity Power Toys - Conditional Access Documenter](https://idpowertoys.merill.net/ca).\r\n\r\n\r\n\r\n",
               "style": "info"
             },
             "name": "MoreCADeets"
@@ -851,7 +850,7 @@
               "size": 0,
               "showAnalytics": true,
               "title": "Current Conditional Access Policies Configured in the Tenant - Graph API",
-              "noDataMessage": "See Overview for CA-SISM Ingetsion",
+              "noDataMessage": "Go to Overview tab and review visualization requirements.",
               "timeContextFromParameter": "Time01",
               "exportFieldName": "PolicyId",
               "exportParameterName": "SelectedPolicyId",
