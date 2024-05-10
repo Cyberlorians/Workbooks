@@ -196,7 +196,7 @@
                   "id": "e1db847c-ceab-4150-bb30-cb4f98b91094",
                   "cellValue": "https://github.com/Cyberlorians/Articles/blob/main/CA-SISM-Conditional%20Access%20Summaries%2C%20Insights%2C%20Security%20%26%20Monitoring.md",
                   "linkTarget": "Url",
-                  "linkLabel": "Enable Graph Conditional Access API Ingestion (CA-SISM)",
+                  "linkLabel": "Enable Tenant Conditional Access Policies - Graph Ingestion",
                   "style": "link",
                   "templateRunContext": {
                     "componentIdSource": "cell",
@@ -322,7 +322,7 @@
               ]
             },
             "value": {
-              "durationMs": 604800000
+              "durationMs": 259200000
             }
           },
           {
@@ -837,7 +837,7 @@
           {
             "type": 1,
             "content": {
-              "json": "## Conditional Access Insights\r\n\r\n#### Conditional Access Policies can get complex, particularly within a workbook. Please utilize the provided KQL query to access a comprehensive log analytics readout of all policies in its raw format.\r\n\r\n#### To generate a PowerPoint presentation containing all policies, please utilize Merill Fernando's, [Identity Power Toys - Conditional Access Documenter](https://idpowertoys.merill.net/ca).\r\n\r\n```\r\nTenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n```\r\n\r\n",
+              "json": "## Conditional Access Insights\r\n\r\n#### Conditional Access Policies can become intricate, especially when dealing with a workbook. Here, you can examine the current policies of the tenant in a comprehensible format. Make sure to implement [Tenant Conditional Access Policies - Graph Ingestion](https://github.com/Cyberlorians/Articles/blob/main/TenantCAPols.md) and use the provided KQL query to access a detailed log analytics report of all policies in their original form.\r\n\r\n```\r\nTenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n```\r\n\r\n#### To generate a PowerPoint presentation containing all policies, please utilize Merill Fernando's, [Identity Power Toys - Conditional Access Documenter](https://idpowertoys.merill.net/ca).\r\n\r\n\r\n\r\n",
               "style": "info"
             },
             "name": "MoreCADeets"
@@ -850,7 +850,7 @@
               "size": 0,
               "showAnalytics": true,
               "title": "Current Conditional Access Policies Configured in the Tenant - Graph API",
-              "noDataMessage": "See Overview for CA-SISM Ingetsion",
+              "noDataMessage": "Go to Overview tab and review visualization requirements.",
               "timeContextFromParameter": "Time01",
               "exportFieldName": "PolicyId",
               "exportParameterName": "SelectedPolicyId",
@@ -917,7 +917,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend LocationName = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| where AzureADApplication in ({Application})\r\n| where UserPrincipalName contains_cs ('{UserPrincipalName}')\r\n| where ['PolicyName'] in ({Policy})\r\n| where Result in ({Report}) or '*' in ({Report})\r\n| mv-expand DeviceDetail\r\n| extend Browser = tostring(DeviceDetail.browser), DeviceID = tostring(DeviceDetail.deviceId),DevicePlatform = tostring(DeviceDetail.operatingSystem), Managed = tostring(parse_json(DeviceDetail).isManaged), Trust = tostring(parse_json(DeviceDetail).trustType), DeviceName = tostring(parse_json(DeviceDetail).displayName)\r\n| extend [\"User risk level\"] = RiskLevelAggregated\r\n| extend [\"Sign-in risk level\"] = RiskLevelDuringSignIn\r\n//| where isnotempty(DevicePlatform) //may have to remove this\r\n| distinct TimeGenerated, UserPrincipalName, AppDisplayName, IP = IPAddress, Country = Location, DevicePlatform, ['PolicyName'], ClientAppUsed, [\"Sign-in risk level\"], [\"User risk level\"], Result, ['Grant Control']= tostring(ConditionalAccessPolicies.enforcedGrantControls)\r\n| sort by TimeGenerated desc\r\n\r\n",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend AzureADApplication = AppDisplayName\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend LocationName = tostring(parse_json(tostring(parse_json(NetworkLocationDetails)[0].networkNames))[0])\r\n| where AzureADApplication in ('ADIbizaUX', 'AEM-DualAuth', 'AIRS', 'App Service', 'AuthTest', 'Azure AD Identity Governance - Entitlement Management', 'Azure Active Directory PowerShell', 'Azure Data Factory', 'Azure Logic Apps - Azure AD', 'Azure OpenAI Studio', 'Azure Portal', 'Azure Virtual Desktop Client', 'AzureADIPLogicAppsConnector', 'AzureDatabricks', 'Bing', 'CyberAI', 'Designer App', 'Exchange Admin Center', 'Graph Explorer', 'Kusto Web Explorer', 'MTAtest01', 'Micorsoft Azure AppInsightsExtension', 'Microsoft 365 Security and Compliance Center', 'Microsoft 365 Support Service', 'Microsoft Account Controls V2', 'Microsoft App Access Panel', 'Microsoft Authentication Broker', 'Microsoft Azure CLI', 'Microsoft Azure PowerShell', 'Microsoft Azure Signup Portal', 'Microsoft Community v2', 'Microsoft Edge', 'Microsoft Exchange REST API Based Powershell', 'Microsoft Graph Command Line Tools', 'Microsoft Invitation Acceptance Portal', 'Microsoft Office', 'Microsoft Office 365 Portal', 'Microsoft Services', 'Microsoft Teams Web Client', 'Microsoft_AAD_RegisteredApps', 'Microsoft_Azure_Security_Insights', 'My Apps', 'My Profile', 'My Signins', 'Office 365 Exchange Online', 'Office 365 SharePoint Online', 'Office365 Shell WCSS-Client', 'OfficeHome', 'Power Virtual Agents ', 'RedirectionUxProd', 'ServiceTreePortal-Prod', 'SharePoint Online Web Client Extensibility', 'Windows Sign In', 'WindowsDefenderATP', 'YellowPages', 'Zero Trust Assessment', 'idPowerToys')\r\n| where UserPrincipalName contains_cs ('')\r\n| where ['PolicyName'] in ('001:MDCA - Monitor', '002:MDCA - Block Download Non-Compliant', '003:MDCA - Block Copy/Cut/Paste', '004:MDCA - Proof Up Sensitive Data', '005:MDCA - Block Upload of Malware', '400-Guest-AllApps-AnyPlatom-AuthStrength-Grant', 'AWS CAS', 'AuthN context test', 'CA001: Require multi-factor authentication for admins', 'CA002: Securing security info registration', 'CA003: Block legacy authentication', 'CA004: Require multi-factor authentication for all users', 'CA005: Require multifactor authentication for guest access', 'CA006: Require multi-factor authentication for Azure management', 'CA007: Require multifactor authentication for risky sign-ins', 'CA008: Require password change for high-risk users', 'CA009 - CBA-Strength', 'CA010 - PIM AuthN Context for Roles', 'CA011-CAE', 'CBAPilot', 'CBAPilot2', 'Device Code Test', 'Device Enrollment - test user', 'FIDOOnly', 'Guest TOU with MFA', 'LLNL - MFA for Azure management', 'MATT - Require multi-factor authentication for Office 365', 'MDE Compliance', 'Multifactor authentication for Microsoft partners and vendors', 'RBCA - High Risk Users - Phish/SIF', 'RBCA - High SignIn Risk - Phish/SIF', 'RBCA - Medium/Low Risk Users - Phish/SIF', 'RBCA - Medium/Low SignIn Risk - Phish/SIF', 'SOCBLOCK', 'WHFB-TestUser', 'aadwhfblogin', 'block admin ports test', 'oconus', 'testauthcontextPIM')\r\n| where Result in ('success', 'notEnabled', 'notApplied', 'reportOnlyNotApplied', 'reportOnlyInterrupted', 'reportOnlySuccess', 'failure') or '*' in ('success', 'notEnabled', 'notApplied', 'reportOnlyNotApplied', 'reportOnlyInterrupted', 'reportOnlySuccess', 'failure')\r\n| extend [\"User risk level\"] = RiskLevelAggregated\r\n| extend [\"Sign-in risk level\"] = RiskLevelDuringSignIn\r\n| extend DeviceDetails = tolower(DeviceDetail)\r\n    | mv-expand parse_json(NetworkLocationDetails)\r\n| evaluate bag_unpack(NetworkLocationDetails)\r\n| summarize ['Named Locations'] = make_set(networkNames) by TimeGenerated, CorrelationId, UserPrincipalName, AppDisplayName, IP = IPAddress, Country = Location, ['PolicyName'], ClientAppUsed,[\"Sign-in risk level\"],\r\n    [\"User risk level\"],    Result,    ['Grant Control']= tostring(ConditionalAccessPolicies.enforcedGrantControls), DeviceDetails\r\n| sort by TimeGenerated desc\r\n\r\n",
               "size": 2,
               "showAnalytics": true,
               "title": "Analyzing Conditional Access Results for What-If Tool. Select a 'TimeGenerated' For Further Details",
@@ -1063,7 +1063,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] == \"{pol2}\"\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result == \"{result2}\"\r\n| where TimeGenerated == \"{Time2}\"\r\n| extend AuthDetails = parse_json(AuthenticationDetails)\r\n| mv-expand AuthDetails\r\n| extend AuthNMethod = tostring(AuthDetails.authenticationMethod), AuthNStepReq = tostring(AuthDetails.authenticationStepRequirement), AuthNStepResultDetails = tostring(AuthDetails.authenticationStepResultDetail), Succession = tostring(AuthDetails.succeeded)\r\n| project TimeGenerated, ['PolicyName'], UserPrincipalName, AuthNMethod, AuthNStepReq, AuthNStepResultDetails, Succession, Result, ResultType, ResultDescription\r\n| sort by TimeGenerated desc",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] == \"{pol2}\"\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result == \"{result2}\"\r\n| where TimeGenerated == \"{Time2}\"\r\n| extend AuthDetails = parse_json(AuthenticationDetails)\r\n| mv-expand AuthDetails\r\n| extend AuthNMethod = tostring(AuthDetails.authenticationMethod), AuthNStepReq = tostring(AuthDetails.authenticationStepRequirement), AuthNStepResultDetails = tostring(AuthDetails.authenticationStepResultDetail), Succession = tostring(AuthDetails.succeeded)\r\n| project TimeGenerated, CorrelationId, ['PolicyName'], UserPrincipalName, AuthNMethod, AuthNStepReq, AuthNStepResultDetails, Succession, Result, ResultType, ResultDescription\r\n| sort by TimeGenerated desc",
               "size": 1,
               "showAnalytics": true,
               "title": "Conditional Access Results Correlation By SelectedTime",
@@ -1080,10 +1080,14 @@
                 "formatters": [
                   {
                     "columnMatch": "$gen_group",
-                    "formatter": 0,
+                    "formatter": 1,
                     "formatOptions": {
                       "customColumnWidthSetting": "60ch"
                     }
+                  },
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 5
                   },
                   {
                     "columnMatch": "PolicyName",
@@ -1098,11 +1102,9 @@
                   "treeType": 1,
                   "groupBy": [
                     "PolicyName",
-                    "UserPrincipalName",
-                    "Result"
+                    "UserPrincipalName"
                   ],
-                  "expandTopLevel": false,
-                  "finalBy": "Result"
+                  "expandTopLevel": false
                 }
               },
               "sortBy": []
