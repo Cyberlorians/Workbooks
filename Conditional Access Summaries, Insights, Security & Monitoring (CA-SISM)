@@ -495,7 +495,6 @@
         "groupType": "editable",
         "title": "Conditional Access Summaries by Parameters Set",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 3,
@@ -865,6 +864,9 @@
               "showExportToExcel": true,
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
               "gridSettings": {
                 "formatters": [
                   {
