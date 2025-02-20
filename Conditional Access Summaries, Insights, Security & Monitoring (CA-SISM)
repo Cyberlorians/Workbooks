@@ -20,11 +20,20 @@
             "id": "18289c31-463f-48ea-b452-4244b147912f",
             "cellValue": "Tab",
             "linkTarget": "parameter",
-            "linkLabel": "Conditional Access Summaries & Insights",
+            "linkLabel": "Conditional Access Summaries & Insights - User",
             "subTarget": "cap1",
             "preText": "",
             "style": "link",
-            "icon": "Diagnostics"
+            "icon": "Person"
+          },
+          {
+            "id": "6ddd69fd-4195-40b4-9552-bd4b26f715aa",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Conditional Access Summaries & Insights - Workload Identities - Development",
+            "subTarget": "cap2",
+            "style": "link",
+            "icon": "Gear"
           },
           {
             "id": "f74be862-4160-4e7c-9c32-1e55ef62c6ae",
@@ -242,7 +251,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "{Workspace}"
+          "value::all"
         ],
         "parameters": [
           {
@@ -266,7 +275,7 @@
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+            "value": null
           },
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
@@ -471,6 +480,265 @@
             "timeContextFromParameter": "Time01",
             "defaultValue": "value::all",
             "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          }
+        ],
+        "style": "above",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap1"
+      },
+      "name": "User - Param"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{WorkspaceWI}"
+        ],
+        "parameters": [
+          {
+            "id": "d57576a5-c9ed-40b0-82c1-fbb9b3e99ce0",
+            "version": "KqlParameterItem/1.0",
+            "name": "WorkspaceWI",
+            "type": 5,
+            "description": "Select at least one workspace that contains continuous export data based on the selected subscriptions",
+            "isRequired": true,
+            "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "resourceTypeFilter": {
+                "microsoft.operationalinsights/workspaces": true
+              },
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "CAPTime",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+          },
+          {
+            "id": "019e403b-e0e5-4fae-ac07-a671022bbcb4",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeWI",
+            "type": 4,
+            "isRequired": true,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                }
+              ]
+            },
+            "value": {
+              "durationMs": 1209600000
+            }
+          },
+          {
+            "id": "dfe94323-601a-47aa-bb31-54973bdf5c9b",
+            "version": "KqlParameterItem/1.0",
+            "name": "WI",
+            "type": 2,
+            "description": "Type username prefix and any search will be found",
+            "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| distinct ServicePrincipalName",
+            "crossComponentResources": [
+              "{WorkspaceWI}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeWI",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": null
+          },
+          {
+            "id": "3d2bda5f-e3c0-4f98-8e5a-3fbb39e720ab",
+            "version": "KqlParameterItem/1.0",
+            "name": "ResourceWI",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| where isnotempty(ResourceDisplayName)\r\n| where ServicePrincipalName contains ('{WI}')\r\n| distinct ResourceDisplayName\r\n| sort by ResourceDisplayName asc ",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeWI",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
+          },
+          {
+            "id": "386daf1d-6ebc-4a16-bf0c-235144285b20",
+            "version": "KqlParameterItem/1.0",
+            "name": "PolicyWI",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend displayName_ = tostring(ConditionalAccessPolicies.displayName)\r\n| where ServicePrincipalName contains ('{WI}')\r\n| distinct displayName_\r\n| sort by displayName_ asc\r\n",
+            "crossComponentResources": [
+              "{WorkspaceWI}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeWI",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
+          },
+          {
+            "id": "71410e9f-6ea9-4c03-abcc-d9b926947485",
+            "version": "KqlParameterItem/1.0",
+            "name": "ReportWI",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where ServicePrincipalName contains ('{WI}')\r\n| distinct Result",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeWI",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces"
+          },
+          {
+            "id": "3879acc8-7a71-4528-a71f-ca3734d92368",
+            "version": "KqlParameterItem/1.0",
+            "name": "RegionWI",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend Region = Location\r\n| where ServicePrincipalName contains ('{WI}')\r\n| distinct Region",
+            "crossComponentResources": [
+              "{WorkspaceWI}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeWI",
+            "defaultValue": "value::all",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
+          },
+          {
+            "id": "dbb71127-afba-4d80-be34-e6418a5a9183",
+            "version": "KqlParameterItem/1.0",
+            "name": "LocationWI",
+            "type": 2,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend Region = Location\r\n| extend State = tostring(parse_json(LocationDetails).state)\r\n| where Region in ({RegionWI}) or '*' in ({RegionWI})\r\n| where ServicePrincipalName contains ('{WI}')\r\n| distinct State\r\n",
+            "crossComponentResources": [
+              "{Workspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeWI",
+            "defaultValue": "value::all",
+            "queryType": 0,
             "resourceType": "microsoft.operationalinsights/workspaces",
             "value": [
               "value::all"
@@ -484,9 +752,9 @@
       "conditionalVisibility": {
         "parameterName": "Tab",
         "comparison": "isEqualTo",
-        "value": "cap1"
+        "value": "cap2"
       },
-      "name": "Param1"
+      "name": "WI - Param"
     },
     {
       "type": 12,
@@ -495,6 +763,7 @@
         "groupType": "editable",
         "title": "Conditional Access Summaries by Parameters Set",
         "expandable": true,
+        "expanded": true,
         "items": [
           {
             "type": 3,
@@ -830,7 +1099,240 @@
         "comparison": "isEqualTo",
         "value": "cap1"
       },
-      "name": "Conditional Access Summaries by Parameters Set"
+      "name": "Conditional Access Summaries - User"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": "Conditional Access Summaries by Parameters Set",
+        "expandable": true,
+        "expanded": true,
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AADServicePrincipalSignInLogs\n| mv-expand todynamic(ConditionalAccessPolicies)\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where ['PolicyName'] in ({PolicyWI})\n| where ResourceDisplayName in ({ResourceWI})\n| extend state = tostring(parse_json(LocationDetails).state)\n| where state in ({LocationWI})\n| extend Region = Location\n| where Region in ({RegionWI})\n| where Result in ({ReportWI}) \n| where ServicePrincipalName contains ('{WI}')\n| project Result\n| summarize count() by Result\n\n",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Report Summaries",
+              "timeContextFromParameter": "TimeWI",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Result",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  }
+                },
+                "showBorder": false,
+                "sortCriteriaField": "Result",
+                "size": "full"
+              },
+              "graphSettings": {
+                "type": 0,
+                "topContent": {
+                  "columnMatch": "Result",
+                  "formatter": 1
+                },
+                "centerContent": {
+                  "columnMatch": "count_",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              }
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "Report Summaries"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({PolicyWI})\r\n| where ResourceDisplayName in ({ResourceWI})\r\n| extend state = tostring(parse_json(LocationDetails).state)\r\n| where state in ({LocationWI})\r\n| extend Region = Location\r\n| where Region in ({RegionWI})\r\n| where Result in ({ReportWI})\r\n| where ServicePrincipalName contains ('{WI}')\r\n| summarize count() by Region\r\n",
+              "size": 0,
+              "title": "Region Summaries",
+              "timeContextFromParameter": "Time01",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "showBorder": false,
+                "titleContent": {
+                  "columnMatch": "Region",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              },
+              "mapSettings": {
+                "locInfo": "CountryRegion",
+                "locInfoColumn": "Region",
+                "latitude": "Location",
+                "longitude": "Location",
+                "sizeSettings": "Region",
+                "sizeAggregation": "Sum",
+                "minSize": 20,
+                "defaultSize": 20,
+                "opacity": 1,
+                "labelSettings": "Location",
+                "legendMetric": "count_",
+                "legendAggregation": "Sum",
+                "itemColorSettings": {
+                  "nodeColorField": "Region",
+                  "colorAggregation": "Sum",
+                  "type": "heatmap",
+                  "heatmapPalette": "magenta"
+                }
+              }
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "Region Summaries"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AADServicePrincipalSignInLogs\n| mv-expand todynamic(ConditionalAccessPolicies)\n| extend Result = tostring(ConditionalAccessPolicies.result)\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\n| where ['PolicyName'] in ({PolicyWI})\n| where ResourceDisplayName in ({ResourceWI})\n| where Result in ({ReportWI})\n| where ServicePrincipalName contains ('{WI}')\n| extend state = tostring(parse_json(LocationDetails).state)\n| where state in ({LocationWI})\n| extend Region = Location\n| where Region in ({RegionWI})\n| extend city = tostring(parse_json(LocationDetails).city)\n| project city, state\n| summarize count() by city, state",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Location Summaries",
+              "timeContextFromParameter": "TimeWI",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "city",
+                  "formatter": 1
+                },
+                "subtitleContent": {
+                  "columnMatch": "state",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  }
+                },
+                "showBorder": false,
+                "sortCriteriaField": "city",
+                "sortOrderField": 1,
+                "size": "full"
+              },
+              "graphSettings": {
+                "type": 0,
+                "topContent": {
+                  "columnMatch": "Result",
+                  "formatter": 1
+                },
+                "centerContent": {
+                  "columnMatch": "count_",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              }
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "Location Summaries"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result in ({Report})\r\n| where UserPrincipalName contains ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region})\r\n| summarize count() by RiskLevelDuringSignIn",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Sign-in Risk",
+              "timeContextFromParameter": "Time01",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "RiskLevelDuringSignIn",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "count_",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                },
+                "showBorder": false,
+                "size": "full"
+              }
+            },
+            "customWidth": "25",
+            "showPin": true,
+            "name": "SignIn-Risk"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap2"
+      },
+      "name": "Conditional Access Summaries - Workload Identity"
     },
     {
       "type": 12,
@@ -1265,6 +1767,430 @@
         "value": "cap1"
       },
       "name": "Conditional Access Insights"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "title": "Conditional Access Insights",
+        "expandable": true,
+        "expanded": true,
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## Conditional Access Insights\r\n\r\n#### Conditional Access Policies can become intricate, especially when dealing with a workbook. Here, you can examine the current policies of the tenant in a comprehensible format. Make sure to implement [Tenant Conditional Access Policies - Graph Ingestion](https://github.com/Cyberlorians/Articles/blob/main/TenantCAPols.md) and use the provided KQL query to access a detailed log analytics report of all policies in their original form.\r\n\r\n```\r\nTenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n```\r\n\r\n#### To generate a PowerPoint presentation containing all policies, please utilize Merill Fernando's, [Identity Power Toys - Conditional Access Documenter](https://idpowertoys.merill.net/ca).\r\n\r\n\r\n\r\n",
+              "style": "info"
+            },
+            "name": "MoreCADeets"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "TenantCAPols_CL\r\n| summarize arg_max(TimeGenerated, *) by id_g\r\n| extend DisplayName = tostring(displayName_s)\r\n| extend PolicyId = tostring(id_g)\r\n//| extend Conditions = Policies.conditions\r\n//| mv-expand Conditions\r\n| extend State = case(\r\n                     tostring(state_s) == \"enabled\",\r\n                     \"On\",\r\n                     tostring(state_s) == \"disabled\",\r\n                     \"Off\",\r\n                     tostring(state_s) == \"enabledForReportingButNotEnforced\",\r\n                     \"Report-only\",\r\n                     \"Unknown\"\r\n                 )\r\n//| extend GrantControls = Policies.grantControls\r\n| extend CreatedTimeDate = createdDateTime_t\r\n| extend ModifiedTimeDate = modifiedDateTime_t\r\n| extend UsersInclude = conditions_users_includeUsers_s\r\n| extend UsersExclude = conditions_users_excludeUsers_s\r\n| extend WorkloadsInclude = conditions_clientApplications_includeServicePrincipals_s\r\n| extend WorkloadExclude = conditions_clientApplications_excludeServicePrincipals_s\r\n| extend WorkloadRisk = conditions_signInRiskLevels_s\r\n| extend GroupsInclude = conditions_users_includeGroups_s\r\n| extend GroupsExclude = conditions_users_excludeGroups_s\r\n| extend CloudAppsInclude = conditions_applications_includeApplications_s\r\n| extend CloudAppsExclude = conditions_applications_excludeApplications_s\r\n| extend ClientPlatformsIncludeTmp = column_ifexists(\"conditions_platforms_includePlatforms_s\", \"\")\r\n| extend ClientPlatformsInclude = case(\r\n                                      \"ExplicitOnly\" == \"ExplicitOnly\",\r\n                                      ClientPlatformsIncludeTmp,\r\n                                      case(\r\n    isnotempty(ClientPlatformsIncludeTmp),\r\n    ClientPlatformsIncludeTmp, \r\n    todynamic(\"(all)\")\r\n)\r\n                                  )\r\n| extend ClientPlatformsIncludeTooltip = case(\r\n                                             ClientPlatformsInclude == \"(all)\",\r\n                                             \"This is the implicit configuration. All platforms are included, because the setting has not been configured.\",\r\n                                             \"\"\r\n                                         )\r\n| extend ClientPlatformsExcludeTmp = column_ifexists(\"conditions_platforms_excludePlatforms_s\", \"[]\")\r\n| extend ClientPlatformsExclude = case(\r\n                                      \"ExplicitOnly\" == \"ExplicitOnly\",\r\n                                      ClientPlatformsExcludeTmp,\r\n                                      case(\r\n    isnotempty(ClientPlatformsExcludeTmp),\r\n    ClientPlatformsExcludeTmp,\r\n    todynamic(\"[]\")\r\n)\r\n                                  )\r\n| extend ClientApps = conditions_clientAppTypes_s\r\n| extend LocationsInclude = case(\r\n                                \"ExplicitOnly\" == \"ExplicitOnly\",\r\n                                conditions_locations_includeLocations_s,\r\n                                case(\r\n    isnotempty(conditions_locations_includeLocations_s),\r\n    conditions_locations_includeLocations_s,\r\n    todynamic(\"(all)\")\r\n)\r\n                            )\r\n| extend LocationsIncludeTooltip = case(\r\n                                       LocationsInclude == \"(all)\",\r\n                                       \"This is the implicit configuration. All locations are included, because the setting has not been configured.\",\r\n                                       \"\"\r\n                                   )\r\n| extend LocationsExclude = case(\r\n                                \"ExplicitOnly\" == \"ExplicitOnly\",\r\n                                conditions_locations_excludeLocations_s,\r\n                                case(\r\n    isnotempty(conditions_locations_excludeLocations_s),\r\n    conditions_locations_excludeLocations_s,\r\n    todynamic(\"[]\")\r\n)\r\n                            )\r\n| extend UserRiskLevels = case(\r\n                              \"ExplicitOnly\" == \"ExplicitOnly\",\r\n                              conditions_userRiskLevels_s,\r\n                              case(\r\n    array_length(todynamic(conditions_userRiskLevels_s)) != 0,\r\n    conditions_userRiskLevels_s,\r\n    todynamic(\"(all)\")\r\n)\r\n                          )\r\n| extend UserRiskLevelsTooltip = case(\r\n                                     UserRiskLevels == \"(all)\",\r\n                                     \"This is the implicit configuration. All user risk levels are included, because the setting has not been configured.\",\r\n                                     \"\"\r\n                                 )\r\n| extend SigninRiskLevels = case(\r\n                                \"ExplicitOnly\" == \"ExplicitOnly\",\r\n                                conditions_signInRiskLevels_s,\r\n                                case(\r\n    array_length(todynamic(conditions_signInRiskLevels_s)) != 0,\r\n    conditions_signInRiskLevels_s,\r\n    todynamic(\"(all)\")\r\n)\r\n                            )\r\n| extend SigninRiskLevelsTooltip = case(\r\n                                       UserRiskLevels == \"(all)\",\r\n                                       \"This is the implicit configuration. All sign-in risk levels are included, because the setting has not been configured.\",\r\n                                       \"\"\r\n                                   )\r\n| extend GrantControls = grantControls_builtInControls_s\r\n| extend FullPolicyJson = pack_all()\r\n| sort by DisplayName asc\r\n| project\r\n    ['Policy display name'] = DisplayName,\r\n    State,\r\n    ['Cloud apps included'] = CloudAppsInclude,\r\n    ['Cloud apps excluded'] = CloudAppsExclude,\r\n    //['Users included'] = UsersInclude,\r\n    //['Users excluded'] = UsersExclude,\r\n    ['Workload included'] = WorkloadsInclude,\r\n    ['Workload exclude'] = WorkloadsInclude,\r\n    ['Workload risk'] = WorkloadRisk,\r\n    //['Groups included'] = GroupsInclude,\r\n    //['Groups excluded'] = GroupsExclude,\r\n    ['Client platforms included'] = ClientPlatformsInclude,\r\n    ['Client platforms excluded'] = ClientPlatformsExclude,\r\n    ['Client apps'] = ClientApps,\r\n    ['Locations included'] = LocationsInclude,\r\n    ['Locations excluded'] = LocationsExclude,\r\n    ['User risk levels'] = UserRiskLevels,\r\n    ['Sign-in risk levels'] = SigninRiskLevels,\r\n    ['Grant controls'] = GrantControls,\r\n    CreatedTimeDate,\r\n    ModifiedTimeDate,\r\n    PolicyId,\r\n    ['Full policy JSON'] = FullPolicyJson,\r\n    ClientPlatformsIncludeTooltip,\r\n    LocationsIncludeTooltip,\r\n    UserRiskLevelsTooltip,\r\n    SigninRiskLevelsTooltip\r\n| sort by State\r\n| where isnotempty(['Workload included'])\r\n\r\n//| where Policy display name == \"CA012 - Workload Risk Protection\"",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Current Conditional Access Policies Configured in the Tenant - Graph API",
+              "noDataMessage": "Go to Overview tab and review visualization requirements.",
+              "timeContextFromParameter": "Time01",
+              "exportFieldName": "PolicyId",
+              "exportParameterName": "SelectedPolicyId",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "State",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Full policy JSON",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "ClientPlatformsIncludeTooltip",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "LocationsIncludeTooltip",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "UserRiskLevelsTooltip",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "SigninRiskLevelsTooltip",
+                    "formatter": 5
+                  }
+                ],
+                "filter": true,
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "State"
+                  ]
+                }
+              },
+              "sortBy": []
+            },
+            "showPin": true,
+            "name": "Current Conditional Access Policies Configured in the Tenant - Graph API",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Conditional Access Insights Reporting\r\n\r\n#### The following are the types of reports available for Conditional Access. The results are presented as data points that can be used with the [What If tool](https://learn.microsoft.com/en-us/entra/identity/conditional-access/what-if-tool) in [Commercial](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade) or [Government](https://entra.microsoft.us/#view/Microsoft_AAD_ConditionalAccess/WhatIfBlade) environments. For more detailed insights, you can expand the results and select an item to view the detailed output.\r\n\r\n#### **Success** -  The configured policy has successfully accessed a resource that is protected by a Conditional Access policy. This means that the user met all the conditions specified in the policy, such as having the right device, being in the right location, or having the right security settings, and was therefore granted access to the resource.\r\n\r\n#### **Failure** - A resource in this context of the configured policy was not able to access a resource that is protected by a Conditional Access Policy. This means the attempting resource did not meet conditions of the policy.\r\n\r\n#### **NotEnabled** - The configured policy and conditions are disabled.\r\n\r\n#### **NotApplied** - The configured policy has not been assigned (enforced) to any user or group in question.\r\n\r\n#### **Report-only: Success** - All configured policy conditions, required non-interactive grant controls, and session controls were satisfied. For example, a multifactor authentication requirement is satisfied by an MFA claim already present in the token, or a compliant device policy is satisfied by performing a device check on a compliant device.\r\n\r\n#### **Report-only: Failure** - All configured policy conditions were satisfied but not all the required non-interactive grant controls or session controls were satisfied. For example, a policy applies to a user where a block control is configured, or a device fails a compliant device policy.\r\n\r\n#### **Report-only: User action required** - All configured policy conditions were satisfied but user action would be required to satisfy the required grant controls or session controls. With report-only mode, the user isn't prompted to satisfy the required controls. For example, users aren't prompted for multifactor authentication challenges or terms of use.\r\n\r\n#### **Report-only: Not applied** -\tNot all configured policy conditions were satisfied. For example, the user is excluded from the policy or the policy only applies to certain trusted named locations.",
+              "style": "info"
+            },
+            "name": "text - 9"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AADServicePrincipalSignInLogs\r\n| mv-expand todynamic(ConditionalAccessPolicies)\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| extend state = tostring(parse_json(LocationDetails).state)\r\n| extend Region = Location\r\n| extend ruleSatisfied_ = tostring(parse_json(tostring(ConditionalAccessPolicies.includeRulesSatisfied))[1].ruleSatisfied)\r\n| distinct TimeGenerated, CorrelationId, ServicePrincipalName, ResourceDisplayName, IPAddress, Country = Location, ['PolicyName'], ['Grant Control'] = tostring(ConditionalAccessPolicies.enforcedGrantControls), Result\r\n| sort by TimeGenerated desc\r\n\r\n\r\n",
+              "size": 2,
+              "showAnalytics": true,
+              "title": "Analyzing Conditional Access Results for What-If Tool. Select a 'TimeGenerated' For Further Details",
+              "noDataMessage": "Signinlogs are not enabled",
+              "timeContextFromParameter": "TimeWI",
+              "showRefreshButton": true,
+              "exportedParameters": [
+                {
+                  "fieldName": "TimeGenerated",
+                  "parameterName": "Time2",
+                  "defaultValue": "{ \"Name\":\"\", \"Type\":\"*\", \"Parent\":\"*\"}"
+                },
+                {
+                  "fieldName": "Result",
+                  "parameterName": "result2",
+                  "parameterType": 1
+                },
+                {
+                  "fieldName": "PolicyName",
+                  "parameterName": "pol2",
+                  "parameterType": 1
+                }
+              ],
+              "showExportToExcel": true,
+              "exportToExcelOptions": "all",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{WorkspaceWI}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "60ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "Result",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "IPAddress",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "20ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "PolicyName",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "UserPrincipalName",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "AppDisplayName",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "30ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "IP",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "20ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "Country",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "15ch"
+                    }
+                  }
+                ],
+                "rowLimit": 1000,
+                "filter": true,
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "Result",
+                    "PolicyName",
+                    "ServicePrincipalName"
+                  ],
+                  "expandTopLevel": false
+                }
+              },
+              "sortBy": [],
+              "tileSettings": {
+                "showBorder": false,
+                "titleContent": {
+                  "columnMatch": "CA Policy Name",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "failure",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              },
+              "mapSettings": {
+                "locInfo": "LatLong",
+                "sizeSettings": "failure",
+                "sizeAggregation": "Sum",
+                "legendMetric": "failure",
+                "legendAggregation": "Sum",
+                "itemColorSettings": {
+                  "type": "heatmap",
+                  "colorAggregation": "Sum",
+                  "nodeColorField": "failure",
+                  "heatmapPalette": "greenRed"
+                }
+              }
+            },
+            "customWidth": "100",
+            "showPin": false,
+            "name": "Analyzing Conditional Access Results for What-If Tool. Select a 'TimeGenerated' For Further Details",
+            "styleSettings": {
+              "margin": "25",
+              "showBorder": true
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SigninLogs\r\n| mv-expand ConditionalAccessPolicies\r\n| extend ['PolicyName'] = tostring(ConditionalAccessPolicies.displayName)\r\n| where ['PolicyName'] == \"{pol2}\"\r\n| extend Result = tostring(ConditionalAccessPolicies.result)\r\n| where Result == \"{result2}\"\r\n| where TimeGenerated == \"{Time2}\"\r\n| extend AuthDetails = parse_json(AuthenticationDetails)\r\n| mv-expand AuthDetails\r\n| extend AuthNMethod = tostring(AuthDetails.authenticationMethod), AuthNStepReq = tostring(AuthDetails.authenticationStepRequirement), AuthNStepResultDetails = tostring(AuthDetails.authenticationStepResultDetail), Succession = tostring(AuthDetails.succeeded)\r\n| project TimeGenerated, CorrelationId, ['PolicyName'], UserPrincipalName, AuthNMethod, AuthNStepReq, AuthNStepResultDetails, Succession, Result, ResultType, ResultDescription\r\n| sort by TimeGenerated desc",
+              "size": 1,
+              "showAnalytics": true,
+              "title": "Conditional Access Results Correlation By SelectedTime",
+              "showRefreshButton": true,
+              "showExportToExcel": true,
+              "exportToExcelOptions": "all",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 1,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "60ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "PolicyName",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "UserPrincipalName",
+                    "formatter": 5
+                  }
+                ],
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "PolicyName",
+                    "UserPrincipalName"
+                  ],
+                  "expandTopLevel": false
+                }
+              },
+              "sortBy": []
+            },
+            "conditionalVisibilities": [
+              {
+                "parameterName": "Time2",
+                "comparison": "isNotEqualTo"
+              },
+              {
+                "parameterName": "result2",
+                "comparison": "isNotEqualTo",
+                "value": ""
+              },
+              {
+                "parameterName": "pol2",
+                "comparison": "isNotEqualTo"
+              }
+            ],
+            "showPin": true,
+            "name": "Conditional Access Results Correlation By SelectedTime",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let apipols = TenantCAPols_CL\r\n    | summarize arg_max(TimeGenerated, *) by id_g\r\n    | extend DisplayName = tostring(displayName_s)\r\n    | extend PolicyId = tostring(id_g)\r\n    | sort by DisplayName asc\r\n    | where (parse_json(conditions_userRiskLevels_s) has \"low\" or parse_json(conditions_userRiskLevels_s) has \"medium\" or parse_json(conditions_userRiskLevels_s) has \"high\") or \r\n        (parse_json(conditions_signInRiskLevels_s) has \"low\" or parse_json(conditions_signInRiskLevels_s) has \"medium\" or parse_json(conditions_signInRiskLevels_s) has \"high\")\r\n    | project\r\n        DisplayName,\r\n        PolicyId,\r\n        conditions_userRiskLevels_s,\r\n        conditions_signInRiskLevels_s;\r\nlet auditpols = SigninLogs\r\n    | mv-expand ConditionalAccessPolicies\r\n    | extend Result = tostring(ConditionalAccessPolicies.result)\r\n    | extend CAId = tostring(ConditionalAccessPolicies.id)\r\n    | extend ['CA Policy Name'] = tostring(ConditionalAccessPolicies.displayName)\r\n    | extend [\"User risk level\"] = RiskLevelAggregated\r\n    | extend [\"Sign-in risk level\"] = RiskLevelDuringSignIn\r\n    | where ['CA Policy Name'] contains 'risk';\r\nauditpols\r\n| join kind=inner apipols on $left.CAId == $right.PolicyId\r\n| where [\"Sign-in risk level\"] != \"none\"\r\n| where ['User risk level'] != \"none\"\r\n| distinct\r\n    TimeGenerated,\r\n    UserPrincipalName,\r\n    AppDisplayName,\r\n    IP = IPAddress,\r\n    Country = Location,\r\n    ['CA Policy Name'],\r\n    ClientAppUsed,\r\n    ['Set-UserRiskLevel'] = conditions_userRiskLevels_s,\r\n    ['Set-SignInRiskLevel'] = conditions_signInRiskLevels_s,\r\n    [\"Sign-in risk level\"],\r\n    [\"User risk level\"],\r\n    Result,\r\n    ['Descriptive Outcome'] = ResultDescription\r\n| sort by TimeGenerated desc\r\n",
+              "size": 2,
+              "showAnalytics": true,
+              "title": "Risk Based Conditional Access Tracking w/ SignIn Results",
+              "timeContextFromParameter": "Time01",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "75ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "UserPrincipalName",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CA Policy Name",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Result",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "75ch"
+                    }
+                  }
+                ],
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "Result",
+                    "CA Policy Name",
+                    "UserPrincipalName"
+                  ]
+                },
+                "sortBy": [
+                  {
+                    "itemKey": "TimeGenerated",
+                    "sortOrder": 2
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "TimeGenerated",
+                  "sortOrder": 2
+                }
+              ]
+            },
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap1"
+            },
+            "showPin": true,
+            "name": "Risk Based Conditional Access Tracking w/ SignIn Results"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SigninLogs\r\n| project TimeGenerated, ConditionalAccessPolicies, UserPrincipalName, AppDisplayName\r\n| mv-expand ConditionalAccessPolicies\r\n| extend CAResult = tostring(ConditionalAccessPolicies.result)\r\n| extend CAPolicyName = tostring(ConditionalAccessPolicies.displayName)\r\n| where CAResult == \"failure\"\r\n| summarize\r\n    ['List of Failed Application']=make_set(AppDisplayName),\r\n    ['Count of Failed Application']=dcount(AppDisplayName)\r\n    by UserPrincipalName, bin(TimeGenerated, 1h)\r\n| where ['Count of Failed Application'] >= 5",
+              "size": 2,
+              "showAnalytics": true,
+              "title": "Conditional Access Block to 5+ Apps within 1 Hour",
+              "timeContextFromParameter": "Time01",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "tileSettings": {
+                "showBorder": false,
+                "titleContent": {
+                  "columnMatch": "UserPrincipalName",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "Count of Failed Application",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              }
+            },
+            "conditionalVisibility": {
+              "parameterName": "Tab",
+              "comparison": "isEqualTo",
+              "value": "cap1"
+            },
+            "showPin": true,
+            "name": "Conditional Access Block to 5+ Apps within 1 Hour"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "cap2"
+      },
+      "name": "Conditional Access Insights Workload"
     },
     {
       "type": 9,
