@@ -1,0 +1,843 @@
+﻿Criticality,CSL1,CSL2,CSL3,Function,Category,Sub-Category,Required Data,Workload,Table,Schema,Schema Value,Workload  Integration,Event Reference,Microsoft Sentinel Event,Microsoft XDR Event,ExcelPKID
+EL0,01,AA,01,Identity,Identity & Credential Management,Account,Account Creation,Entra,AuditLogs,OperationName,Add User,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //(Success/Failures) of 'Add User' by Sync, User, App and Service. B2BAdmin worker is SCIM.
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Add user""  
+| extend InitiatedBySync = iif(tostring(InitiatedBy.user.userPrincipalName) !has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| extend InitiatedByUser = iif(tostring(InitiatedBy.user.userPrincipalName) has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| distinct TimeGenerated,       
+            ['Service'] = Identity,      
+            ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), 
+            ['InitiatedBySync'], 
+            ['InitiatedByUser'], 
+            Result,
+            ['Target-Resource'] = tostring(TargetResources)
+| sort by TimeGenerated desc
+| take 1000",NA,EL001280
+EL0,01,AB,02,Identity,Identity & Credential Management,Account,Account Creation,Entra,AuditLogs,OperationName,Add Service Principal,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //(Success/Failures) of 'Add Service Principal' Service, User, App.
+| where TimeGenerated > ago(30d) 
+| where OperationName == ""Add service principal""
+| project TimeGenerated, ['Service'] = Identity, ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), ['InitiatedByUser'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), OperationName, Result, ['Target-Resource'] = tostring(TargetResources)
+| sort by TimeGenerated desc
+| take 1000",NA,EL001281
+EL0,01,AC,03,Identity,Identity & Credential Management,Account,Account Creation,Entra,MicrosoftGraphActivityLogs,RequestUri,Applications,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,"https://learn.microsoft.com/en-us/graph/api/application-post-applications?view=graph-rest-1.0&tabs=http
+
+","MicrosoftGraphActivityLogs  //View SP POST (Success/Failures) methods from PowerShell, GraphExplorer, Consent Grant and etc
+| where TimeGenerated > ago(30d)
+| where RequestMethod == 'POST'
+| where RequestUri has '/applications' //Captures /beta and /v1.0
+| join ( AuditLogs
+| extend id_ = tostring(parse_json(tostring(InitiatedBy.user)).id)
+)
+on $left.UserId == $right.id_
+| where OperationName == ""Add service principal""
+| project ActivityDateTime, RequestUri, ['Service'] = Identity, ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), ['InitiatedByUser'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), OperationName, Result, ['Target-Resource'] = tostring(TargetResources)
+| sort by ActivityDateTime desc
+| take 1000",NA,EL001282
+EL0,01,AD,04,Identity,Identity & Credential Management,Account,Account Creation,Entra,MicrosoftGraphActivityLogs,RequestUri,ServicePrincipals,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/graph/api/serviceprincipal-post-serviceprincipals,"MicrosoftGraphActivityLogs //View SP POST (Success/Failures) methods from PowerShell, GraphExplorer, Consent Grant and etc
+| where TimeGenerated > ago(30d)
+| where RequestMethod == 'POST'
+| where RequestUri has '/servicePrincipals' //Captures /beta and /v1.0
+| join ( AuditLogs
+| extend id_ = tostring(parse_json(tostring(InitiatedBy.user)).id)
+)
+on $left.UserId == $right.id_
+| where OperationName == ""Add service principal""
+| project ActivityDateTime, RequestUri, ['Service'] = Identity, ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), ['InitiatedByUser'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), OperationName, Result, ['Target-Resource'] = tostring(TargetResources)
+| sort by ActivityDateTime desc
+| take 1000",NA,EL001283
+EL0,01,AE,05,Identity,Identity & Credential Management,Account,Account Creation,Entra,MicrosoftGraphActivityLogs,RequestUri,Users,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/graph/api/user-post-users,"MicrosoftGraphActivityLogs //View SP POST (Success/Failures) methods on Add user
+| where TimeGenerated > ago(30d)
+| where RequestMethod == 'POST'
+| where RequestUri has '/users' //Captures /beta and /v1.0
+| join (
+    AuditLogs
+    | extend Id = tostring(parse_json(tostring(InitiatedBy.user)).id)
+) on $left.UserId == $right.Id
+| where OperationName == ""Add user""
+| project ActivityDateTime, RequestUri, ['Service'] = Identity, ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), ['InitiatedByUser'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), OperationName, Result, ['Target-Resource'] = tostring(TargetResources)
+| sort by ActivityDateTime desc
+| take 1000",NA,EL001284
+EL0,01,AF,06,Identity,Identity & Credential Management,Account,Account Creation,Entra,AADProvisioningLogs,ProvisioningAction,Create,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-provisioning-logs#what-can-you-do-with-the-provisioning-logs,"AADProvisioningLogs //Users created (Success/Skipped/Failures) by AADProvisioningService - Connect Sync server is an example
+| where TimeGenerated > ago(30d)
+| where ProvisioningAction == ""create"" //creation is shown by any type service principal using SCIM
+| extend ['Service'] = tostring(parse_json(InitiatedBy).Name)
+| extend ['InitiatedByApp'] = tostring(parse_json(ServicePrincipal).Name)
+| distinct TimeGenerated, ['Service'], ['InitiatedByApp'], OperationName, ResultType, ModifiedProperties
+| take 1000",NA,EL001285
+EL0,01,AG,07,Identity,Identity & Credential Management,Account,Account Creation,Windows,SecurityEvent,Activity,4720(S): A user account was created,M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4720,"SecurityEvent
+| where TimeGenerated > ago(30d)
+| where EventData == 4720
+| where Activity == ""4720 - A user account was created.""
+| distinct TimeGenerated, Activity, ['Initiated By'] = SubjectUserName, TargetUserName
+| sort by TimeGenerated desc
+| take 1000",NA,EL001286
+EL0,01,AH,08,Identity,Identity & Credential Management,Account,Account Creation,Microsoft Defender for Endpoint,DeviceEvents,ActionType,User Account Created,Microsoft Defender XDR to Microsoft Sentinel; https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceevents-table,"DeviceEvents 
+| where TimeGenerated > ago(30d)
+| where ActionType == ""UserAccountCreated"" //Detect when a local user account is created on an endpoint, will reveal accounts created on Domain Controllers if agent is present
+//Exclude defaultuser1 which is created by Windows through different processes 
+| where AccountName != ""defaultuser1""
+| project
+    TimeGenerated, 
+    ActionType,
+    InitiatedBy=InitiatingProcessAccountName,  
+    ['Initiated On Device'] = DeviceName,
+    ['Account Created Name']=AccountName,
+     AccountSid, AccountDomain
+| sort by TimeGenerated desc 
+| take 1000","DeviceEvents 
+| where Timestamp > ago(30d)
+| where ActionType == ""UserAccountCreated"" //Detect when a local user account is created on an endpoint, will reveal accounts created on Domain Controllers if agent is present
+//Exclude defaultuser1 which is created by Windows through different processes 
+| where AccountName != ""defaultuser1""
+| project
+    Timestamp, 
+    ActionType,
+    InitiatedBy=InitiatingProcessAccountName,  
+    ['Initiated On Device'] = DeviceName,
+    ['Account Created Name']=AccountName,
+     AccountSid, AccountDomain
+| sort by Timestamp desc 
+| take 1000",
+EL0,01,AI,09,Identity,Identity & Credential Management,Account,Account Creation,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType,User Account Created,Microsoft Defender XDR to Microsoft Sentinel; https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table,"IdentityDirectoryEvents //Defender for Identity detecting when directory user account was created and by whom
+| where TimeGenerated > ago(30d)
+| where ActionType == ""User Account Created"" 
+| distinct TimeGenerated, ActionType, ['Initiated By'] = tostring(AdditionalFields.[""ACTOR.ACCOUNT""]), ['Initiated On'] = DestinationDeviceName, TargetAccountUpn, TargetAccountDisplayName
+| sort by TimeGenerated desc
+| take 1000","IdentityDirectoryEvents //Defender for Identity detecting when directory user account was created and by whom
+| where Timestamp > ago(30d)
+| where ActionType == ""User Account Created"" 
+| distinct Timestamp, ActionType, ['Initiated By'] = tostring(AdditionalFields.[""ACTOR.ACCOUNT""]), ['Initiated On'] = DestinationDeviceName, TargetAccountUpn, TargetAccountDisplayName
+| sort by Timestamp desc
+| take 1000",EL001288
+EL0,01,AJ,10,Identity,Identity & Credential Management,Account,Account Creation,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType,Device Account Created,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table,"IdentityDirectoryEvents //Defender for Identity detecting when directory device account was created and by whom. No domain suffix could mean admin manually created object
+| where TimeGenerated > ago(30d)
+| where ActionType == ""Device Account Created""
+| distinct TimeGenerated, ActionType, ['Initiated By'] = tostring(AdditionalFields.[""ACTOR.ACCOUNT""]), ['Initiated On'] = DestinationDeviceName, ['Device Created'] = TargetDeviceName
+| sort by TimeGenerated desc
+| take 1000","IdentityDirectoryEvents //Defender for Identity detecting when directory device account was created and by whom. No domain suffix could mean admin manually created object
+| where Timestamp > ago(30d)
+| where ActionType == ""Device Account Created""
+| distinct 
+Timestamp, ActionType, ['Initiated By'] = tostring(AdditionalFields.[""ACTOR.ACCOUNT""]), ['Initiated On'] = DestinationDeviceName, ['Device Created'] = TargetDeviceName
+| sort by Timestamp desc
+| take 1000",EL001289
+EL0,01,AK,11,Identity,Identity & Credential Management,Account,AccountCreation,Microsoft Defender for Identity,IdentityInfo,SourceSystem,ActiveDirectory,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identityinfo-table,"let srvcList = dynamic([""svcaccount""]); //use inline with where accountupn srvclist
+IdentityInfo
+| where TimeGenerated > ago(30d)
+| where SourceSystem == ""ActiveDirectory""
+//| where AccountUpn in~ (srvcList) //edit to verify your svc creations
+| where AccountName == 'svc_m2131' //edit your svc acct
+| distinct AccountCreationTime, AccountName, AccountUPN, IsAccountEnabled, OnPremisesDistinguishedName
+| sort by AccountCreationTime desc
+| take 1000","let srvcList = dynamic([""svcaccount""]); //use inline with where accountupn srvclist
+IdentityInfo
+| where Timestamp > ago(30d)
+| where SourceProvider == ""ActiveDirectory""
+//| where AccountUpn in~ (srvcList) //edit to verify your svc creations
+| where AccountName == 'svc_m2131' //edit your svc acct
+| distinct Timestamp, AccountName, AccountUpn, IsAccountEnabled, DistinguishedName
+| sort by Timestamp desc
+| take 1000",
+EL0,01,BA,01,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Entra,AuditLogs,ActivityDisplayName,Authentication Methods Policy Update,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities#authentication-methods,"AuditLogs
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Authentication Methods Policy Update"" //Entra Auth Methods updated for specific tenant. To review configured, review UI or graph call.
+| distinct TimeGenerated, OperationName, ['Initiated By'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), tostring(TargetResources)
+| take 1000",NA,EL001290
+EL0,01,BB,02,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Entra,AuditLogs,LoggedByService,Self-service password management,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/authentication/howto-sspr-reporting,"AuditLogs
+| where LoggedByService == ""Self-service Password Management""
+| extend ['Activity Actor'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)
+| distinct TimeGenerated, ['Activity Actor'], Result, ResultDescription, TargetResources
+| sort by TimeGenerated
+| take 1000",NA,
+EL0,01,BC,03,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Windows,Event,Source,Entra Connect Admin Actions,M-21-31/EL0/Identity/DCR-EntraConnectAdminAuditEvents.md at main · Cyberlorians/M-21-31,https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/admin-audit-logging,"let EventMapping = datatable(EventID: int, EventName: string)
+[
+    2503, ""Add/Update/Delete Directories"",
+    2504, ""Enable Express settings mode"",
+    2505, ""Enable/Disable domains and OU for sync"",
+    2506, ""Enable/Disable PHS Sync"",
+    2507, ""Enable/Disable Sync start after install"",
+    2508, ""Create ADDS account"",
+    2509, ""Use Existing ADDS account"",
+    2510, ""Create/Update/Delete custom sync rule"",
+    2511, ""Enable/Disable Domain based filtering"",
+    2512, ""Enable/Disable OU based filtering"",
+    2513, ""User Sign-In method changed"",
+    2514, ""Configure new ADFS farm"",
+    2515, ""Enable/Disable Single sign-on"",
+    2516, ""Install web application proxy server"",
+    2517, ""Set Permissions"",
+    2518, ""Change ADDS Connector credential"",
+    2519, ""Reinitialize Entra ID Connector account password"",
+    2520, ""Install ADFS Server"",
+    2521, ""Set ADFS Service Account""
+];
+Event
+| where TimeGenerated > ago(30d)
+| where Source == ""Entra Connect Admin Actions""
+| extend ['Action'] = tostring(parse_json(RenderedDescription).ActionType)
+| join kind=inner (EventMapping) on $left.EventID == $right.EventID
+| distinct TimeGenerated, Source, Computer, ['Action'], EventID, EventName, RenderedDescription
+| sort by TimeGenerated desc  
+| take 1000",NA,
+EL0,01,BD,04,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Entra,AuditLogs,OperationName,*Conditional access policy,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/conditional-access/troubleshoot-policy-changes-audit-log,"AuditLogs //reviewing CRUD for Conditional Access policies. NonHumanActor represents a SP doing the CRUD of the CA.
+| where TimeGenerated > ago(30d)
+| where OperationName in (""Add conditional access policy"", ""Update conditional access policy"", ""Delete conditional access policy"")
+| project
+    TimeGenerated,
+    Operation=OperationName,
+    Policy=TargetResources[0].displayName,
+    HumanActor=InitiatedBy.user.userPrincipalName,
+    NonHumanActor=Identity,
+    TargetResources
+| sort by TimeGenerated desc
+| take 1000",NA,EL001291
+EL0,01,BE,05,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Entra,MicrosoftGraphActivityLogs,RequestUri,Users,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,"https://learn.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&tabs=http
+
+","MicrosoftGraphActivityLogs  //View SP POST (Success/Failures) methods on update user
+| where TimeGenerated > ago(30d)
+| where RequestMethod == 'POST'
+| where RequestUri has '/users'
+| join (
+    AuditLogs
+    | extend Id = tostring(parse_json(tostring(InitiatedBy.user)).id)
+) on $left.UserId == $right.Id
+| where Result == ""success""
+| where OperationName == ""Update user""
+| project ActivityDateTime, RequestUri, ['Service'] = Identity, ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), ['InitiatedByUser'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), OperationName, Result, ['Target-Resource'] = tostring(TargetResources)
+| sort by ActivityDateTime desc
+| take 1000",NA,EL001292
+EL0,01,BF,06,Identity,Identity & Credential Management,Manage Credential Type, (PIV or CAC) & Derived Credentials,Microsoft Intune,IntuneAuditLogs,OperationName,Device Configuration,https://learn.microsoft.com/en-us/mem/intune/fundamentals/review-logs-using-azure-monitor#send-logs-to-azure-monitor,"
+https://learn.microsoft.com/en-us/mem/intune/protect/derived-credentials","IntuneAuditLogs
+| where TimeGenerated > ago(30d)
+| where OperationName has 'DeviceConfiguration'
+| where parse_json(tostring(Properties)) has ""DerivedCredentialSettingsRef""
+| take 1000",NA,EL001293
+EL0,01,BG,07,Identity,Identity & Credential Management,Manage Credential Type, (PIV or CAC) & Derived Credentials,Entra,AuditLogs,OperationName,TrustedCAsfForPasswordlessAuth,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-certificate-based-authentication,"AuditLogs //Setting Trusted Certificate Authorities in Entra CAs
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Set Company Information""
+| mv-expand TargetResources
+| extend ['Tenant Name'] = TargetResources.displayName
+| extend ['Tenant Id'] = TargetResources.id
+| extend ['Initiated By'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)
+| extend modifiedProperties = TargetResources.modifiedProperties
+| extend displayName = tostring(modifiedProperties[0].displayName),   
+         oldValue = tostring(modifiedProperties[0].oldValue),       
+         newValue = tostring(modifiedProperties[0].newValue)  
+| where displayName == ""TrustedCAsForPasswordlessAuth""      
+| project TimeGenerated,['Initiated By'], ['Tenant Name'], ['Tenant Id'], ['Configuration'] = displayName, oldValue, newValue
+| take 1000",NA,EL001294
+EL0,01,BH,08,Identity,Identity & Credential Management,Manage Credential Type, (PIV or CAC) & Derived Credentials,Entra,AuditLogs,Category,PublicKeyInfrastructure,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-certificate-based-authentication#step-1-configure-the-certificate-authorities-with-pki-based-trust-store-preview,"AuditLogs
+| where TimeGenerated > ago(30d)
+| where Category == ""PublicKeyInfrastructure""
+| extend ['Initiated By'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)
+| distinct TimeGenerated, Category, ActivityDisplayName, AADOperationType, ['Initiated By'], Result, tostring(TargetResources)
+| sort by TimeGenerated desc
+| take 1000",NA,
+EL0,01,BI,09,Identity,Identity & Credential Management,Manage Credential Type,Cert,Entra,AuditLogs,OperationName ,Update User,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //Update of Certuserid w/ x509. Could be native in Entra, Sync, PowerShell, Graph.
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Update user""
+| where parse_json(tostring(TargetResources[0])) has ""CertificateUserIds"" or parse_json(tostring(TargetResources[0])) has ""X509""
+| distinct TimeGenerated, ['Initiated By'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), ['Target User'] = tostring(TargetResources[0].userPrincipalName), ['Modified CertUserID'] = tostring(parse_json(tostring(parse_json(TargetResources)[0].modifiedProperties)))
+| sort by TimeGenerated desc
+| take 1000",NA,EL001296
+EL0,01,BJ,10,Identity,Identity & Credential Management,Manage Credential Type,Cert,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType,ADCS Certificate issuance,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://techcommunity.microsoft.com/blog/microsoftthreatprotectionblog/securing-ad-cs-microsoft-defender-for-identitys-sensor-unveiled/3980265,"IdentityDirectoryEvents //Review Issuing Certificate Issuance to UPN/DisplayName w/ Issuing-CA/SKI
+| where TimeGenerated > ago(30d)
+| where ActionType == ""ADCS Certificate issuance""
+| distinct TimeGenerated, ['Issued-UPN'] = AccountUpn, ['Issued-DisplayName'] = AccountDisplayName, ['Issuing-CA'] = DestinationDeviceName, ['Issued SubjectKeyIdentifier'] = tostring(AdditionalFields.SubjectKeyIdentifier)
+| sort by TimeGenerated desc
+| take 1000","IdentityDirectoryEvents //Review Issuing Certificate Issuance to UPN/DisplayName w/ Issuing-CA/SKI
+| where Timestamp > ago(30d)
+| where ActionType == ""ADCS Certificate issuance""
+| distinct Timestamp, ['Issued-UPN'] = AccountUpn, ['Issued-DisplayName'] = AccountDisplayName, ['Issuing-CA'] = DestinationDeviceName, ['Issued SubjectKeyIdentifier'] = tostring(AdditionalFields.SubjectKeyIdentifier)
+| sort by Timestamp desc
+| take 1000",EL001297
+EL0,01,BK,11,Identity,Identity & Credential Management,Manage Credential Type,MFA,Entra,AuditLogs,OperationName,Security Info,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //will show both user and administrator registered security information
+| where TimeGenerated > ago(30d)
+| where OperationName has ""security info""
+| where Result == ""success""
+| extend IPAddress = tostring(parse_json(tostring(InitiatedBy.user)).ipAddress)
+| extend UserPrincipalName = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)
+| extend UserId = tostring(TargetResources[0].id)
+| distinct UserPrincipalName, UserId, IPAddress, OperationName, ResultDescription, TimeGenerated
+| sort by TimeGenerated desc
+| take 1000",NA,EL001298
+EL0,01,BL,12,Identity,Identity & Credential Management,Manage Credential Type,Password,Entra,AuditLogs,OperationName,Change User Password,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //change user password. Most orgs will witness by Sync but split to see by user.
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Change user password""  
+| extend Actor= InitiatedBy.user.userPrincipalName  
+//| distinct TimeGenerated, ['Initiated By'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), ['Target User'] = tostring(TargetResources[0].userPrincipalName), ['Modified Value'] = tostring(parse_json(tostring(parse_json(TargetResources)[0].modifiedProperties)))
+| extend InitiatedBySync = iif(tostring(InitiatedBy.user.userPrincipalName) !has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| extend InitiatedByUser = iif(tostring(InitiatedBy.user.userPrincipalName) has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| distinct TimeGenerated,       
+            ['Service'] = Identity,      
+            ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), 
+            ['InitiatedBySync'], 
+            ['InitiatedByUser'], 
+            Result,
+            ['Target-Resource'] = tostring(TargetResources)
+| sort by TimeGenerated desc
+| take 1000",NA,EL001299
+EL0,01,BM,13,Identity,Identity & Credential Management,Manage Credential Type,Password,Windows,Event,Source,Microsoft-AzureADPasswordProtection-DCAgent,M-21-31/EL0/Identity/DCR-EntraIDPasswordProtection.md at main · Cyberlorians/M-21-31,https://learn.microsoft.com/en-us/entra/identity/authentication/howto-password-ban-bad-on-premises-monitor,"Event
+| where Source == ""Microsoft-AzureADPasswordProtection-DCAgent""
+| summarize PasswordChangesValidated = countif(EventID == 10014), PasswordSetsValidated = countif(EventID == 10015), PasswordChangesRejected = countif(EventID == 10016), PasswordSetsRejected = countif(EventID == 10017), PasswordChangeAuditOnlyFailures = countif(EventID == 10024), PasswordSetAuditOnlyFailures = countif(EventID == 10025), PasswordChangeErrors = countif(EventID == 10012), PasswordSetErrors = countif(EventID == 10013) by bin(TimeGenerated, 30d), Computer
+|  sort by TimeGenerated desc
+| take 1000",NA,
+EL0,01,BN,14,Identity,Identity & Credential Management,Manage Credential Type,Password,Entra,AuditLogs,OperationName,Update company settings,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/authentication/howto-password-ban-bad-on-premises-operations,"AuditLogs
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Update company settings""
+| extend BannedPasswordCheckOnPremisesMode = tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0].Settings))[0].Properties))[0].Value)
+| extend EnableBannedPasswordCheckOnPremises = tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0].Settings))[0].Properties))[1].Value)
+| extend EnableBannedPasswordCheck = tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0].Settings))[0].Properties))[2].Value)
+| extend LockoutDurationInSeconds = tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0].Settings))[0].Properties))[3].Value)
+| extend LockoutThreshold = tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0].Settings))[0].Properties))[4].Value)
+| extend BannedPasswordList = tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0].Settings))[0].Properties))[5].Value)
+| distinct TimeGenerated, BannedPasswordCheckOnPremisesMode, EnableBannedPasswordCheckOnPremises, EnableBannedPasswordCheck, LockoutDurationInSeconds, LockoutThreshold, BannedPasswordList
+| sort by TimeGenerated desc
+| take 1000",NA,
+EL0,01,BO,15,Identity,Identity & Credential Management,Manage Credential Type,Password,Windows,SecurityEvent,Activity,"4723(S, F): An attempt was made to change an account's password",M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4723,"SecurityEvent
+| where TimeGenerated > ago(30d)
+| where EventID == 4723
+| where Activity == ""4723 - An attempt was made to change an account\'s password.""
+| distinct TimeGenerated, Activity,  ['Initiated By'] = SubjectUserName, TargetUserName
+| sort by TimeGenerated desc
+| take 1000",NA,EL001300
+EL0,01,BP,16,Identity,Identity & Credential Management,Manage Credential Type,Password,Windows,SecurityEvent,Activity,"4724(S, F): An attempt was made to reset an account's password",M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4724,"SecurityEvent
+| where TimeGenerated > ago(30d)
+| where EventID == 4724
+| where Activity == ""4724 - An attempt was made to reset an account\'s password.""
+| distinct TimeGenerated, Activity, ['Initiated By'] = SubjectUserName, TargetUserName
+| sort by TimeGenerated desc
+| take 1000",NA,EL001301
+EL0,01,BQ,17,Identity,Identity & Credential Management,Manage Credential Type,Password,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType ,Account Password Change,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table,"IdentityDirectoryEvents
+| where TimeGenerated > ago(30d)
+| where ActionType == ""Account Password changed"" //tracks both targetupn and targetdevicename
+| distinct TimeGenerated, ActionType, TargetDeviceName, TargetAccountUpn, TargetAccountDisplayName, tostring(AdditionalFields)
+| take 1000","IdentityDirectoryEvents
+| where Timestamp > ago(30d)
+| where ActionType == ""Account Password changed"" //tracks both targetupn and targetdevicename
+| distinct Timestamp, ActionType, TargetDeviceName, TargetAccountUpn, TargetAccountDisplayName, tostring(AdditionalFields)
+| take 1000",EL001302
+EL0,01,CA,01,Identity,Identity & Credential Management,Attributes,Establish/Manage: Organization & Groups/Roles,Entra,AuditLogs,TargetResources,Attribute Value,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //review modified properties (attributes) from users, service, sync and scim
+| where TimeGenerated > ago(30d)
+| extend x = tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].displayName)
+| extend [""Attribute Value""] = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[0].newValue))[0])
+| extend Target = tostring(TargetResources[0].userPrincipalName)
+| extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)
+| parse x with * '.' ['Attribute Set Name'] ""_"" *
+| extend [""Attribute Name""]=split(x, ""_"")[1]
+| extend InitiatedBySync = iif(tostring(InitiatedBy.user.userPrincipalName) !has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| extend InitiatedByUser = iif(tostring(InitiatedBy.user.userPrincipalName) has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| distinct TimeGenerated,       
+            ['Service'] = Identity,      
+            ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), 
+            ['InitiatedBySync'], 
+            ['InitiatedByUser'], 
+            Result,
+            ['Target-Resource'] = tostring(TargetResources)
+| sort by TimeGenerated desc
+| take 1000","//capturing attribute changes based off MDI actiontypes, user attributes. See windows event logs (EVENTID 5136) for extended attribute changes.
+let ADAttributeChanges = 
+    dynamic([
+        ""Account Constrained Delegation State Changed"",
+        ""Account Constrained Delegation SPNs Changed"",
+        ""Account Delegation Changed"",
+        ""Account Disabled Changed"",
+        ""Account Expired"",
+        ""Account Expiry Time Changed"",
+        ""Account Locked Changed"",
+        ""Account Password Changed"",
+        ""Account Password Expired"",
+        ""Account Password Never Expires Changed"",
+        ""Account Password Not Required Changed"",
+        ""Account Smartcard Required Changed"",
+        ""Account Supported Encryption Types Changed"",
+        ""Account Unlock changed"",
+        ""Account UPN Name Changed"",
+        ""Group Membership Changed"",
+        ""User Mail Changed""
+    ]);
+IdentityDirectoryEvents
+| where Timestamp > ago(7d)
+| where ActionType has_any (ADAttributeChanges)
+| distinct Timestamp, ActionType, Application, TargetAccountUpn, TargetAccountDisplayName, TargetDeviceName, tostring(AdditionalFields)
+| sort by Timestamp desc
+",
+EL0,01,CB,02,Identity,Identity & Credential Management,Attributes,Establish/Manage: Organization & Groups/Roles,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType,ADAttributeChanges,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-for-identity/monitored-activities#monitored-user-activities-user-account-ad-attribute-changes,"//capturing attribute changes based off MDI actiontypes, user attributes. See windows event logs (EVENTID 5136) for extended attribute changes.
+let ADAttributeChanges = 
+    dynamic([
+        ""Account Constrained Delegation State Changed"",
+        ""Account Constrained Delegation SPNs Changed"",
+        ""Account Delegation Changed"",
+        ""Account Disabled Changed"",
+        ""Account Expired"",
+        ""Account Expiry Time Changed"",
+        ""Account Locked Changed"",
+        ""Account Password Changed"",
+        ""Account Password Expired"",
+        ""Account Password Never Expires Changed"",
+        ""Account Password Not Required Changed"",
+        ""Account Smartcard Required Changed"",
+        ""Account Supported Encryption Types Changed"",
+        ""Account Unlock changed"",
+        ""Account UPN Name Changed"",
+        ""Group Membership Changed"",
+        ""User Mail Changed""
+    ]);
+IdentityDirectoryEvents
+| where TimeGenerated > ago(30d)
+| where ActionType has_any (ADAttributeChanges)
+| distinct TimeGenerated, ActionType, Application, TargetAccountUpn, TargetAccountDisplayName, TargetDeviceName, tostring(AdditionalFields)
+| sort by TimeGenerated desc
+| take 1000
+
+
+IdentityDirectoryEvents
+| where TimeGenerated > ago(30d)
+//| where Application == ""Active Directory""
+| where ActionType contains 'group'
+| extend ToGroup = tostring(parse_json(AdditionalFields).[""TO.GROUP""])
+| extend FromGroup = tostring(parse_json(AdditionalFields).[""FROM.GROUP""])
+| extend Action = iff(isempty(ToGroup), ""Remove"", ""Add"")
+| extend GroupModified = iff(isempty(ToGroup), FromGroup, ToGroup)
+| extend Target_Group = tostring(parse_json(AdditionalFields).[""TARGET_OBJECT.GROUP""])
+| sort by TimeGenerated desc 
+| take 1000","//capturing attribute changes based off MDI actiontypes, user attributes. See windows event logs (EVENTID 5136) for extended attribute changes.
+let ADAttributeChanges = 
+    dynamic([
+        ""Account Constrained Delegation State Changed"",
+        ""Account Constrained Delegation SPNs Changed"",
+        ""Account Delegation Changed"",
+        ""Account Disabled Changed"",
+        ""Account Expired"",
+        ""Account Expiry Time Changed"",
+        ""Account Locked Changed"",
+        ""Account Password Changed"",
+        ""Account Password Expired"",
+        ""Account Password Never Expires Changed"",
+        ""Account Password Not Required Changed"",
+        ""Account Smartcard Required Changed"",
+        ""Account Supported Encryption Types Changed"",
+        ""Account Unlock changed"",
+        ""Account UPN Name Changed"",
+        ""Group Membership Changed"",
+        ""User Mail Changed""
+    ]);
+IdentityDirectoryEvents
+| where Timestamp > ago(30d)
+| where ActionType has_any (ADAttributeChanges)
+| distinct Timestamp, ActionType, Application, TargetAccountUpn, TargetAccountDisplayName, TargetDeviceName, tostring(AdditionalFields)
+| sort by Timestamp desc
+| take 1000
+
+
+IdentityDirectoryEvents
+//| where Application == ""Active Directory""
+| where Timestamp > ago(30d)
+| where ActionType contains 'group'
+| extend ToGroup = tostring(parse_json(AdditionalFields).[""TO.GROUP""])
+| extend FromGroup = tostring(parse_json(AdditionalFields).[""FROM.GROUP""])
+| extend Action = iff(isempty(ToGroup), ""Remove"", ""Add"")
+| extend GroupModified = iff(isempty(ToGroup), FromGroup, ToGroup)
+| extend Target_Group = tostring(parse_json(AdditionalFields).[""TARGET_OBJECT.GROUP""])
+| sort by Timestamp desc 
+| take 1000",
+EL0,01,CC,03,Identity,Identity & Credential Management,Attributes,Establish/Manage: Organization & Groups/Roles,Microsoft Defender for Endpoint,DeviceEvents,ActionType,group,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceevents-table,"DeviceEvents //establish/manage org and groups/roles
+| where TimeGenerated > ago(30d)
+| where ActionType contains ""group""
+| distinct TimeGenerated, ActionType, DeviceName, ['Initiated By'] = InitiatingProcessAccountName, tostring(AdditionalFields)
+| sort by TimeGenerated desc
+| take 1000","DeviceEvents //establish/manage org and groups/roles
+| where Timestamp > ago(30d)
+| where ActionType contains ""group""
+| distinct Timestamp, ActionType, DeviceName, ['Initiated By'] = InitiatingProcessAccountName, tostring(AdditionalFields)
+| sort by Timestamp desc
+| take 1000",
+EL0,01,CD,04,Identity,Identity & Credential Management,Attributes,Establish/Manage: Organization & Groups/Roles,Windows,SecurityEvent,Activity,5137(S): A directory service object was modified,M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-5137,"SecurityEvent //This event documents creations of AD objects, identifying the object created and user who created it. 
+| extend d = parse_xml(EventData)
+| extend EventDataParsed = parse_json(tostring(d.EventData))
+| mv-expand DataItem = EventDataParsed.Data
+| where TimeGenerated > ago(30d)
+| where EventID == 5137
+| where Activity == ""5137 - A directory service object was created.""
+| distinct TimeGenerated, Name = tostring(DataItem[""@Name""]), Value = tostring(DataItem[""#text""]), Activity, Source = ""SecurityEvent""
+| summarize 
+    InitiatedBy = anyif(Value, Name == ""SubjectUserName""),
+    TargetUserName = anyif(Value, Name == ""ObjectDN""),
+    ['Object Class'] = anyif(Value, Name == ""ObjectClass""),
+    ['Attributes'] = make_list_if(Value, Name contains ""Attribute"")
+    by TimeGenerated, Activity
+| sort by TimeGenerated desc
+| take 1000",,EL001306
+EL0,01,CE,01,Identity,Identity & Credential Management,Attributes,Manage/Track Changes in Attributes & Credentials,Entra,AuditLogs,OperationName ,Update user,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //audit update user by service, app or user
+| where TimeGenerated > ago(30d)
+| where OperationName == 'Update user'
+| extend InitiatedBySync = iif(tostring(InitiatedBy.user.userPrincipalName) !has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| extend InitiatedByUser = iif(tostring(InitiatedBy.user.userPrincipalName) has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| distinct TimeGenerated,       
+            ['Service'] = Identity,      
+            ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), 
+            ['InitiatedBySync'], 
+            ['InitiatedByUser'], 
+            Result,
+            ['Target-Resource'] = tostring(TargetResources)
+| sort by TimeGenerated desc
+| take 1000",,EL001307
+EL0,01,CF,02,Identity,Identity & Credential Management,Attributes,Manage/Track Changes in Attributes & Credentials,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType,ADAttributeChanges,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table,"//capturing attribute changes based off MDI actiontypes, all attributes. 
+let ADAttributeChanges = 
+    dynamic([
+        ""Account Constrained Delegation State Changed"",
+        ""Account Constrained Delegation SPNs Changed"",
+        ""Account Delegation Changed"",
+        ""Account Disabled Changed"",
+        ""Account Expired"",
+        ""Account Expiry Time Changed"",
+        ""Account Locked Changed"",
+        ""Account Password Changed"",
+        ""Account Password Expired"",
+        ""Account Password Never Expires Changed"",
+        ""Account Password Not Required Changed"",
+        ""Account Smartcard Required Changed"",
+        ""Account Supported Encryption Types Changed"",
+        ""Account Unlock changed"",
+        ""Account UPN Name Changed"",
+        ""Group Membership Changed"",
+        ""User Mail Changed"",
+        ""User Account Created"",
+        ""Computer Account Created"",
+        ""Security Principal Deleted Changed"",
+        ""Security Principal Display Name Changed"",
+        ""Security Principal Name Changed"",
+        ""Security Principal Path Changed"",
+        ""Security Principal Sam Name Changed""
+    ]);
+IdentityDirectoryEvents
+| where TimeGenerated > ago(30d)
+| where ActionType has_any (ADAttributeChanges)
+| distinct TimeGenerated, ActionType, Application, TargetAccountUpn, TargetAccountDisplayName, TargetDeviceName, tostring(AdditionalFields)
+| sort by TimeGenerated desc
+| take 1000","//capturing attribute changes based off MDI actiontypes, all attributes. 
+let ADAttributeChanges = 
+    dynamic([
+        ""Account Constrained Delegation State Changed"",
+        ""Account Constrained Delegation SPNs Changed"",
+        ""Account Delegation Changed"",
+        ""Account Disabled Changed"",
+        ""Account Expired"",
+        ""Account Expiry Time Changed"",
+        ""Account Locked Changed"",
+        ""Account Password Changed"",
+        ""Account Password Expired"",
+        ""Account Password Never Expires Changed"",
+        ""Account Password Not Required Changed"",
+        ""Account Smartcard Required Changed"",
+        ""Account Supported Encryption Types Changed"",
+        ""Account Unlock changed"",
+        ""Account UPN Name Changed"",
+        ""Group Membership Changed"",
+        ""User Mail Changed"",
+        ""User Account Created"",
+        ""Computer Account Created"",
+        ""Security Principal Deleted Changed"",
+        ""Security Principal Display Name Changed"",
+        ""Security Principal Name Changed"",
+        ""Security Principal Path Changed"",
+        ""Security Principal Sam Name Changed""
+    ]);
+IdentityDirectoryEvents
+| where Timestamp > ago(30d)
+| where ActionType has_any (ADAttributeChanges)
+| distinct Timestamp, ActionType, Application, TargetAccountUpn, TargetAccountDisplayName, TargetDeviceName, tostring(AdditionalFields)
+| sort by Timestamp desc
+| take 1000",EL001308
+EL0,01,CG,03,Identity,Identity & Credential Management,Attributes,Manage/Track Changes in Attributes & Credentials,Windows,SecurityEvent,Activity,5136(S): A directory service object was modified,M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-5136,"SecurityEvent //This event documents modifications to AD objects, identifying the object, user, attribute modified, the new value of the attribute if applicable and the operation performed. 
+| extend d = parse_xml(EventData)
+| extend EventDataParsed = parse_json(tostring(d.EventData))
+| mv-expand DataItem = EventDataParsed.Data
+| where TimeGenerated > ago(30d)
+| where EventID == 5136
+| where Activity == ""5136 - A directory service object was modified.""
+| distinct TimeGenerated, Name = tostring(DataItem[""@Name""]), Value = tostring(DataItem[""#text""]), Activity, Source = ""SecurityEvent""
+| summarize 
+    InitiatedBy = anyif(Value, Name == ""SubjectUserName""),
+    TargetUserName = anyif(Value, Name == ""ObjectDN""),
+    ['Object Class'] = anyif(Value, Name == ""ObjectClass""),
+    ['Attributes'] = make_list_if(Value, Name contains ""Attribute"")
+    by TimeGenerated, Activity
+| sort by TimeGenerated desc
+| take 1000",,EL001309
+EL0,01,CH,04,Identity,Identity & Credential Management,Attributes,Manage/Track Changes in Attributes & Credentials,Microsoft Defender for Endpoint,DeviceEvents,ActionType,user,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceevents-table,"DeviceEvents //establish/manage org and groups/roles
+| where TimeGenerated > ago(30d)
+| where ActionType contains ""user""
+| distinct TimeGenerated, ActionType, ['Initiated By'] = InitiatingProcessAccountName, DeviceName, AccountDomain, AccountName, tostring(AdditionalFields)
+| sort by TimeGenerated desc
+| take 1000","DeviceEvents //establish/manage org and groups/roles
+| where Timestamp > ago(30d)
+| where ActionType contains ""user""
+| distinct Timestamp, ActionType, ['Initiated By'] = InitiatingProcessAccountName, DeviceName, AccountDomain, AccountName, tostring(AdditionalFields)
+| sort by Timestamp desc
+| take 1000",EL001310
+EL0,01,CI,05,Identity,Identity & Credential Management,Attributes,Manage/Track Changes in Attributes & Credentials,Windows,SecurityEvent,Activity,4738(S): A user account was changed,M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4738,"SecurityEvent //review reference to dictact what was changed, more so who did so to what account
+| where TimeGenerated > ago(30d)
+| where EventID == 4738
+| where Activity == ""4738 - A user account was changed.""
+| distinct TimeGenerated, Activity, ['Initiated By'] = SubjectUserName, TargetUserName
+| sort by TimeGenerated desc
+| take 1000",,
+EL0,01,EA,01,Identity,Identity & Credential Management,Track Usage,Credential Usage,Windows,SecurityEvent,Activity,"4768(S, F): A Kerberos authentication ticket (TGT) was requested",M-21-31 DCR RULE - on Git,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4768,"SecurityEvent //This event is logged on domain controllers only and both success and failure instances of this event are logged.
+| extend d = parse_xml(EventData)
+| extend EventDataParsed = parse_json(tostring(d.EventData))
+| mv-expand DataItem = EventDataParsed.Data
+| where TimeGenerated >= ago(30d)
+| where EventID == 4768
+| where Activity == ""4768 - A Kerberos authentication ticket (TGT) was requested.""
+| distinct TimeGenerated, Name = tostring(DataItem[""@Name""]), Value = tostring(DataItem[""#text""]), Activity, Source = ""SecurityEvent""
+| summarize 
+    User = anyif(Value, Name == ""TargetUserName""),
+    CertIssuerName = anyif(Value, Name == ""CertIssuerName""), 
+    CertSerialNumber = anyif(Value, Name == ""CertSerialNumber""), 
+    CertThumbprint = anyif(Value, Name == ""CertThumbprint"") 
+    by TimeGenerated, Source, Activity
+| where isnotempty(CertIssuerName) and isnotempty(CertSerialNumber) and isnotempty(CertThumbprint)
+| where User !contains ""$"" //comment out to see machines
+| sort by TimeGenerated desc",,EL001311
+EL0,01,EB,02,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,SigninLogs,AuthenticationDetails,AuthenticationDetails,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-in-log-activity-details#authentication-details,"SigninLogs //Interactive user sign-ins are sign-ins that require the user to supply an authentication factor
+| where TimeGenerated > ago(30d)
+| mv-expand todynamic(AuthenticationDetails)
+| extend AuthMethod = tostring(AuthenticationDetails.authenticationMethod)
+| where AuthMethod <> ""Previously satisfied""
+| where isnotempty(AuthMethod)
+| distinct TimeGenerated, UserPrincipalName, AuthMethod, Category, AppDisplayName
+| summarize count() by TimeGenerated, AuthMethod, UserPrincipalName, AppDisplayName
+| sort by TimeGenerated desc
+| take 1000",,EL001312
+EL0,01,EC,03,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,AADNonInteractiveUserSignInLogs,AuthenticationDetails,AuthenticationDetails,"https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs
+
+https://github.com/Cyberlorians/M-21-31/blob/main/EL0/Identity/Transform-AADNonInteractive.md",https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-noninteractive-sign-ins,"AADNonInteractiveUserSignInLogs //Non-interactive user sign-ins are sign-ins that were performed by a client app or an OS component on behalf of a user
+| where TimeGenerated > ago(30d)
+| mv-expand todynamic(AuthenticationDetails)
+| extend AuthMethod = tostring(AuthenticationDetails.authenticationMethod)
+| where isnotempty(AuthMethod)
+| distinct TimeGenerated, UserPrincipalName, AuthMethod, Category, AppDisplayName
+| summarize count() by TimeGenerated, UserPrincipalName, AppDisplayName
+| sort by TimeGenerated desc 
+| take 1000",NA,EL001313
+EL0,01,ED,04,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,AADServicePrincipalSignInLogs,OperationName ,Sign-in activity,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-service-principal-sign-ins,"AADServicePrincipalSignInLogs //SP sign-in activity
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Sign-in activity""
+| distinct TimeGenerated, ServicePrincipalName, AppId, ResultType, ResultDescription
+| summarize count() by TimeGenerated, ServicePrincipalName, AppId, ResultType
+| sort by TimeGenerated desc  
+| take 1000","//capturing attribute changes based off MDI actiontypes, all attributes. 
+let ADAttributeChanges = 
+    dynamic([
+        ""Account Constrained Delegation State Changed"",
+        ""Account Constrained Delegation SPNs Changed"",
+        ""Account Delegation Changed"",
+        ""Account Disabled Changed"",
+        ""Account Expired"",
+        ""Account Expiry Time Changed"",
+        ""Account Locked Changed"",
+        ""Account Password Changed"",
+        ""Account Password Expired"",
+        ""Account Password Never Expires Changed"",
+        ""Account Password Not Required Changed"",
+        ""Account Smartcard Required Changed"",
+        ""Account Supported Encryption Types Changed"",
+        ""Account Unlock changed"",
+        ""Account UPN Name Changed"",
+        ""Group Membership Changed"",
+        ""User Mail Changed"",
+        ""User Account Created"",
+        ""Computer Account Created"",
+        ""Security Principal Deleted Changed"",
+        ""Security Principal Display Name Changed"",
+        ""Security Principal Name Changed"",
+        ""Security Principal Path Changed"",
+        ""Security Principal Sam Name Changed""
+    ]);
+IdentityDirectoryEvents
+| where Timestamp > ago(7d)
+| where ActionType has_any (ADAttributeChanges)
+| distinct Timestamp, ActionType, Application, TargetAccountUpn, TargetAccountDisplayName, TargetDeviceName, tostring(AdditionalFields)
+| sort by Timestamp desc",
+EL0,01,EE,05,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,ManagedIdentitySigninlogs,OperationName ,Sign-in activity,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-managed-identity-sign-ins,"AADManagedIdentitySignInLogs //Managed Identity sign-in activity
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Sign-in activity""
+| distinct TimeGenerated, ['Managed Identity'] = ServicePrincipalName, AppId
+| summarize count() by TimeGenerated, ['Managed Identity'] , AppId
+| sort by TimeGenerated desc 
+| take 1000",,
+EL0,01,EF,06,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,ADFSSignInLogs,OperationName ,Sign-in activity,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/troubleshoot/entra/entra-id/ad-dmn-services/understand-ad-fs-sign-in-events-azure-ad-connect-health,"ADFSSignInLogs
+| where TimeGenerated > ago(30d)
+| where OperationName == ""Sign-in activity""
+| distinct TimeGenerated, UserPrincipalName, ResourceIdentity, Requirement, AuthenticationDetails, AuthenticationProcessingDetails
+| sort by TimeGenerated desc
+| take 1000","DeviceEvents //establish/manage org and groups/roles
+| where Timestamp > ago(7d)
+| where ActionType contains ""user""
+| distinct Timestamp, ActionType, ['Initiated By'] = InitiatingProcessAccountName, DeviceName, AccountDomain, AccountName, tostring(AdditionalFields)
+| sort by Timestamp desc",
+EL0,01,EG,07,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,AADUserRiskEvents,OperationName,User Risk Detection,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-investigate-risk,"// Extend the columns and calculate the time delta between the sign in event and the risk event, for real time that is obviously going to be quick, but for offline you can find out how long it took for the risk to be flagged. Also tracking usage of Authentication Details
+let signin=
+SigninLogs
+| where TimeGenerated > ago(90d)
+| extend SigninTime = TimeGenerated
+| where RiskEventTypes_V2 != ""[]"";
+AADUserRiskEvents //AADUserRiskEvents – this is the data that you would see in Azure AD Identity Protection if you went and viewed the risk detections, or risky sign-in reports
+| where TimeGenerated > ago(90d)
+| where OperationName == ""User Risk Detection""
+| join kind=inner signin on CorrelationId
+| extend RiskTime = TimeGenerated
+| extend TimeDelta = abs(SigninTime - RiskTime)
+| distinct TimeGenerated, UserPrincipalName, AppDisplayName, DetectionTimingType, SigninTime, RiskTime, TimeDelta, RiskEventType, RiskLevelDuringSignIn, Source, RiskDetail, RiskState, AuthenticationDetails
+// comment out line 11/12 to see all RiskStates
+| where RiskState <> ""remediated""
+| where RiskState <> ""dismissed""
+| sort by TimeGenerated desc
+| take 1000",,
+EL0,01,EH,08,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,AADRiskyUsers,RiskState,dismissed,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-investigate-risk,"let riskyevent=
+SigninLogs
+| where TimeGenerated > ago(90d)
+| extend SigninTime = TimeGenerated
+| where RiskEventTypes_V2 != ""[]""
+| join kind=inner (
+AADUserRiskEvents //AADUserRiskEvents – this is the data that you would see in Azure AD Identity Protection if you went and viewed the risk detections, or risky sign-in reports
+| where TimeGenerated > ago(90d)
+| extend RiskTime = TimeGenerated
+) on CorrelationId
+| distinct TimeGenerated, UserPrincipalName, DetectionTimingType, RiskLevelDuringSignIn, Location, IPAddress, AuthenticationDetails;
+AADRiskyUsers //AADRiskyUsers – this is the data from the Risky Users blade in Azure AD Identity Protection but streamed as log data, so will include when users are remediated.
+| summarize arg_max(TimeGenerated, *) by UserPrincipalName
+| join kind=inner riskyevent on UserPrincipalName
+| where RiskState contains 'dismissed'  //shows the state of a user if remediated, remove to see all
+| distinct TimeGenerated, UserPrincipalName, DetectionTimingType, RiskLevelDuringSignIn, RiskState, Location, IPAddress, AuthenticationDetails
+| sort by TimeGenerated desc 
+| take 1000",,
+EL0,01,EI,09,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,AADServicePrincipalRiskEvents,Type,AADServicePrincipalRiskEvents,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-investigate-risk,"// Extend the columns and calculate the time delta between the sign in event and the risk event, for real time that is obviously going to be quick, but for offline you can find out how long it took for the risk to be flagged. Also tracking usage of Authentication Details
+let spsignin=
+AADServicePrincipalSignInLogs
+| extend SigninTime = TimeGenerated
+| where TimeGenerated > ago(90d);
+AADServicePrincipalRiskEvents //AADServicePrincipalRiskEvents – this is the data that you would see in Azure AD Identity Protection if you went and viewed the risk detections, or risky sign-in reports
+| where TimeGenerated > ago(90d)
+| join kind=inner spsignin on AppId
+| extend RiskTime = TimeGenerated
+| extend TimeDelta = abs(SigninTime - RiskTime)
+| distinct TimeGenerated, ServicePrincipalName, DetectionTimingType, SigninTime, RiskTime, TimeDelta, RiskEventType, Source, RiskDetail, RiskState, ConditionalAccessPolicies
+// comment out line 11/12 to see all RiskStates
+| where RiskState <> ""remediated""
+| where RiskState <> ""dismissed""
+| sort by TimeGenerated desc
+| take 1000",,
+EL0,01,EJ,10,Identity,Identity & Credential Management,Track Usage,Credential Usage,Entra,AADRiskyServicePrincipals,RiskState,dismissed,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-investigate-risk,"let spsignin=
+AADServicePrincipalSignInLogs
+| extend SigninTime = TimeGenerated
+| where TimeGenerated > ago(90d)
+| join kind=inner (
+AADServicePrincipalRiskEvents
+| where Type == 'AADServicePrincipalRiskEvents'
+| where TimeGenerated > ago(90d)
+) on AppId;
+AADRiskyServicePrincipals
+| join kind=inner spsignin on AppId
+| summarize arg_max(TimeGenerated, *) by AppId
+| where RiskState contains 'dismissed'  //shows the state of the sp if remediated, remove to see all
+| distinct TimeGenerated, AppId, ServicePrincipalName, DetectionTimingType, SigninTime, RiskEventType, RiskLevel, Source, RiskDetail, RiskState, ConditionalAccessPolicies
+| sort by TimeGenerated desc 
+| take 1000",,
+EL0,01,EK,11,Identity,Identity & Credential Management,Track Usage,Credential Usage,Microsoft Defender for Identity,IdentityLogonEvents,AccountName,(acctlist),https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitylogonevents-table,"let acctlist = dynamic([""useracctname""]); //use inline with where accountupn acctlist //track user and spn
+IdentityLogonEvents
+| where TimeGenerated > ago(30d)
+| where AccountName in~ (acctlist) //edit to verify your svc creations
+//| where AccountName == 'useracctname' //edit your svc acct
+| distinct TimeGenerated, AccountName, LogonType, ActionType, Application
+| sort by TimeGenerated desc
+| take 1000","let acctlist = dynamic([""useracctname""]); //use inline with where accountupn acctlist //track user and spn
+IdentityLogonEvents
+| where Timestamp > ago(30d)
+| where AccountName in~ (acctlist) //edit to verify your svc creations
+//| where AccountName == 'useracctname' //edit your svc acct
+| distinct Timestamp, AccountName, LogonType, ActionType, Application
+| sort by Timestamp desc
+| take 1000",
+EL0,01,FA,01,Identity,Identity & Credential Management,Account,Account Deletion,Entra,AuditLogs,OperationName ,Delete user,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"AuditLogs //audit deleted user by service, app or user
+| where TimeGenerated > ago(30d)
+| where OperationName == 'Delete user'
+| extend InitiatedBySync = iif(tostring(InitiatedBy.user.userPrincipalName) !has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| extend InitiatedByUser = iif(tostring(InitiatedBy.user.userPrincipalName) has ""Sync"", """", tostring(InitiatedBy.user.userPrincipalName))
+| distinct TimeGenerated,    
+            OperationName,   
+            ['Service'] = Identity,      
+            ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), 
+            ['InitiatedBySync'], 
+            ['InitiatedByUser'], 
+            Result,
+            ['Target-Resource'] = tostring(TargetResources)            
+| sort by TimeGenerated desc
+| take 1000",,EL001317
+EL0,01,FB,02,Identity,Identity & Credential Management,Account,Account Deletion,Entra,MicrosoftGraphActivityLogs,RequestMethod,DELETE,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/graph/api/resources/users,"MicrosoftGraphActivityLogs //View POST (Success/Failures) methods on delete user
+| where TimeGenerated > ago(30d)
+| where RequestMethod == 'POST'
+| where RequestUri has '/users' //Captures /beta and /v1.0
+| join (
+    AuditLogs
+    | extend Id = tostring(parse_json(tostring(InitiatedBy.user)).id)
+) on $left.UserId == $right.Id
+| where Result == ""success""
+| where OperationName == ""Delete user""
+| distinct ActivityDateTime, RequestUri, ['Service'] = Identity, ['InitiatedByApp'] = tostring(parse_json(tostring(InitiatedBy.app)).displayName), ['InitiatedByUser'] = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName), OperationName, Result, ['Target-Resource'] = tostring(TargetResources)
+| sort by ActivityDateTime desc
+| take 1000",,EL001318
+EL0,01,FC,03,Identity,Identity & Credential Management,Account,Account Deletion,Microsoft Defender for Identity,IdentityDirectoryEvents,ActionType,Account Deleted changed,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDI,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table,"IdentityDirectoryEvents //view deleted user, group and device via Microsoft Defender for Identity
+| where TimeGenerated > ago(30d)
+| where ActionType == ""Account Deleted changed""
+| where Application == ""Active Directory""
+| extend TARGET_OBJECT_DEVICE_ = tostring(AdditionalFields.[""TARGET_OBJECT.DEVICE""])
+| extend TARGET_OBJECT_GROUP_ = tostring(AdditionalFields.[""TARGET_OBJECT.GROUP""])
+| extend TARGET_OBJECT_USER_ = tostring(AdditionalFields.[""TARGET_OBJECT.USER""])
+| distinct TimeGenerated, ActionType, Application, TARGET_OBJECT_USER_, TARGET_OBJECT_GROUP_, TARGET_OBJECT_DEVICE_
+| sort by TimeGenerated desc
+| take 1000","IdentityDirectoryEvents //view deleted user, group and device via Microsoft Defender for Identity
+| where Timestamp > ago(30d)
+| where ActionType == ""Account Deleted changed""
+| where Application == ""Active Directory""
+| extend TARGET_OBJECT_DEVICE_ = tostring(AdditionalFields.[""TARGET_OBJECT.DEVICE""])
+| extend TARGET_OBJECT_GROUP_ = tostring(AdditionalFields.[""TARGET_OBJECT.GROUP""])
+| extend TARGET_OBJECT_USER_ = tostring(AdditionalFields.[""TARGET_OBJECT.USER""])
+| distinct Timestamp, ActionType, Application, TARGET_OBJECT_USER_, TARGET_OBJECT_GROUP_, TARGET_OBJECT_DEVICE_
+| sort by Timestamp desc
+| take 1000",EL001319
+EL0,01,FD,04,Identity,Identity & Credential Management,Account,Account Deletion,Entra,AADProvisioningLogs,Action ,Delete,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-provisioning-logs#what-can-you-do-with-the-provisioning-logs,"AADProvisioningLogs //deletion is shown by any type service principal using SCIM
+| where TimeGenerated > ago(30d)
+| where ProvisioningAction == ""delete"" 
+| extend ['Service'] = tostring(parse_json(InitiatedBy).Name)
+| extend ['InitiatedByApp'] = tostring(parse_json(ServicePrincipal).Name)
+| distinct TimeGenerated, ['Service'], ['InitiatedByApp'], OperationName, ResultType, ModifiedProperties
+| sort by TimeGenerated desc
+| take 1000",,EL001320
+EL0,01,FE,05,Identity,Identity & Credential Management,Account,Account Deletion,Windows,SecurityEvent,Activity,4726(S): A user account was deleted,M2131 DCR,https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4726,"SecurityEvent
+| extend d = parse_xml(EventData)
+| extend EventDataParsed = parse_json(tostring(d.EventData))
+| mv-expand DataItem = EventDataParsed.Data
+| where TimeGenerated > ago(30d)
+| where EventID == 4726
+| where Activity == ""4726 - A user account was deleted.""
+| distinct TimeGenerated, Name = tostring(DataItem[""@Name""]), Value = tostring(DataItem[""#text""]), Activity, Source = ""SecurityEvent""
+| summarize 
+    InitiatedBy = anyif(Value, Name == ""SubjectUserName""),
+    TargetUserName = anyif(Value, Name == ""TargetUserName""),
+    DisplayName = anyif(Value, Name == ""DisplayName"")
+    by TimeGenerated, Source, Activity
+    | sort by TimeGenerated desc  
+    | take 1000",,EL001321
+EL0,01,FF,06,Identity,Identity & Credential Management,Account,Account Deletion,Microsoft Defender for Endpoint,DeviceEvents,ActionType,UserAccountDeleted,https://learn.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE,https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceevents-table,"DeviceEvents //establish/manage org and groups/roles
+| where TimeGenerated > ago(30d)
+| where ActionType == ""UserAccountDeleted""
+| distinct TimeGenerated, ActionType, ['Initiated By'] = InitiatingProcessAccountName, DeviceName, AccountDomain, AccountName, tostring(AdditionalFields)
+| sort by TimeGenerated desc
+| take 1000","DeviceEvents //establish/manage org and groups/roles
+| where Timestamp > ago(30d)
+| where ActionType == ""UserAccountDeleted""
+| distinct Timestamp, ActionType, ['Initiated By'] = InitiatingProcessAccountName, DeviceName, AccountDomain, AccountName, tostring(AdditionalFields)
+| sort by Timestamp desc
+| take 1000",
