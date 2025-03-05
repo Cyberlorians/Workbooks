@@ -1,0 +1,625 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "# [Maturity Model for Event Log Management (M-21-31) Solution](https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/modernize-log-management-with-the-maturity-model-for-event-log/ba-p/3072842)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n"
+                  },
+                  "name": "Workbook Overview"
+                }
+              ]
+            },
+            "customWidth": "79",
+            "name": "group - 2"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "![Image Name](https://azure.microsoft.com/svghandler/azure-sentinel?width=600&height=315) "
+            },
+            "customWidth": "21",
+            "name": "Microsoft Sentinel Logo"
+          }
+        ]
+      },
+      "name": "group - 14"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL0 - Not Effective\\\", \\\"tab\\\": \\\"EL0\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL1 - Basic\\\", \\\"tab\\\": \\\"EL1\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL2 - Intermediate\\\", \\\"tab\\\": \\\"EL2\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL3 - Advanced\\\", \\\"tab\\\": \\\"EL3\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
+              "size": 1,
+              "exportMultipleValues": true,
+              "exportedParameters": [
+                {
+                  "fieldName": "tab",
+                  "parameterName": "Tab",
+                  "parameterType": 1
+                }
+              ],
+              "queryType": 8,
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "tab",
+                    "formatter": 5
+                  }
+                ]
+              }
+            },
+            "customWidth": "90",
+            "name": "EL-JSON"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "8f836776-6a60-46a6-8d25-be73bf045494",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL0Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL0",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "3758b348-e74f-437f-abd4-4e6e66b1be7e",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL1Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL1",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "aa7ebd19-042f-46e5-a510-cf22deda0491",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL2Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL2",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "03b0ef89-0638-4acc-a4db-2428fea9a844",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL3Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL3",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "5",
+            "name": "EL-JSON-Params"
+          }
+        ],
+        "exportParameters": true
+      },
+      "customWidth": "50",
+      "name": "Event-Selection"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Identity\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Network\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Email\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Opearting Systems\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Cloud\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
+              "size": 1,
+              "exportMultipleValues": true,
+              "exportedParameters": [
+                {
+                  "fieldName": "tab",
+                  "parameterName": "Tab",
+                  "parameterType": 1
+                }
+              ],
+              "queryType": 8,
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "tab",
+                    "formatter": 5
+                  }
+                ]
+              }
+            },
+            "customWidth": "90",
+            "name": "EL0-JSON"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "8f836776-6a60-46a6-8d25-be73bf045494",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL01Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL01",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "3758b348-e74f-437f-abd4-4e6e66b1be7e",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL02Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL02",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "aa7ebd19-042f-46e5-a510-cf22deda0491",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL03Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL03",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "03b0ef89-0638-4acc-a4db-2428fea9a844",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL04Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL04",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                },
+                {
+                  "id": "ebe7944a-82bc-46c1-b377-0415f108cf95",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "isEL05Visible",
+                  "type": 1,
+                  "isHiddenWhenLocked": true,
+                  "criteriaData": [
+                    {
+                      "criteriaContext": {
+                        "leftOperand": "Tab",
+                        "operator": "contains",
+                        "rightValType": "static",
+                        "rightVal": "EL05",
+                        "resultValType": "static",
+                        "resultVal": "true"
+                      }
+                    },
+                    {
+                      "criteriaContext": {
+                        "operator": "Default",
+                        "resultValType": "static",
+                        "resultVal": "false"
+                      }
+                    }
+                  ],
+                  "timeContext": {
+                    "durationMs": 86400000
+                  }
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "customWidth": "5",
+            "name": "EL0-Params"
+          }
+        ],
+        "exportParameters": true
+      },
+      "conditionalVisibility": {
+        "parameterName": "isEL0Visible",
+        "comparison": "isEqualTo",
+        "value": "true"
+      },
+      "customWidth": "50",
+      "name": "EL0-Functions"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.1.0-COPY.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3)\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event']\r\n| sort by ID asc\r\n",
+              "size": 0,
+              "title": "EL0 Function - Identity",
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "exportedParameters": [
+                {
+                  "fieldName": "Microsoft Sentinel Event",
+                  "parameterName": "kql"
+                },
+                {
+                  "fieldName": "Microsoft XDR Event",
+                  "parameterName": "xdrkql",
+                  "parameterType": 1
+                }
+              ],
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Criticality",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CSL1",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CSL2",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CSL3",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Function",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Category",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Sub-Category",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Microsoft Sentinel Event",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "CellDetails",
+                      "linkIsContextBlade": true
+                    }
+                  },
+                  {
+                    "columnMatch": "Microsoft XDR Event",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Workload Integration",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Url"
+                    }
+                  },
+                  {
+                    "columnMatch": "Event Reference",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Url"
+                    }
+                  }
+                ],
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "Category"
+                  ],
+                  "expandTopLevel": false
+                }
+              }
+            },
+            "conditionalVisibility": {
+              "parameterName": "isEL01Visible",
+              "comparison": "isEqualTo",
+              "value": "true"
+            },
+            "name": "EL01-Identity"
+          }
+        ],
+        "exportParameters": true
+      },
+      "name": "EL0-Function-Group-Master"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "### Microsoft Sentinel KQL\r\n\r\n```\r\n{kql}\r\n```",
+              "style": "info"
+            },
+            "customWidth": "50",
+            "name": "Sentinel-KQL",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "### Microsoft XDR KQL\r\n\r\n```\r\n{xdrkql}\r\n```",
+              "style": "info"
+            },
+            "customWidth": "50",
+            "name": "XDR-KQL",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "kql",
+        "comparison": "isNotEqualTo"
+      },
+      "name": "KQL-Group-Text"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "{kql}",
+        "size": 3,
+        "showAnalytics": true,
+        "title": "EVENT VERIFICATION - Sentinel",
+        "showRefreshButton": true,
+        "exportFieldName": "Value",
+        "exportParameterName": "try",
+        "exportToExcelOptions": "all",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "Parameter name",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Display name",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Parameter type",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Value",
+              "formatter": 1
+            },
+            {
+              "columnMatch": "Formatted",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Label",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Pending",
+              "formatter": 5
+            },
+            {
+              "columnMatch": "Failed",
+              "formatter": 5
+            }
+          ],
+          "rowLimit": 1000,
+          "filter": true
+        },
+        "sortBy": [],
+        "mapSettings": {
+          "locInfo": "LatLong"
+        }
+      },
+      "conditionalVisibility": {
+        "parameterName": "kql",
+        "comparison": "isNotEqualTo"
+      },
+      "showPin": true,
+      "name": "Event Results"
+    }
+  ],
+  "fallbackResourceIds": [
+    "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinellaw"
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
