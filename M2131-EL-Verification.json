@@ -393,7 +393,7 @@
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces"
             },
-            "customWidth": "5",
+            "customWidth": "1",
             "name": "EL0-Params"
           }
         ],
@@ -417,7 +417,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.1.0-COPY.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3)\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event']\r\n| sort by ID asc\r\n",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.1.0-COPY.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3)\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
               "size": 0,
               "title": "EL0 Function - Identity",
               "timeContext": {
