@@ -16,7 +16,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "# [Maturity Model for Event Log Management (M-21-31) Solution](https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/modernize-log-management-with-the-maturity-model-for-event-log/ba-p/3072842)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n"
+                    "json": "# [M-21-31 Mapping - Event Verification](https://github.com/Cyberlorians/M-21-31/blob/main/ExecutiveSummary.md)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n\n\n**Instructions: Select ELO > Select Identity > Drill down into each category and SELECT a corresponding \"Criticality ID\" that aligns w/ the M21-31 PowerApp > Event Artificats will be shown as the logic used and Event Verification will be displayed if an event is logged. If needed, please click the log analytics icon on the Event Verification to adjust any KQL logic.**"
                   },
                   "name": "Workbook Overview"
                 }
@@ -47,7 +47,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL0 - Not Effective\\\", \\\"tab\\\": \\\"EL0\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL1 - Basic\\\", \\\"tab\\\": \\\"EL1\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL2 - Intermediate\\\", \\\"tab\\\": \\\"EL2\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL3 - Advanced\\\", \\\"tab\\\": \\\"EL3\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL0 - Not Effective - IN BETA (Select Here)\\\", \\\"tab\\\": \\\"EL0\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL1 - Basic - To Be Mapped\\\", \\\"tab\\\": \\\"EL1\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL2 - Intermediate - To Be Mapped\\\", \\\"tab\\\": \\\"EL2\\\" },\\r\\n\\t\\t{ \\\"Event Logging Level\\\": \\\"EL3 - Advanced - To Be Mapped\\\", \\\"tab\\\": \\\"EL3\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
               "size": 1,
               "exportMultipleValues": true,
               "exportedParameters": [
@@ -215,7 +215,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Identity\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Network\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Email\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Opearting Systems\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Cloud\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Identity - IN BETA (Select Here)\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Network - To Be Mapped\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Email - To Be Mapped\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Opearting Systems - To Be Mapped\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Cloud - To Be Mapped\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
               "size": 1,
               "exportMultipleValues": true,
               "exportedParameters": [
@@ -417,7 +417,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.1.0-COPY.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3)\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.1.0-COPY.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3)\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
               "size": 0,
               "title": "EL0 Function - Identity",
               "timeContext": {
@@ -431,6 +431,11 @@
                 {
                   "fieldName": "Microsoft XDR Event",
                   "parameterName": "xdrkql",
+                  "parameterType": 1
+                },
+                {
+                  "fieldName": "Event Reference",
+                  "parameterName": "er",
                   "parameterType": 1
                 }
               ],
@@ -479,14 +484,14 @@
                     "formatter": 5
                   },
                   {
-                    "columnMatch": "Workload Integration",
+                    "columnMatch": "Event Reference",
                     "formatter": 5,
                     "formatOptions": {
                       "linkTarget": "Url"
                     }
                   },
                   {
-                    "columnMatch": "Event Reference",
+                    "columnMatch": "Workload Integration",
                     "formatter": 5,
                     "formatOptions": {
                       "linkTarget": "Url"
@@ -519,11 +524,14 @@
       "content": {
         "version": "NotebookGroup/1.0",
         "groupType": "editable",
+        "title": "Event Artificats ",
+        "expandable": true,
+        "expanded": true,
         "items": [
           {
             "type": 1,
             "content": {
-              "json": "### Microsoft Sentinel KQL\r\n\r\n```\r\n{kql}\r\n```",
+              "json": "Reference: {er}\r\n\r\n### Microsoft Sentinel KQL\r\n\r\n```\r\n{kql}\r\n```",
               "style": "info"
             },
             "customWidth": "50",
@@ -535,7 +543,7 @@
           {
             "type": 1,
             "content": {
-              "json": "### Microsoft XDR KQL\r\n\r\n```\r\n{xdrkql}\r\n```",
+              "json": "Reference: {er}\r\n\r\n### Microsoft XDR KQL\r\n\r\n```\r\n{xdrkql}\r\n```",
               "style": "info"
             },
             "customWidth": "50",
@@ -559,7 +567,7 @@
         "query": "{kql}",
         "size": 3,
         "showAnalytics": true,
-        "title": "EVENT VERIFICATION - Sentinel",
+        "title": "EVENT VERIFICATION ",
         "showRefreshButton": true,
         "exportFieldName": "Value",
         "exportParameterName": "try",
