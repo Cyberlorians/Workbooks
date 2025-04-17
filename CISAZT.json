@@ -34,8 +34,11 @@
         {
         "GraphEndpoint": "policies",
         "GraphUri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/policies"
+        },
+         {
+        "GraphEndpoint": "subscribedSkus",
+        "GraphUri": "https://graph.microsoft.com/v1.0/subscribedSkus"
         }
-
-                   
+                       
         
 ]
