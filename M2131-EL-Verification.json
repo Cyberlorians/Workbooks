@@ -16,7 +16,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "# [M-21-31 Mapping - Event Verification](https://github.com/Cyberlorians/M-21-31/blob/main/ExecutiveSummary.md)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n\n\n**Instructions: Select ELO > Select Identity > Drill down into each category and SELECT a corresponding \"Criticality ID\" that aligns w/ the M21-31 PowerApp > Event Artificats will be shown as the logic used and Event Verification will be displayed if an event is logged. If needed, please click the log analytics icon on the Event Verification to adjust any KQL logic.**"
+                    "json": "# [M-21-31 Mapping - Event Validation](https://github.com/Cyberlorians/M-21-31/blob/main/ExecutiveSummary.md)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n\n\n**Instructions: Select ELO > Select Identity > Drill down into each category and SELECT a corresponding \"Criticality ID\" that aligns w/ the M21-31 PowerApp > Event Queries will be shown as the logic used and Event Validation will be displayed if an event is logged. If needed, please click the log analytics icon on the Event Validation to adjust any KQL logic.**"
                   },
                   "name": "Workbook Overview"
                 }
@@ -524,7 +524,7 @@
       "content": {
         "version": "NotebookGroup/1.0",
         "groupType": "editable",
-        "title": "Event Artificats ",
+        "title": "Event Queries",
         "expandable": true,
         "expanded": true,
         "items": [
@@ -567,7 +567,7 @@
         "query": "{kql}",
         "size": 3,
         "showAnalytics": true,
-        "title": "EVENT VERIFICATION ",
+        "title": "Event Validation",
         "showRefreshButton": true,
         "exportFieldName": "Value",
         "exportParameterName": "try",
