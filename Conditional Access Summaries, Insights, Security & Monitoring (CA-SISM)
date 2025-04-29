@@ -30,7 +30,7 @@
             "id": "6ddd69fd-4195-40b4-9552-bd4b26f715aa",
             "cellValue": "Tab",
             "linkTarget": "parameter",
-            "linkLabel": "Conditional Access Summaries & Insights - Workload Identities - Development",
+            "linkLabel": "Conditional Access Summaries & Insights - Workload Identities",
             "subTarget": "cap2",
             "style": "link",
             "icon": "Gear"
@@ -51,7 +51,7 @@
     {
       "type": 1,
       "content": {
-        "json": "Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM)\r\n---\r\n \r\nThe Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM) Workbook serves as a robust tool tailored for administrators aiming to gain comprehensive insights into their organization’s conditional access policies. Here are the key features offered by this workbook:\r\n\r\n1. **Dynamic Reporting:** Stay updated with real-time reporting on tenant-defined conditional access policies. This feature allows administrators to track policy application, success rates, and potential failures. Entra ID 'AuditLogs' & 'SigninLogs' are required to ingest into the workspace for visualization. *See **visualization requirements** for enablement.*\r\n\r\n2. **Log Analytics Integration for Microsoft Graph Conditional Access Policy Insights:** Deploy the [(CA-SISM) Ingestion Logic App](https://github.com/Cyberlorians/Articles/blob/main/CA-SISM-Conditional%20Access%20Summaries%2C%20Insights%2C%20Security%20%26%20Monitoring.md) logic app to ingest the graph data into the Log Analytics workspace for CA Insights. *See **visualization requirements** for enablement.*\r\n\r\n3. **Insights and Summaries:** By analyzing sign-in activities, administrators can delve deep into the application of conditional access policies, identify any gaps, and assess overall effectiveness.\r\n\r\n4. **Report-Only Policy Data:** Access specific data related to report-only policies, enabling administrators to evaluate policy impact without affecting user access.\r\n\r\n5. **In-Depth Insights:** Gain visibility into trends related to device platforms, device state, sign-in risk, and client app usage. These insights empower administrators to make informed decisions based on real-world data.\r\n\r\n6. **What If Analysis:** Utilize detailed data from the workbook to conduct What If analyses. This feature allows administrators to simulate policy changes and validate individual results before implementation.\r\n\r\n7. **Emergency Account Monitoring:** A dedicated section enables administrators to define up to two emergency accounts for monitoring and reporting on sign-ins. This ensures that these accounts remain unaffected by any conditional access policies that might block them.\r\n\r\nIn essence, the Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM) Workbook streamlines policy validation, enhances security measures, and ensures the safeguarding of emergency accounts. It stands as an indispensable resource for maintaining a robust and effective conditional access configuration.\r\n\r\n***Further Guidance - Baseline Conditional Access Deployment Templates***\r\n\r\nTo follow a Zero Trust framework methodology, conditional access templates offer a streamlined approach for implementing new policies in accordance with Microsoft's guidelines. Tailored to offer robust protection, these templates adhere to commonly adopted practices across diverse customer demographics and geographical locations. They are categorized based on their respective areas of focus, facilitating easy adherence. For more information on template categories, please review [Tailored Templates](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-policy-common?tabs=secure-foundation#template-categories).\r\n\r\n***Below are additional security tools that can be leveraged to advance Zero Trust initiatives***\r\n\r\n**[CISA SCUBA](https://github.com/cisagov/ScubaGear)**: The Secure Cloud Business Applications (SCuBA) project provides guidance and capabilities to secure agencies’ cloud business application environments and protect federal information that is created, accessed, shared and stored in those environments.\r\n\r\n**[Maester](https://maester.dev/docs/intro)**: Maester is a PowerShell based test automation framework to help you stay in control of your Microsoft security configuration.\r\n\r\n**[Entra ID Security Config Analyzer (EIDSCA)](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/AADSecurityConfigAnalyzer.md)**: The purpose of the Entra ID Security Config Analyzer is to provide a solution that pulls out Entra ID security configuration from the selected Microsoft Graph API endpoints and ingest the data to Log Analytics. Azure Workbook is used for data visualization and Microsoft Sentinel can be used to create alerts/incidents when critical configuration change is detected.\r\n\r\n**[DoD Zero Trust Strategy](https://www.microsoft.com/en-us/security/blog/2024/04/16/new-microsoft-guidance-for-the-dod-zero-trust-strategy/)**: The Department of Defense (DoD) Zero Trust Strategy and accompanying execution roadmap sets a path for achieving enterprise-wide target-level Zero Trust by 2027. The roadmap lays out vendor-agnostic Zero Trust activities that DoD Components and Defense Industrial Base (DIB) partners should complete to achieve Zero Trust capabilities and outcomes."
+        "json": "Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM)\r\n---\r\n \r\nThe Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM) Workbook serves as a robust tool tailored for administrators aiming to gain comprehensive insights into their organization’s conditional access policies. Here are the key features offered by this workbook:\r\n\r\n1. **Dynamic Reporting:** Stay updated with real-time reporting on tenant-defined conditional access policies. This feature allows administrators to track policy application, success rates, and potential failures. Entra ID 'AuditLogs' & 'SigninLogs' are required to ingest into the workspace for visualization. *See **visualization requirements** for enablement.*\r\n\r\n2. **Log Analytics Integration for Microsoft Graph Conditional Access Policy Insights:** Deploy the [(CA-SISM) Ingestion Logic App](https://github.com/Cyberlorians/Articles/blob/main/CA-SISM-Conditional%20Access%20Summaries%2C%20Insights%2C%20Security%20%26%20Monitoring.md) logic app to ingest the graph data into the Log Analytics workspace for CA Insights. *See **visualization requirements** for enablement.*\r\n\r\n3. **Insights and Summaries:** By analyzing sign-in activities, administrators can delve deep into the application of conditional access policies, identify any gaps, and assess overall effectiveness.\r\n\r\n4. **Report-Only Policy Data:** Access specific data related to report-only policies, enabling administrators to evaluate policy impact without affecting user access.\r\n\r\n5. **In-Depth Insights:** Gain visibility into trends related to device platforms, device state, sign-in risk, and client app usage. These insights empower administrators to make informed decisions based on real-world data.\r\n\r\n6. **What If Analysis:** Utilize detailed data from the workbook to conduct What If analyses. This feature allows administrators to simulate policy changes and validate individual results before implementation.\r\n\r\n7. **Emergency Account Monitoring:** A dedicated section enables administrators to define up to two emergency accounts for monitoring and reporting on sign-ins. This ensures that these accounts remain unaffected by any conditional access policies that might block them.\r\n\r\nIn essence, the Conditional Access - Summaries, Insight, Security & Monitoring (CA-SISM) Workbook streamlines policy validation, enhances security measures, and ensures the safeguarding of emergency accounts. It stands as an indispensable resource for maintaining a robust and effective conditional access configuration.\r\n\r\n***Further Guidance - Baseline Conditional Access Deployment Templates***\r\n\r\nTo follow a Zero Trust framework methodology, conditional access templates offer a streamlined approach for implementing new policies in accordance with Microsoft's guidelines. Tailored to offer robust protection, these templates adhere to commonly adopted practices across diverse customer demographics and geographical locations. They are categorized based on their respective areas of focus, facilitating easy adherence. For more information on template categories, please review [Tailored Templates](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-policy-common?tabs=secure-foundation#template-categories).\r\n\r\n***Below are additional security tools that can be leveraged to advance Zero Trust initiatives***\r\n\r\n**[CISA SCUBA](https://github.com/cisagov/ScubaGear)**: The Secure Cloud Business Applications (SCuBA) project provides guidance and capabilities to secure agencies’ cloud business application environments and protect federal information that is created, accessed, shared and stored in those environments.\r\n\r\n**[Maester](https://maester.dev/docs/intro)**: Maester is a PowerShell based test automation framework to help you stay in control of your Microsoft security configuration.\r\n\r\n**[Entra ID Security Config Analyzer (EIDSCA)](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/AADSecurityConfigAnalyzer.md)**: The purpose of the Entra ID Security Config Analyzer is to provide a solution that pulls out Entra ID security configuration from the selected Microsoft Graph API endpoints and ingest the data to Log Analytics. Azure Workbook is used for data visualization and Microsoft Sentinel can be used to create alerts/incidents when critical configuration change is detected.\r\n\r\n**[Microsoft DoD Zero Trust Strategy](https://www.microsoft.com/en-us/security/blog/2024/04/16/new-microsoft-guidance-for-the-dod-zero-trust-strategy/)**: The Department of Defense (DoD) Zero Trust Strategy and accompanying execution roadmap sets a path for achieving enterprise-wide target-level Zero Trust by 2027. The roadmap lays out vendor-agnostic Zero Trust activities that DoD Components and Defense Industrial Base (DIB) partners should complete to achieve Zero Trust capabilities and outcomes.\r\n\r\n**[Microsoft CISA Zero Trust Strategy](https://www.microsoft.com/en-us/security/blog/2024/12/19/new-microsoft-guidance-for-the-cisa-zero-trust-maturity-model/)**: The Cybersecurity Infrastructure Security Agency (CISA) Zero Trust Maturity Model (ZTMM) assists agencies in development of their Zero Trust strategies and continued evolution of their implementation plans. "
       },
       "conditionalVisibility": {
         "parameterName": "Tab",
@@ -499,7 +499,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "{WorkspaceWI}"
+          "value::all"
         ],
         "parameters": [
           {
@@ -514,9 +514,6 @@
               "value::all"
             ],
             "typeSettings": {
-              "resourceTypeFilter": {
-                "microsoft.operationalinsights/workspaces": true
-              },
               "additionalResourceOptions": [],
               "showDefault": false
             },
@@ -526,7 +523,7 @@
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+            "value": null
           },
           {
             "id": "019e403b-e0e5-4fae-ac07-a671022bbcb4",
@@ -584,7 +581,7 @@
               ]
             },
             "value": {
-              "durationMs": 2592000000
+              "durationMs": 604800000
             }
           },
           {
@@ -746,8 +743,8 @@
           }
         ],
         "style": "above",
-        "queryType": 0,
-        "resourceType": "microsoft.operationalinsights/workspaces"
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
       },
       "conditionalVisibility": {
         "parameterName": "Tab",
@@ -763,7 +760,6 @@
         "groupType": "editable",
         "title": "Conditional Access Summaries by Parameters Set",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 3,
@@ -1344,7 +1340,6 @@
         "groupType": "editable",
         "title": "Conditional Access Insights",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 1,
@@ -2092,7 +2087,7 @@
             "timeContextFromParameter": "TimeRange",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+            "value": null
           },
           {
             "id": "e327ae2b-6659-4d53-98d7-7326e30a893a",
@@ -2130,7 +2125,7 @@
               "durationMs": 86400000
             },
             "value": {
-              "durationMs": 2592000000
+              "durationMs": 1209600000
             },
             "label": "Time"
           }
@@ -2168,7 +2163,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What does the term \"Emergency Account\" (also known as \"Break Glass\") mean, and why is it important for organizations to have a way to manage emergency access? Review [manage emergency access](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) and proceed with creation.\r\n\r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create break glass accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n",
+                    "json": "## Conditional Access Emergency Account - Creation\r\n\r\n#### What does the term \"Emergency Account\" (also known as \"Break Glass\") mean, and why is it important for organizations to have a way to manage emergency access? Review [manage emergency access](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx) and proceed with creation.\r\n\r\n*It is important that you prevent being accidentally locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. You can mitigate the impact of accidental lack of administrative access by creating two or more emergency access accounts in your organization.*\r\n\r\n*Emergency access accounts are highly privileged, and they are not assigned to specific individuals. Emergency access accounts are limited to emergency or \"break glass\"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it is absolutely necessary.* \r\n\r\n#### **Step:1** - Create Emergency Access accounts according to Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#how-to-create-an-emergency-access-account).\r\n\r\n",
                     "style": "info"
                   },
                   "conditionalVisibility": {
@@ -2181,7 +2176,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account - Monitor SignIn\r\n\r\n#### **Step:2** - Monitor SignIn events of the emergency accounts and create alert rules. Follow guidance for an [Alert Rule](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#create-an-alert-rule) in Azure Monitor.\r\n\r\n#### If you're using Microsoft Sentinel, it's recommended that you set up an Analytical Rule to monitor how emergency accounts are being used. You can find more information about this in a [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/) that you should review.\r\n\r\n#### To monitor SignIn events, enter the full UserPrincipalName or UserID values for the emergency accounts in the parameters below. Note that you should only have two of these accounts, which is why the parameter allows for 2x(UserPrincipalName) or 2x(UserId).",
+                    "json": "## Conditional Access Emergency Account – Monitor Sign-In\r\n\r\n#### **Step 2 – Monitor Sign-In Events and Create Alert Rules**\r\n\r\nMonitor sign-in events for emergency access accounts by configuring alert rules in [Azure Monitor](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access?WT.mc_id=Portal-fx#create-an-alert-rule). These rules will help ensure timely detection of unauthorized or unexpected activity.\r\n\r\nIf you're using [Microsoft Sentinel](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/), it is recommended to set up an **Analytics Rule** to monitor how these accounts are being used. This approach provides enhanced visibility and automated threat response. Refer to the linked document for detailed implementation guidance.\r\n\r\nWhen defining your monitoring parameters, input the full `UserPrincipalName` or `UserId` values of the emergency accounts. These parameters are limited to two entries, reflecting the standard that **only two emergency accounts** should exist and be actively monitored.\r\n",
                     "style": "info"
                   },
                   "name": "onditional Access Emergency Account - Monitor SignIn"
@@ -2200,7 +2195,7 @@
                         "timeContext": {
                           "durationMs": 86400000
                         },
-                        "value": "bg01@cyberloriangcc.onmicrosoft.com"
+                        "value": "michael"
                       },
                       {
                         "version": "KqlParameterItem/1.0",
@@ -2210,7 +2205,7 @@
                         "timeContext": {
                           "durationMs": 86400000
                         },
-                        "value": "bg02@cyberloriangcc.onmicrosoft.com",
+                        "value": "",
                         "id": "7ee36d59-2e33-4fb7-bd55-d8d6c15387e2"
                       },
                       {
@@ -2235,18 +2230,18 @@
                         "id": "8efd981b-6c68-4b80-9d94-fc31a1480ac6"
                       }
                     ],
-                    "style": "above",
+                    "style": "formHorizontal",
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces"
                   },
-                  "customWidth": "50",
+                  "customWidth": "25",
                   "name": "parameters - 6"
                 },
                 {
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "// Search for a single UserPrincipalName\r\nSigninLogs\r\n| where UserPrincipalName ==  ('{UPN1}') or UserPrincipalName ==  ('{UPN2}') or UserId == ('{UserID1}') or UserId == ('{UserID2}') \r\n| distinct TimeGenerated, UserPrincipalName, UserId\r\n| sort by TimeGenerated desc",
+                    "query": "// Search for a single UserPrincipalName\r\nSigninLogs\r\n| where (strlen('{UPN1}') > 0 and UserPrincipalName contains '{UPN1}')\r\n   or (strlen('{UPN2}') > 0 and UserPrincipalName contains '{UPN2}')\r\n   or (strlen('{UserID1}') > 0 and UserId contains '{UserID1}')\r\n   or (strlen('{UserID2}') > 0 and UserId contains '{UserID2}')\r\n| distinct TimeGenerated, UserPrincipalName, UserId, IPAddress, ClientAppUsed, City = tostring(LocationDetails.city), Country = tostring(LocationDetails.countryOrRegion), State = tostring(LocationDetails.state)\r\n| sort by TimeGenerated desc\r\n",
                     "size": 0,
                     "showAnalytics": true,
                     "title": "Emergency Accounts, SignIn Events",
@@ -2262,24 +2257,29 @@
                         {
                           "columnMatch": "UserPrincipalName",
                           "formatter": 5
+                        },
+                        {
+                          "columnMatch": "UserId",
+                          "formatter": 5
                         }
                       ],
                       "hierarchySettings": {
                         "treeType": 1,
                         "groupBy": [
-                          "UserPrincipalName"
+                          "UserPrincipalName",
+                          "UserId"
                         ]
                       }
                     }
                   },
-                  "customWidth": "50",
+                  "customWidth": "75",
                   "showPin": true,
                   "name": "Emergency Accounts, SignIn Events"
                 },
                 {
                   "type": 1,
                   "content": {
-                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n#### The Identity team is responsible for managing emergency accounts, and they should ensure that these accounts are excluded from Conditional Access policies to prevent lockouts caused by configuration errors or malicious actors. One way to achieve this is by using automation tools.\r\n\r\n#### **Step:3** - Create an Entra Security group called 'Exclude - BG'. \r\n*Please note that the Identity team has the ability to change the name of the security group, but it's important to make sure that the correct group name is added to the automation variable.*\r\n\r\n#### **Step:4** - Deploy [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md).\r\n\r\n\r\n#### **Step:5** - After completing and successfully running the [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) tool, it's crucial to monitor any changes made to the Emergency group. In this workbook, utilize the parameter labeled 'Enter Exclusion Group' within the tool. Additionally, consider creating an alert rule in Azure Monitor using the [Exclusion Group Alteration](https://github.com/Cyberlorians/KQL/blob/main/Azure%20Active%20Directory/ExclusionGroupAlteration.kql) KQL, or deploy the Sentinel Analytic Rule [Exclusion Group Alteration](https://github.com/Cyberlorians/Sentinel/blob/main/Analytic%20Rules/ExclusionGroupAlteration.json).\r\n\r\n#### **Disclaimer:** There should only be two emergency accounts included in the exclusion group. If there are additional accounts, you should document the temporary need for those accounts or remove them from the group.",
+                    "json": "## Conditional Access Emergency Account - Managing Emergency accounts with Automation\r\n\r\n#### The Identity team is responsible for managing emergency accounts, and they should ensure that these accounts are excluded from Conditional Access policies to prevent lockouts caused by configuration errors or malicious actors. One way to achieve this is by using automation tools.\r\n\r\n#### **Step 3** – Create Entra Security Groups: `EmergencyAccess01` & `EmergencyAccess02` (Example Names)\r\n\r\n> **Note:** The Identity team may choose to rename the security groups as needed. However, it is critical that the corresponding group names are accurately reflected in the automation variable.\r\n\r\nEach emergency access account should have its own dedicated security group. This separation serves several important purposes:\r\n- Support for different authentication (authN) and authorization (authZ) methods  \r\n- Logical separation of accounts  \r\n- Scoped access through restricted administrative units  \r\n\r\n#### **Disclaimer:**  \r\nOnly two emergency access accounts—each associated with its respective security group (e.g., `EmergencyAccess01` and `EmergencyAccess02`)—should be included in the exclusion group. If additional accounts are present, their inclusion must be justified and documented as a temporary exception. Otherwise, they should be promptly removed to maintain strict access control.\r\n",
                     "style": "info"
                   },
                   "name": "Conditional Access Emergency Account - Managing Emergency accounts with Automation"
@@ -2298,15 +2298,14 @@
                             {
                               "id": "05ef3b6b-055a-4744-98b7-e569dc827d15",
                               "version": "KqlParameterItem/1.0",
-                              "name": "ExclusionGroup",
-                              "label": "Enter Exclusion Group",
+                              "name": "ExclusionGroup01",
+                              "label": "Enter Exclusion Group 01",
                               "type": 1,
                               "description": "Enter the exclusion group from your access policies",
-                              "isRequired": true,
                               "timeContext": {
                                 "durationMs": 86400000
                               },
-                              "value": "emergency"
+                              "value": "EmergencyAccess01"
                             }
                           ],
                           "style": "above",
@@ -2320,6 +2319,35 @@
                           "value": "cap3"
                         },
                         "name": "parameters - 12"
+                      },
+                      {
+                        "type": 9,
+                        "content": {
+                          "version": "KqlParameterItem/1.0",
+                          "parameters": [
+                            {
+                              "id": "7474353c-065f-4849-b17a-8d3b7d315453",
+                              "version": "KqlParameterItem/1.0",
+                              "name": "ExclusionGroup02",
+                              "label": "Enter Exclusion Group 02",
+                              "type": 1,
+                              "description": "Enter the exclusion group from your access policies",
+                              "timeContext": {
+                                "durationMs": 86400000
+                              }
+                            }
+                          ],
+                          "style": "above",
+                          "queryType": 0,
+                          "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "customWidth": "20",
+                        "conditionalVisibility": {
+                          "parameterName": "Tab",
+                          "comparison": "isEqualTo",
+                          "value": "cap3"
+                        },
+                        "name": "parameters - 12 - Copy"
                       }
                     ],
                     "exportParameters": true
@@ -2330,11 +2358,12 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "AuditLogs\r\n| where OperationName in (\"Add member to group\", \"Remove member from group\")\r\n| where TargetResources contains ('{ExclusionGroup}')\r\n| extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend Target = tostring(TargetResources[0].userPrincipalName)\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| extend OldValue = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].oldValue)))\r\n| extend NewValue = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| extend Value = coalesce(OldValue, NewValue)\r\n| project TimeGenerated, Actor, OperationName, Target, GroupID, Value",
+                    "query": "AuditLogs\r\n| where OperationName in (\"Add member to group\", \"Remove member from group\")\r\n| where (strlen('{ExclusionGroup01}') > 0 and TargetResources contains '{ExclusionGroup01}')\r\n    or (strlen('{ExclusionGroup02}') > 0 and TargetResources contains '{ExclusionGroup02}')\r\n| extend Actor = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend Target = tostring(TargetResources[0].userPrincipalName)\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| extend OldValue = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].oldValue)))\r\n| extend NewValue = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| extend Value = coalesce(OldValue, NewValue)\r\n| project TimeGenerated, Actor, OperationName, Target, GroupID, Value\r\n",
                     "size": 1,
                     "showAnalytics": true,
                     "title": "Conditional Access Exclusion Group Auditing",
                     "timeContextFromParameter": "TimeRange",
+                    "showRefreshButton": true,
                     "exportFieldName": "GroupID",
                     "exportParameterName": "guid",
                     "queryType": 0,
@@ -2362,7 +2391,8 @@
                         "groupBy": [
                           "Actor",
                           "OperationName"
-                        ]
+                        ],
+                        "expandTopLevel": true
                       },
                       "sortBy": [
                         {
@@ -2390,34 +2420,45 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "let GroupIDs = AuditLogs\r\n| extend GroupName = tostring(parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)))\r\n| where GroupName contains ('{ExclusionGroup}')\r\n| extend GroupID = tostring(TargetResources[1].id)\r\n| project GroupID, GroupName;\r\nAuditLogs\r\n| where OperationName in (\"Update conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| extend Exclude = todynamic(parse_json(tostring(parse_json(tostring(parse_json(tostring(Policy.conditions)).users)))))\r\n| extend Policy = tostring(Policy.displayName)\r\n| extend ['Group Added to Exclusion'] = tostring(parse_json(tostring(Exclude.excludeGroups))[0])\r\n| where ['Group Added to Exclusion'] in (GroupIDs)\r\n| join kind=inner GroupIDs on $left['Group Added to Exclusion'] == $right.GroupID\r\n| project TimeGenerated, Policy, GroupName, ['Group Added to Exclusion'], OperationName\r\n| sort by TimeGenerated desc",
+                    "query": "AuditLogs // review addition and removal from CA policies on exclusions\r\n| where OperationName == \"Update conditional access policy\"\r\n| mv-expand InitiatedBy\r\n| extend User = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend APP = tostring(parse_json(tostring(InitiatedBy.app)).displayName)\r\n| extend User = iff(isempty(User), \"NA\", User)\r\n| extend APP = iff(isempty(APP), \"NA\", APP)\r\n| extend TargetPolicy = todynamic(tostring(TargetResources[0].modifiedProperties[0]))\r\n| extend NewValue = todynamic(tostring(TargetPolicy.newValue))\r\n| extend OldValue = todynamic(tostring(TargetPolicy.oldValue))\r\n| extend NewExcludeGroups = todynamic(parse_json(tostring(parse_json(tostring(NewValue.conditions)).users))).excludeGroups\r\n| extend OldExcludeGroups = todynamic(parse_json(tostring(parse_json(tostring(OldValue.conditions)).users))).excludeGroups\r\n| extend ['Actor'] = User\r\n| extend ['Actor IP'] = tostring(parse_json(tostring(InitiatedBy.user)).ipAddress)\r\n| project\r\n    TimeGenerated,\r\n    ['Actor'],\r\n    ['Actor IP'],\r\n    APP,\r\n    Policy = tostring(NewValue.displayName),\r\n    NewExcludeGroups,\r\n    OldExcludeGroups",
                     "size": 0,
                     "showAnalytics": true,
-                    "title": "Verifying Exclusion Group Addition to Contional Access Policies",
+                    "title": "Exclusion Group Changes in Conditional Access Policies",
                     "timeContextFromParameter": "TimeRange",
+                    "showRefreshButton": true,
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces",
                     "gridSettings": {
                       "formatters": [
                         {
-                          "columnMatch": "Group Added to Exclusion",
+                          "columnMatch": "$gen_group",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "customColumnWidthSetting": "80ch"
+                          }
+                        },
+                        {
+                          "columnMatch": "Policy",
                           "formatter": 5
                         },
                         {
-                          "columnMatch": "OperationName",
-                          "formatter": 5
+                          "columnMatch": "$gen_group",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "customColumnWidthSetting": "100ch"
+                          }
                         }
                       ],
                       "hierarchySettings": {
                         "treeType": 1,
                         "groupBy": [
-                          "OperationName"
+                          "Policy"
                         ]
                       }
                     }
                   },
                   "customWidth": "50",
-                  "name": "Verifying Exclusion Group Addition to Contional Access Policies"
+                  "name": "Exclusion Group Changes in Conditional Access Policies"
                 }
               ]
             },
@@ -2444,12 +2485,11 @@
         "groupType": "editable",
         "title": "Conditional Access Monitoring",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 1,
             "content": {
-              "json": "## Conditional Access - Monitoring\r\n\r\n#### Below are visuals on change history, top editors and corrleations. If [AutoCAPExclude](https://github.com/Cyberlorians/Articles/blob/main/AutoExcludeCAP.md) was deployed. It will be shown as 'NonHumanActor'. NonHumanActor is any other automation used for Conditonal Access policies, such as, 'Microsoft Managed Policy Manager'.\r\n\r\n####  **Microsoft Sentinel** customers. You may chose to create your own Analytic Rules based off the KQL logic to 'Audit'; Create, Update & Delete Conditional Access Policies. For a short cut, please review and deploy [Conditional Access w/ Microsoft Sentinel](####  **Microsoft Sentinel** customers. It is advised to create an Analytical Rule for tracking the usage of the emergency accounts. Please review this [document](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/).\r\n\r\n",
+              "json": "## Conditional Access – Monitoring\r\n\r\n### Change History & Audit Context\r\n\r\nBelow are visuals highlighting change history, top policy editors, and correlation data for Conditional Access activity.\r\n\r\nIn audit logs, any automated service or process making Conditional Access changes—such as Microsoft’s **Managed Policy Manager**—will now appear under the `APP` field in KQL queries. The `APP` field identifies application-based actions, whether initiated by internal automation tools or by Microsoft.\r\n\r\nIf your organization uses any app to interact with Conditional Access policies, or if Microsoft pushes changes, you will see those events attributed to the relevant application name in the `APP` column.\r\n\r\n---\r\n\r\n### Microsoft Sentinel Integration\r\n\r\nFor **Microsoft Sentinel** customers, it's recommended to create custom **Analytics Rules** using KQL to monitor `Create`, `Update`, and `Delete` operations on Conditional Access policies.\r\n\r\nTo streamline deployment, refer to this solution:  \r\n[Conditional Access with Microsoft Sentinel](https://jeffreyappel.nl/monitor-azure-ad-break-glass-accounts-with-azure-sentinel/)\r\n\r\nThis will improve visibility and auditing for both manual and automated policy changes.\r\n",
               "style": "info"
             },
             "name": "text - 4"
@@ -2502,7 +2542,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "AuditLogs\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| mv-expand InitiatedBy\r\n| project HumanActor=tostring(InitiatedBy.user.userPrincipalName), NonHumanActor=Identity, OperationName\r\n| summarize Total=count() by HumanActor, NonHumanActor, OperationName\r\n| order by Total desc\r\n",
+              "query": "AuditLogs\r\n| where OperationName in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| mv-expand InitiatedBy\r\n| extend User = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend APP = tostring(parse_json(tostring(InitiatedBy.app)).displayName)\r\n| extend User = iff(isempty(User), \"NotApplicable\", User)\r\n| extend APP = iff(isempty(APP), \"NotApplicable\", APP)\r\n| project User, APP, OperationName\r\n| summarize Total = count() by User, APP, OperationName\r\n| order by Total desc\r\n",
               "size": 1,
               "showAnalytics": true,
               "title": "Conditional Access Top Editors",
@@ -2598,7 +2638,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "let OldPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].oldValue))\r\n| project Policy\r\n| extend version=\"OldVersion\"\r\n;\r\nlet NewPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName  in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| extend Policy=todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| project Policy\r\n| extend version=\"NewVersion\"\r\n;\r\nunion OldPolicy, NewPolicy\r\n| order by version asc\r\n| extend grantControls = todynamic(\"\")\r\n| extend sessionControls = todynamic(\"\")\r\n| evaluate bag_unpack(Policy, columnsConflict='replace_source')\r\n| evaluate bag_unpack(conditions, columnsConflict='replace_source')\r\n| evaluate bag_unpack(grantControls, columnsConflict='replace_source')\r\n| evaluate bag_unpack(sessionControls, columnsConflict='replace_source')\r\n| project-away id",
+              "query": "let OldPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| mv-expand InitiatedBy\r\n| extend User = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend APP = tostring(parse_json(tostring(InitiatedBy.app)).displayName)\r\n| extend User = iff(isempty(User), \"NA\", User)\r\n| extend APP = iff(isempty(APP), \"NA\", APP)\r\n| extend Policy = todynamic(tostring(TargetResources[0].modifiedProperties[0].oldValue))\r\n| project Policy, User, APP\r\n| extend version = \"OldVersion\";\r\nlet NewPolicy = AuditLogs\r\n| where CorrelationId == \"{SelectedCorrelationId}\"\r\n| where OperationName in (\"Add conditional access policy\", \"Update conditional access policy\", \"Delete conditional access policy\")\r\n| mv-expand InitiatedBy\r\n| extend User = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\r\n| extend APP = tostring(parse_json(tostring(InitiatedBy.app)).displayName)\r\n| extend User = iff(isempty(User), \"NA\", User)\r\n| extend APP = iff(isempty(APP), \"NA\", APP)\r\n| extend Policy = todynamic(tostring(TargetResources[0].modifiedProperties[0].newValue))\r\n| project Policy, User, APP\r\n| extend version = \"NewVersion\";\r\nunion OldPolicy, NewPolicy\r\n| order by version asc\r\n| extend grantControls = todynamic(\"\")\r\n| extend sessionControls = todynamic(\"\")\r\n| evaluate bag_unpack(Policy, columnsConflict = 'replace_source')\r\n| evaluate bag_unpack(conditions, columnsConflict = 'replace_source')\r\n| evaluate bag_unpack(grantControls, columnsConflict = 'replace_source')\r\n| evaluate bag_unpack(sessionControls, columnsConflict = 'replace_source')\r\n| project-away id\r\n",
               "size": 0,
               "showAnalytics": true,
               "title": "Conditional Access Change Comparison",
