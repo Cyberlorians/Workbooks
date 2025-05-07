@@ -275,7 +275,7 @@
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+            "value": null
           },
           {
             "id": "9943b4a1-371e-4e50-8cbe-749a6dd87d76",
@@ -523,7 +523,7 @@
             "timeContextFromParameter": "CAPTime",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+            "value": null
           },
           {
             "id": "019e403b-e0e5-4fae-ac07-a671022bbcb4",
@@ -2130,7 +2130,7 @@
             "timeContextFromParameter": "TimeRange",
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
-            "value": "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
+            "value": null
           },
           {
             "id": "e327ae2b-6659-4d53-98d7-7326e30a893a",
@@ -2168,7 +2168,7 @@
               "durationMs": 86400000
             },
             "value": {
-              "durationMs": 1209600000
+              "durationMs": 604800000
             },
             "label": "Time"
           }
@@ -2195,6 +2195,7 @@
         "groupType": "editable",
         "title": "Conditional Access Security",
         "expandable": true,
+        "expanded": true,
         "items": [
           {
             "type": 12,
@@ -2552,7 +2553,6 @@
         "groupType": "editable",
         "title": "Conditional Access Monitoring",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 1,
