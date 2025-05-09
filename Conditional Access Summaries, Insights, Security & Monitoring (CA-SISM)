@@ -2195,7 +2195,6 @@
         "groupType": "editable",
         "title": "Conditional Access Security",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 12,
