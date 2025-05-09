@@ -2535,6 +2535,63 @@
               "value": "cap3"
             },
             "name": "Emergency Account Tracking"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🔍 Monitoring Dynamic Group Rule Changes for Conditional Access Exclusions\r\n\r\nTrack changes to **Dynamic Membership Rules** for specific Entra ID groups, particularly those used in **Conditional Access (CA) policy exclusions**. This workbook view helps detect when a dynamic rule is altered—whether by an admin or an automated process—potentially impacting the scope of a CA policy.\r\n\r\n🛠️ **How it works:**  \r\nThis query monitors `AuditLogs` for `Update group` operations where the group's membership is defined by a dynamic rule (`DynamicMembership`). It filters to groups of interest based on user-defined parameters.\r\n\r\n📌 **Parameters:**\r\n- `{dynamic1}` — The name (or partial name) of the first group you want to monitor.  \r\n- `{dynamic2}` — The name (or partial name) of the second group you want to monitor (optional).\r\n\r\n🔐 **Use Case:**  \r\nDynamic groups often drive conditional access exclusions for device trust, compliance, or other identity-based signals. Monitoring for changes to these group rules is essential for preventing misconfigurations or unauthorized privilege expansion.\r\n\r\n⚠️ **Why it matters:**  \r\nChanges to dynamic membership rules can silently broaden or narrow access for devices and users. Since CA policies can depend on these groups for enforcement exclusions, an unnoticed rule update can undermine your Zero Trust strategy.\r\n\r\n🧠 **Pro Tip:**  \r\nUse this in combination with Conditional Access policy change tracking to correlate group rule edits with CA behavior shifts.\r\n",
+              "style": "info"
+            },
+            "name": "text - 1"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "e0ca87fd-49bb-4fe8-ba47-fb8bb84d3ae2",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "dynamic1",
+                  "label": "Dynamic Group 01",
+                  "type": 1,
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "value": "intune"
+                },
+                {
+                  "id": "e0ca87fd-49bb-4fe8-ba47-fb8bb84d3ae2",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "dynamic2",
+                  "label": "Dynamic Group 02",
+                  "type": 1,
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "value": "auto"
+                }
+              ],
+              "style": "above",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "name": "parameters - 3"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AuditLogs\r\n| where OperationName == \"Update group\"\r\n| mv-expand detail = AdditionalDetails\r\n| where detail.value == \"DynamicMembership\"\r\n| extend DynamicGroupName = tostring(TargetResources[0].displayName)\r\n| where DynamicGroupName contains '{dynamic1}' or DynamicGroupName contains '{dynamic2}'  // Directly using the params here\r\n| extend modifiedBy = tostring(InitiatedBy.user.userPrincipalName)\r\n| extend accountName = tostring(split(modifiedBy, \"@\")[0])\r\n| extend upnSuffix = tostring(split(modifiedBy, \"@\")[1])\r\n| extend oldRule = tostring(TargetResources[0].modifiedProperties[0].oldValue)\r\n| extend newRule = tostring(TargetResources[0].modifiedProperties[0].newValue)\r\n| where oldRule != newRule\r\n| project\r\n    TimeGenerated,\r\n    OperationName,\r\n    DynamicGroupName,\r\n    modifiedBy,\r\n    accountName,\r\n    upnSuffix,\r\n    result = Result,\r\n    oldRule,\r\n    newRule\r\n| order by TimeGenerated desc\r\n",
+              "size": 0,
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ]
+            },
+            "name": "query - 2"
           }
         ]
       },
