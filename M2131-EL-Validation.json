@@ -38,6 +38,75 @@
       "name": "group - 14"
     },
     {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subscription}"
+        ],
+        "parameters": [
+          {
+            "id": "55d3ab63-6e1f-4d02-8d9e-2225526689c7",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "summarize by subscriptionId\r\n| project value = strcat(\"/subscriptions/\", subscriptionId)",
+            "crossComponentResources": [
+              "value::all"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "TimeRange",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": [
+              "/subscriptions/c6e01167-4bd7-4cf4-a96a-3ccd3e61b6b9"
+            ]
+          },
+          {
+            "id": "95a45501-31b5-4ea2-bcb3-eb208e0080e2",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 5,
+            "isRequired": true,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "resources\r\n| where type =~ 'microsoft.operationsmanagement/solutions'\r\n| where name contains 'SecurityInsights'\r\n| project id = tolower(tostring(properties.workspaceResourceId))\r\n| join (resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| extend id=tolower(id)\r\n) on id\r\n| project id",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContextFromParameter": "TimeRange",
+            "defaultValue": "value::all",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "customWidth": "100",
+      "name": "parameters - 6"
+    },
+    {
       "type": 12,
       "content": {
         "version": "NotebookGroup/1.0",
@@ -441,6 +510,9 @@
               ],
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
               "gridSettings": {
                 "formatters": [
                   {
@@ -526,7 +598,6 @@
         "groupType": "editable",
         "title": "Event Queries",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 1,
@@ -574,6 +645,9 @@
         "exportToExcelOptions": "all",
         "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces",
+        "crossComponentResources": [
+          "{Workspace}"
+        ],
         "gridSettings": {
           "formatters": [
             {
@@ -626,7 +700,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinellaw"
+    "/subscriptions/c698221d-1ed4-410a-8e74-b91ad6669850/resourcegroups/dodin_sentinel_rg/providers/microsoft.operationalinsights/workspaces/dodin-sentinel-law"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
