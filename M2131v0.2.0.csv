@@ -53,8 +53,8 @@ AuditLogs
 | distinct TimeGenerated, Status, FailureReason, InitiatorType, Initiator, InitiatorIpAddress, TargetUserUPN, TargetUserID
 | sort by TimeGenerated desc
 | take 100",NA
-EL0,01,AA,01,02,Identity,Identity & Credential Management,Account,Account Creation,Entra,"MicrosoftGraphActivityLogs
-AuditLogs",RequestUri,"Users
+EL0,01,AA,01,02,Identity,Identity & Credential Management,Account,Account Creation,Entra,"MicrosoftGraphActivityLogs;
+AuditLogs",RequestUri,"Users;
 Add user",https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/graph/api/user-post-users,"// PURPOSE: Detects user account creation events in Entra ID by correlating Microsoft Graph activity and AuditLogs, allowing targeted review by initiator or target UPN.
 //
 // ----- Part 0: Define Flexible Filters -----
@@ -188,9 +188,9 @@ AuditLogs
 | sort by TimeGenerated desc
 | take 100",
 EL0,01,AA,01,04,Identity,Identity & Credential Management,Account,Account Creation,Entra,"
-MicrosoftGraphActivityLogs
+MicrosoftGraphActivityLogs;
 AuditLogs",OperationName,"
-servicePrincipals
+servicePrincipals;
 Add service principal",https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"// PURPOSE: Detects creation of new service principals in Entra ID. Uses both MicrosoftGraphActivityLogs and AuditLogs for comprehensive coverage.
 //
 // ----- Part 0: Define Flexible Filters -----
@@ -327,8 +327,8 @@ AuditLogs
 | distinct TimeGenerated, OperationName, Status, InitiatorType, Initiator, InitiatorIpAddress, IsMultiTenant, TargetSpName = tostring(TargetInfo.displayName), TargetSpAppId, TargetSpId = AppObjectId
 | sort by TimeGenerated desc
 | take 100",
-EL0,01,AA,01,06,Identity,Identity & Credential Management,Account,Account Creation,Entra,"MicrosoftGraphActivityLogs
-AuditLogs",RequestUri,"servicePrincipals
+EL0,01,AA,01,06,Identity,Identity & Credential Management,Account,Account Creation,Entra,"MicrosoftGraphActivityLogs;
+AuditLogs",RequestUri,"servicePrincipals;
 Add application",https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,"https://learn.microsoft.com/en-us/graph/api/application-post-applications?view=graph-rest-1.0&tabs=http
 
 ","// PURPOSE: Correlates MicrosoftGraphActivityLogs and AuditLogs to identify creation of new applications and service principals in Entra ID.
@@ -1015,9 +1015,9 @@ AuditLogs
 | distinct TimeGenerated, Status, FailureReason, InitiatorType, Initiator, InitiatorIpAddress, TargetUserUPN, TargetUserID
 | sort by TimeGenerated desc
 | take 100",
-EL0,01,AB,01,05,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Entra,"MicrosoftGraphActivityLogs
+EL0,01,AB,01,05,Identity,Identity & Credential Management,Manage Credential Type,Credential Management,Entra,"MicrosoftGraphActivityLogs;
 AuditLogs","RequestUri
-OperationName","users
+OperationName","users;
 Update user",https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,"https://learn.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&tabs=http
 
 ","// PURPOSE: Correlates MicrosoftGraphActivityLogs and AuditLogs to track user update operations in Entra ID.
@@ -3996,9 +3996,9 @@ RawActivity
 | order by TimeGenerated desc
 | take 100",NA
 EL0,01,AT,01,01,Identity,Privileged Identity & Credential Management,Control Privileged Actions,Tasks,Entra,"
-IdentityInfo
-AuditLogs
-AzureActivity",Join,"AccountUPN
+IdentityInfo;
+AuditLogs;
+AzureActivity",Join,"AccountUPN;
 Role",https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities,"// PURPOSE: Summarizes privileged user activity across Entra and Azure, filtered by user, role, or operation, to provide a unified view for investigations.// (AuditLogs, AzureActivity), filtered by users, roles, operations, and exclusions.
 // -----Part 0: Targeting -----
 let TargetUsers = dynamic([]);        // Optional filter for specific users
