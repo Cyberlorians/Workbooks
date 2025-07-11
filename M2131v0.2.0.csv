@@ -2940,7 +2940,7 @@ AuditLogs
           Result
 | sort by TimeGenerated desc
 | take 100"
-,,AL,02,07,Identity,Privileged Identity & Credential Management,Manage Credential Type,Cert,Windows,SecurityEvent,EventID,4887 - Certificate Services approved a certificate request and issued a certificate.,,,"// PURPOSE: Tracks all certificate issuance events from Windows AD Certificate Services (EventID 4887 via SecurityEvent), including requester, disposition, subject, and issuing CA—supports compliance and monitoring of certificate approvals.
+EL0,01,AL,02,07,Identity,Privileged Identity & Credential Management,Manage Credential Type,Cert,Windows,SecurityEvent,EventID,4887 - Certificate Services approved a certificate request and issued a certificate.,,,"// PURPOSE: Tracks all certificate issuance events from Windows AD Certificate Services (EventID 4887 via SecurityEvent), including requester, disposition, subject, and issuing CA—supports compliance and monitoring of certificate approvals.
 //
 // Reference: 
 //   Official Microsoft auditing guidance for AD CS:
