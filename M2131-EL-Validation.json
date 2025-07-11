@@ -42,7 +42,7 @@
       "content": {
         "version": "KqlParameterItem/1.0",
         "crossComponentResources": [
-          "{Subscription}"
+          "value::all"
         ],
         "parameters": [
           {
@@ -71,7 +71,7 @@
             "queryType": 1,
             "resourceType": "microsoft.resourcegraph/resources",
             "value": [
-              "/subscriptions/c6e01167-4bd7-4cf4-a96a-3ccd3e61b6b9"
+              "value::all"
             ]
           },
           {
@@ -79,7 +79,6 @@
             "version": "KqlParameterItem/1.0",
             "name": "Workspace",
             "type": 5,
-            "isRequired": true,
             "multiSelect": true,
             "quote": "'",
             "delimiter": ",",
@@ -284,7 +283,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Identity - IN BETA (Select Here)\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Network - To Be Mapped\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Email - To Be Mapped\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Opearting Systems - To Be Mapped\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Cloud - To Be Mapped\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Identity - PRODUCTION (Select Here)\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Network - To Be Mapped\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Email - To Be Mapped\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Opearting Systems - IN BETA (Select Here)\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Cloud - To Be Mapped\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
               "size": 1,
               "exportMultipleValues": true,
               "exportedParameters": [
@@ -486,12 +485,9 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.1.0-COPY.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3)\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, CSL4:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.2.0.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3, \"-\", CSL4)\r\n| where Function == 'Identity'\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID desc\r\n",
               "size": 0,
               "title": "EL0 Function - Identity",
-              "timeContext": {
-                "durationMs": 86400000
-              },
               "exportedParameters": [
                 {
                   "fieldName": "Microsoft Sentinel Event",
@@ -570,14 +566,27 @@
                     }
                   }
                 ],
+                "filter": true,
                 "hierarchySettings": {
                   "treeType": 1,
                   "groupBy": [
                     "Category"
                   ],
                   "expandTopLevel": false
+                },
+                "sortBy": [
+                  {
+                    "itemKey": "ID",
+                    "sortOrder": 1
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "ID",
+                  "sortOrder": 1
                 }
-              }
+              ]
             },
             "conditionalVisibility": {
               "parameterName": "isEL01Visible",
@@ -585,6 +594,133 @@
               "value": "true"
             },
             "name": "EL01-Identity"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, CSL4:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.2.0.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3, \"-\", CSL4)\r\n| where Function == 'Operating Systems'\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
+              "size": 0,
+              "title": "EL0 Function - Operation Systems",
+              "exportedParameters": [
+                {
+                  "fieldName": "Microsoft Sentinel Event",
+                  "parameterName": "kql"
+                },
+                {
+                  "fieldName": "Microsoft XDR Event",
+                  "parameterName": "xdrkql",
+                  "parameterType": 1
+                },
+                {
+                  "fieldName": "Event Reference",
+                  "parameterName": "er",
+                  "parameterType": 1
+                }
+              ],
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "100ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "Criticality",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CSL1",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CSL2",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "CSL3",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Function",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Category",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Sub-Category",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Required Data",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Microsoft Sentinel Event",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "CellDetails",
+                      "linkIsContextBlade": true
+                    }
+                  },
+                  {
+                    "columnMatch": "Microsoft XDR Event",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Event Reference",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Url"
+                    }
+                  },
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "100ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "Workload Integration",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Url"
+                    }
+                  }
+                ],
+                "filter": true,
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "Category",
+                    "Required Data"
+                  ],
+                  "expandTopLevel": false
+                },
+                "labelSettings": [
+                  {
+                    "columnId": "Category",
+                    "label": "Required Data"
+                  }
+                ]
+              }
+            },
+            "conditionalVisibility": {
+              "parameterName": "isEL04Visible",
+              "comparison": "isEqualTo",
+              "value": "true"
+            },
+            "name": "EL01-Windows"
           }
         ],
         "exportParameters": true
@@ -598,12 +734,12 @@
         "groupType": "editable",
         "title": "Event Queries",
         "expandable": true,
+        "expanded": true,
         "items": [
           {
             "type": 1,
             "content": {
-              "json": "Reference: {er}\r\n\r\n### Microsoft Sentinel KQL\r\n\r\n```\r\n{kql}\r\n```",
-              "style": "info"
+              "json": " 🔎 **Microsoft Sentinel Query** </br>\r\n 📎 **Reference**: {er}\r\n\r\n```\r\n{kql}\r\n```"
             },
             "customWidth": "50",
             "name": "Sentinel-KQL",
@@ -614,8 +750,7 @@
           {
             "type": 1,
             "content": {
-              "json": "Reference: {er}\r\n\r\n### Microsoft XDR KQL\r\n\r\n```\r\n{xdrkql}\r\n```",
-              "style": "info"
+              "json": " 🔎 **Microsoft XDR Query** </br>\r\n 📎 **Reference**: {er}\r\n\r\n```\r\n{xdrkql}\r\n```"
             },
             "customWidth": "50",
             "name": "XDR-KQL",
@@ -700,7 +835,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/c698221d-1ed4-410a-8e74-b91ad6669850/resourcegroups/dodin_sentinel_rg/providers/microsoft.operationalinsights/workspaces/dodin-sentinel-law"
+    "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinellaw"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
