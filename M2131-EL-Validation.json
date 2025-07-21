@@ -16,7 +16,7 @@
                 {
                   "type": 1,
                   "content": {
-                    "json": "# [M-21-31 Mapping - Event Validation](https://github.com/Cyberlorians/M-21-31/blob/main/ExecutiveSummary.md)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n\n\n**Instructions: Select ELO > Select Identity > Drill down into each category and SELECT a corresponding \"Criticality ID\" that aligns w/ the M21-31 PowerApp > Event Queries will be shown as the logic used and Event Validation will be displayed if an event is logged. If needed, please click the log analytics icon on the Event Validation to adjust any KQL logic.**"
+                    "json": "# [🧾 Event-to-Control Mapping – M-21-31 Alignment](https://github.com/Cyberlorians/M-21-31/blob/main/ExecutiveSummary.md)\n---\n\nThis solution is designed to enable Cloud Architects, Security Engineers, and Governance Risk Compliance Professionals to increase visibility before, during, and after a cybersecurity incident. Information from logs on information systems (for both on-premises systems and connections \nhosted by third parties, such as cloud services providers (CSPs) is invaluable in the detection, \ninvestigation, and remediation of cyber threats. \"Executive Order 14028, Improving the Nation's Cybersecurity, directs decisive action to improve the Federal Government’s investigative and remediation capabilities. This memorandum was developed in accordance with and addresses the requirements in section 8 of the Executive Order for logging, log retention, and log management, with a focus on ensuring centralized access and visibility for the highest-level enterprise security operations center (SOC) of each agency.\" For more information, see the💡[M-21-31 Memorandum](https://www.whitehouse.gov/wp-content/uploads/2021/08/M-21-31-Improving-the-Federal-Governments-Investigative-and-Remediation-Capabilities-Related-to-Cybersecurity-Incidents.pdf)\n\n\n**Instructions: Select ELO > Select Identity > Drill down into each category and SELECT a corresponding \"Criticality ID\" that aligns w/ the M21-31 PowerApp > Event Queries will be shown as the logic used and Event Validation will be displayed if an event is logged. If needed, please click the log analytics icon on the Event Validation to adjust any KQL logic.**"
                   },
                   "name": "Workbook Overview"
                 }
@@ -283,7 +283,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Identity - PRODUCTION (Select Here)\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Network - To Be Mapped\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Email - To Be Mapped\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Opearting Systems - IN BETA (Select Here)\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"EL0 Function\\\": \\\"Cloud - To Be Mapped\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
+              "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n\\t\\t{ \\\"Function\\\": \\\"Identity - PRODUCTION (Select Here)\\\", \\\"tab\\\": \\\"EL01\\\" },\\r\\n\\t\\t{ \\\"Function\\\": \\\"Network - To Be Mapped\\\", \\\"tab\\\": \\\"EL02\\\" },\\r\\n\\t\\t{ \\\"Function\\\": \\\"Email - To Be Mapped\\\", \\\"tab\\\": \\\"EL03\\\" },\\r\\n\\t\\t{ \\\"Function\\\": \\\"Opearting Systems - IN BETA (Select Here)\\\", \\\"tab\\\": \\\"EL04\\\" },\\r\\n\\t\\t{ \\\"Function\\\": \\\"Cloud - To Be Mapped\\\", \\\"tab\\\": \\\"EL05\\\" }\\r\\n\\t\\t]\",\"transformers\":null}",
               "size": 1,
               "exportMultipleValues": true,
               "exportedParameters": [
@@ -485,17 +485,13 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, CSL4:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.2.0.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3, \"-\", CSL4)\r\n| where Function == 'Identity'\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID desc\r\n",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, CSL4:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string, ['Microsoft Unified SecOps Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.2.0.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3, \"-\", CSL4)\r\n| where Function == 'Identity'\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Unified SecOps Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
               "size": 0,
-              "title": "EL0 Function - Identity",
+              "title": "🧑‍💼 Identity",
               "exportedParameters": [
                 {
-                  "fieldName": "Microsoft Sentinel Event",
-                  "parameterName": "kql"
-                },
-                {
-                  "fieldName": "Microsoft XDR Event",
-                  "parameterName": "xdrkql",
+                  "fieldName": "Microsoft Unified SecOps Event",
+                  "parameterName": "kql",
                   "parameterType": 1
                 },
                 {
@@ -536,8 +532,19 @@
                     "formatter": 5
                   },
                   {
-                    "columnMatch": "Sub-Category",
+                    "columnMatch": "Required Data",
                     "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Microsoft Unified SecOps Event",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Event Reference",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Url"
+                    }
                   },
                   {
                     "columnMatch": "Microsoft Sentinel Event",
@@ -552,13 +559,6 @@
                     "formatter": 5
                   },
                   {
-                    "columnMatch": "Event Reference",
-                    "formatter": 5,
-                    "formatOptions": {
-                      "linkTarget": "Url"
-                    }
-                  },
-                  {
                     "columnMatch": "Workload Integration",
                     "formatter": 5,
                     "formatOptions": {
@@ -570,23 +570,13 @@
                 "hierarchySettings": {
                   "treeType": 1,
                   "groupBy": [
-                    "Category"
+                    "Category",
+                    "Required Data"
                   ],
                   "expandTopLevel": false
-                },
-                "sortBy": [
-                  {
-                    "itemKey": "ID",
-                    "sortOrder": 1
-                  }
-                ]
-              },
-              "sortBy": [
-                {
-                  "itemKey": "ID",
-                  "sortOrder": 1
                 }
-              ]
+              },
+              "sortBy": []
             },
             "conditionalVisibility": {
               "parameterName": "isEL01Visible",
@@ -599,17 +589,13 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, CSL4:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Sentinel Event']:string, ['Microsoft XDR Event']:string  )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.2.0.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3, \"-\", CSL4)\r\n| where Function == 'Operating Systems'\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Sentinel Event'], ['Microsoft XDR Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
+              "query": "externaldata (Criticality:string, CSL1:string, CSL2:string, CSL3:string, CSL4:string, Function:string, Category:string, ['Sub-Category']:string, ['Required Data']:string, Workload:string, Table:string, Schema:string, ['Schema-Value']:string, ['Workload Integration']:string, ['Event Reference']:string,['Microsoft Unified SecOps Event']:string )[@\"https://raw.githubusercontent.com/Cyberlorians/Workbooks/refs/heads/main/M2131v0.2.0.csv\"] with (format=\"csv\",ignoreFirstRecord=true)\r\n| extend ID = strcat(Criticality, \"-\", CSL1, \"-\", CSL2, \"-\", CSL3, \"-\", CSL4)\r\n| where Function == 'Operating Systems'\r\n| project ID, Criticality, CSL1, CSL2, CSL3, Function, Category, ['Sub-Category'], ['Required Data'], Workload, Table, Schema, ['Schema-Value'], ['Microsoft Unified SecOps Event'], ['Event Reference']\r\n| where isnotempty(Category)\r\n| sort by ID asc\r\n",
               "size": 0,
-              "title": "EL0 Function - Operation Systems",
+              "title": "💻 Operating Systems",
               "exportedParameters": [
                 {
-                  "fieldName": "Microsoft Sentinel Event",
-                  "parameterName": "kql"
-                },
-                {
-                  "fieldName": "Microsoft XDR Event",
-                  "parameterName": "xdrkql",
+                  "fieldName": "Microsoft Unified SecOps Event",
+                  "parameterName": "kql",
                   "parameterType": 1
                 },
                 {
@@ -665,15 +651,7 @@
                     "formatter": 5
                   },
                   {
-                    "columnMatch": "Microsoft Sentinel Event",
-                    "formatter": 5,
-                    "formatOptions": {
-                      "linkTarget": "CellDetails",
-                      "linkIsContextBlade": true
-                    }
-                  },
-                  {
-                    "columnMatch": "Microsoft XDR Event",
+                    "columnMatch": "Microsoft Unified SecOps Event",
                     "formatter": 5
                   },
                   {
@@ -684,11 +662,20 @@
                     }
                   },
                   {
-                    "columnMatch": "$gen_group",
-                    "formatter": 0,
+                    "columnMatch": "Microsoft Unified Secops Event",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Microsoft Sentinel Event",
+                    "formatter": 5,
                     "formatOptions": {
-                      "customColumnWidthSetting": "100ch"
+                      "linkTarget": "CellDetails",
+                      "linkIsContextBlade": true
                     }
+                  },
+                  {
+                    "columnMatch": "Microsoft XDR Event",
+                    "formatter": 5
                   },
                   {
                     "columnMatch": "Workload Integration",
@@ -720,6 +707,7 @@
               "comparison": "isEqualTo",
               "value": "true"
             },
+            "showPin": false,
             "name": "EL01-Windows"
           }
         ],
@@ -732,28 +720,15 @@
       "content": {
         "version": "NotebookGroup/1.0",
         "groupType": "editable",
-        "title": "Event Queries",
+        "title": "🕵️‍♂️ Event Queries – Expand to View!",
         "expandable": true,
-        "expanded": true,
         "items": [
           {
             "type": 1,
             "content": {
-              "json": " 🔎 **Microsoft Sentinel Query** </br>\r\n 📎 **Reference**: {er}\r\n\r\n```\r\n{kql}\r\n```"
+              "json": " 🔎 **Microsoft Unified SecOps Event** </br>\r\n 📎 **Reference**: {er}\r\n\r\n```\r\n{kql}\r\n```"
             },
-            "customWidth": "50",
             "name": "Sentinel-KQL",
-            "styleSettings": {
-              "showBorder": true
-            }
-          },
-          {
-            "type": 1,
-            "content": {
-              "json": " 🔎 **Microsoft XDR Query** </br>\r\n 📎 **Reference**: {er}\r\n\r\n```\r\n{xdrkql}\r\n```"
-            },
-            "customWidth": "50",
-            "name": "XDR-KQL",
             "styleSettings": {
               "showBorder": true
             }
@@ -764,6 +739,7 @@
         "parameterName": "kql",
         "comparison": "isNotEqualTo"
       },
+      "customWidth": "50",
       "name": "KQL-Group-Text"
     },
     {
@@ -773,7 +749,7 @@
         "query": "{kql}",
         "size": 3,
         "showAnalytics": true,
-        "title": "Event Validation",
+        "title": "📊 Event Validation",
         "showRefreshButton": true,
         "exportFieldName": "Value",
         "exportParameterName": "try",
