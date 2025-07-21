@@ -1,0 +1,19 @@
+// Objective: Show estimated data size in GB and record count per table over the last 7 days
+let TimeRange = ago(7d);
+union isfuzzy=true
+    (DeviceInfo              | where Timestamp > TimeRange | extend Table = "DeviceInfo"),
+    (DeviceProcessEvents     | where Timestamp > TimeRange | extend Table = "DeviceProcessEvents"),
+    (DeviceNetworkEvents     | where Timestamp > TimeRange | extend Table = "DeviceNetworkEvents"),
+    (DeviceFileEvents        | where Timestamp > TimeRange | extend Table = "DeviceFileEvents"),
+    (DeviceLogonEvents       | where Timestamp > TimeRange | extend Table = "DeviceLogonEvents"),
+    (DeviceEvents            | where Timestamp > TimeRange | extend Table = "DeviceEvents"),
+    (EmailEvents             | where Timestamp > TimeRange | extend Table = "EmailEvents"),
+    (EmailUrlInfo            | where Timestamp > TimeRange | extend Table = "EmailUrlInfo"),
+    (EmailAttachmentInfo     | where Timestamp > TimeRange | extend Table = "EmailAttachmentInfo"),
+    (EmailPostDeliveryEvents | where Timestamp > TimeRange | extend Table = "EmailPostDeliveryEvents"),
+    (UrlClickEvents          | where Timestamp > TimeRange | extend Table = "UrlClickEvents")
+| summarize 
+    RecordCount = count(), 
+    TotalSizeGB = round(sum(estimate_data_size(*)) / pow(1024, 3), 2)
+    by Table
+| order by TotalSizeGB desc
