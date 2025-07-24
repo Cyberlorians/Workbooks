@@ -4310,8 +4310,9 @@ SecurityEvent
     ProcessName = tostring(EventData_xml.EventData.Data[7]['#text'])
 | sort by TimeGenerated desc
 
-//
 
+// Make sure there is a break here before running the second part
+//
 //
 // Objective: Investigates file deletion events (Event ID 4660) in Windows SecurityEvent logs, allowing analysts to pivot on HandleId and user SIDs for forensic investigation, and join with file access events for additional detail.
 // 
