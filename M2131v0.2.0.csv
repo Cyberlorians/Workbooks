@@ -1747,7 +1747,7 @@ EL0,01,AI,02,01,Identity,Identity & Credential Management,Track Usage,Credential
 // ----- Part 0: Analyst-Driven Targeting (Optional) -----
 // Adjust arrays below to focus on specific users or certificate issuers; leave empty for all.
 let TargetUsers = dynamic([]);            // e.g., [""jsmith""]
-let TargetCertIssuers = dynamic([]);      // e.g., [""DOD CA-63""]
+let TargetCertIssuers = dynamic([]);      // e.g., [""CA-21""]
 //
 // ----- Part 1: Filter and Parse 4768 Events -----
 // GPO Path: To capture 4768 events (Kerberos TGT requests), enable on all domain controllers:
