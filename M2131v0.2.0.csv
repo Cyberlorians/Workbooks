@@ -1,4 +1,4 @@
-Criticality,CSL1,CSL2,CSL3,CSL4,Function,Category,Sub-Category,Required Data,Workload,Table,Schema,Schema Value,Workload  Integration,Event Reference,Microsoft Unified SecOps Events
+﻿Criticality,CSL1,CSL2,CSL3,CSL4,Function,Category,Sub-Category,Required Data,Workload,Table,Schema,Schema Value,Workload  Integration,Event Reference,Microsoft Unified SecOps Events
 EL0,01,AA,01,01,Identity,Identity & Credential Management,Account,Account Creation,Entra,AuditLogs,OperationName,Add User,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs,https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs,"// Objective: Detects new user creation events in Entra ID and allows for targeted filtering by initiator or target UPN.
 //
 // ----- Part 0: Analyst-Driven Targeting (Optional) -----
@@ -609,7 +609,7 @@ EL0,01,AB,01,01,Identity,Identity & Credential Management,Manage Credential Type
 //
 // ----- Part 0: Analyst-Driven Targeting (Optional) -----
 //Leave this list empty to return all results, or populate with UPNs to filter for changes made by specific administrators.
-let TargetUsers = dynamic([]); //Example: dynamic([""michaelcrane@cyberloriangcc.onmicrosoft.com""])
+let TargetUsers = dynamic([]); //Example: dynamic([""user1@yes.onmicrosoft.com""])
 //-----Part 1: Define The Methods You Want To Monitor-----
 let MonitoredMethods = dynamic([
     ""Fido2"",
@@ -989,7 +989,7 @@ EL0,01,AC,05,03,Identity,Identity & Credential Management,Manage Credential Type
 // Add specific tenant IDs or initiator UPNs to filter for them.
 //
 let TargetTenants = dynamic([]); // Example: dynamic([""b2d7dbd9-8286-46ff-8799-177a5d2f3ec1""])
-let InitiatorUPNs = dynamic([]);     // Example: dynamic([""michaelcrane@cyberloriangcc.onmicrosoft.com""])
+let InitiatorUPNs = dynamic([]);     // Example: dynamic([""user1@yes.onmicrosoft.com""])
 // ----- Part 1: Filter for ""Set Company Information"" Operations -----
 // Focus on ""Set Company Information"" events in the last 90 days.
 CloudAppEvents
@@ -1747,7 +1747,7 @@ EL0,01,AI,02,01,Identity,Identity & Credential Management,Track Usage,Credential
 // ----- Part 0: Analyst-Driven Targeting (Optional) -----
 // Adjust arrays below to focus on specific users or certificate issuers; leave empty for all.
 let TargetUsers = dynamic([]);            // e.g., [""jsmith""]
-let TargetCertIssuers = dynamic([]);      // e.g., [""CA-21""]
+let TargetCertIssuers = dynamic([]);      // e.g., [""CA""]
 //
 // ----- Part 1: Filter and Parse 4768 Events -----
 // GPO Path: To capture 4768 events (Kerberos TGT requests), enable on all domain controllers:
@@ -4310,10 +4310,6 @@ SecurityEvent
     ProcessName = tostring(EventData_xml.EventData.Data[7]['#text'])
 | sort by TimeGenerated desc
 
-
-// Make sure there is a break here before running the second part
-//
-//
 // Objective: Investigates file deletion events (Event ID 4660) in Windows SecurityEvent logs, allowing analysts to pivot on HandleId and user SIDs for forensic investigation, and join with file access events for additional detail.
 // 
 // ----- Part 0: Analyst-Driven Targeting (Optional) -----
