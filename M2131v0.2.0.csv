@@ -609,7 +609,7 @@ EL0,01,AB,01,01,Identity,Identity & Credential Management,Manage Credential Type
 //
 // ----- Part 0: Analyst-Driven Targeting (Optional) -----
 //Leave this list empty to return all results, or populate with UPNs to filter for changes made by specific administrators.
-let TargetUsers = dynamic([]); //Example: dynamic([""michaelcrane@cyberloriangcc.onmicrosoft.com""])
+let TargetUsers = dynamic([]); //Example: dynamic(["user"])
 //-----Part 1: Define The Methods You Want To Monitor-----
 let MonitoredMethods = dynamic([
     ""Fido2"",
@@ -989,7 +989,7 @@ EL0,01,AC,05,03,Identity,Identity & Credential Management,Manage Credential Type
 // Add specific tenant IDs or initiator UPNs to filter for them.
 //
 let TargetTenants = dynamic([]); // Example: dynamic([""b2d7dbd9-8286-46ff-8799-177a5d2f3ec1""])
-let InitiatorUPNs = dynamic([]);     // Example: dynamic([""michaelcrane@cyberloriangcc.onmicrosoft.com""])
+let InitiatorUPNs = dynamic([]);     // Example: dynamic([""])
 // ----- Part 1: Filter for ""Set Company Information"" Operations -----
 // Focus on ""Set Company Information"" events in the last 90 days.
 CloudAppEvents
@@ -6096,3 +6096,4 @@ SecurityEvent
 | distinct TimeGenerated, IsTargetedUser, Account, SubjectUserSid, ObjectName, ObjectType, Computer, Activity
 | sort by TimeGenerated desc
 | take 50"
+
