@@ -267,7 +267,7 @@
               ]
             },
             "value": {
-              "durationMs": 86400000
+              "durationMs": 2592000000
             }
           },
           {
@@ -382,7 +382,10 @@
             },
             "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces"
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
           },
           {
             "id": "bb86ad3f-bed2-40a0-a4de-a3caa66e3d36",
@@ -434,7 +437,10 @@
             "timeContextFromParameter": "Time01",
             "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces"
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
           },
           {
             "id": "031c7763-7b46-419c-a2c9-ca59f975c344",
@@ -460,7 +466,10 @@
             "timeContextFromParameter": "Time01",
             "defaultValue": "value::all",
             "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces"
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
           }
         ],
         "style": "above",
@@ -1037,7 +1046,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "SigninLogs\r\n| mv-expand CAPolicy = ConditionalAccessPolicies\r\n| extend\r\n    PolicyName = tostring(CAPolicy.displayName),\r\n    CAResult = tostring(CAPolicy.result),\r\n    SigninRisk = tostring(RiskDetail)\r\n| where PolicyName in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| where CAResult in ({Report})\r\n| where UserPrincipalName contains ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region})\r\n| summarize count() by SigninRisk\r\n",
+                    "query": "SigninLogs\r\n| mv-expand CAPolicy = ConditionalAccessPolicies\r\n| extend\r\n    PolicyName = tostring(CAPolicy.displayName),\r\n    CAResult = tostring(CAPolicy.result),\r\n    SigninRisk = tostring(RiskDetail)\r\n| where PolicyName in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| where CAResult in ({Report})\r\n| where UserPrincipalName contains ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region})\r\n| where SigninRisk in ({SignInRisk})\r\n| summarize count() by SigninRisk\r\n",
                     "size": 0,
                     "showAnalytics": true,
                     "title": "Sign-in Risk",
@@ -1079,7 +1088,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "SigninLogs\r\n| mv-expand CAPolicy = ConditionalAccessPolicies\r\n| extend\r\n    PolicyName = tostring(CAPolicy.displayName),\r\n    CAResult = tostring(CAPolicy.result),\r\n    UserRisk = tostring(RiskLevelDuringSignIn)\r\n| where PolicyName in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| where CAResult in ({Report})\r\n| where UserPrincipalName contains ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region})\r\n| summarize count() by UserRisk\r\n",
+                    "query": "SigninLogs\r\n| mv-expand CAPolicy = ConditionalAccessPolicies\r\n| extend\r\n    PolicyName = tostring(CAPolicy.displayName),\r\n    CAResult = tostring(CAPolicy.result),\r\n    UserRisk = tostring(RiskLevelDuringSignIn)\r\n| where PolicyName in ({Policy})\r\n| extend AzureADApplication = AppDisplayName\r\n| where AzureADApplication in ({Application})\r\n| where CAResult in ({Report})\r\n| where UserPrincipalName contains ('{UserPrincipalName}')\r\n| evaluate bag_unpack(LocationDetails)\r\n| where state in ({Location})\r\n| extend Region = Location\r\n| where Region in ({Region})\r\n| where UserRisk in ({UserRisk})\r\n| summarize count() by UserRisk\r\n",
                     "size": 0,
                     "showAnalytics": true,
                     "title": "User Risk",
