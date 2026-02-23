@@ -1,0 +1,1655 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "# 🛡️ Microsoft Defender for Identity - ITDR Workbook\n---\n**Identity Threat Detection and Response** | Comprehensive Coverage for All MDI Detections\n\n> 📚 **Documentation References:**\n> - [MDI Alert Categories](https://learn.microsoft.com/en-us/defender-for-identity/alerts-overview)\n> - [ITDR Dashboard](https://learn.microsoft.com/en-us/defender-for-identity/dashboard)\n> - [IdentityLogonEvents Schema](https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitylogonevents-table)\n> - [IdentityDirectoryEvents Schema](https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table)\n> - [IdentityQueryEvents Schema](https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identityqueryevents-table)"
+      },
+      "name": "header"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "sub-param",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "typeSettings": {
+              "includeAll": false,
+              "showDefault": false
+            },
+            "value": null
+          },
+          {
+            "id": "ws-param",
+            "version": "KqlParameterItem/1.0",
+            "name": "Workspace",
+            "type": 5,
+            "isRequired": true,
+            "query": "resources\r\n| where type =~ \"microsoft.operationalinsights/workspaces\"",
+            "crossComponentResources": [
+              "{Subscription}"
+            ],
+            "typeSettings": {
+              "resourceTypeFilter": {
+                "microsoft.operationalinsights/workspaces": true
+              },
+              "showDefault": false
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources"
+          },
+          {
+            "id": "time-param",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 604800000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2592000000
+                }
+              ],
+              "allowCustom": true
+            }
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "id": "tab1",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🎯 Executive Summary",
+            "subTarget": "Overview",
+            "style": "link"
+          },
+          {
+            "id": "tab2",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🚨 All Alerts",
+            "subTarget": "Alerts",
+            "style": "link"
+          },
+          {
+            "id": "tab3",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🔍 Reconnaissance",
+            "subTarget": "Recon",
+            "style": "link"
+          },
+          {
+            "id": "tab4",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🔐 Credential Access",
+            "subTarget": "Credentials",
+            "style": "link"
+          },
+          {
+            "id": "tab5",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🔀 Lateral Movement",
+            "subTarget": "Lateral",
+            "style": "link"
+          },
+          {
+            "id": "tab6",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🏰 Persistence & PrivEsc",
+            "subTarget": "Persistence",
+            "style": "link"
+          },
+          {
+            "id": "tab7",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "👤 Risky Accounts",
+            "subTarget": "Accounts",
+            "style": "link"
+          },
+          {
+            "id": "tab8",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🔑 Authentication",
+            "subTarget": "Auth",
+            "style": "link"
+          },
+          {
+            "id": "tab9",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "🔎 Hunt",
+            "subTarget": "Hunt",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "tabs"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 📊 Identity Security Posture\n*Based on [Microsoft ITDR Dashboard](https://learn.microsoft.com/en-us/defender-for-identity/dashboard)*"
+            },
+            "name": "text - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| summarize \n    High = dcountif(SystemAlertId, AlertSeverity == 'High'),\n    Medium = dcountif(SystemAlertId, AlertSeverity == 'Medium'),\n    Low = dcountif(SystemAlertId, AlertSeverity == 'Low')",
+              "size": 4,
+              "title": "MDI Alerts by Severity",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Column1",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "High",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "redBright"
+                  }
+                }
+              }
+            },
+            "customWidth": "33",
+            "name": "kpi-severity"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let accounts = SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| mv-expand Entity = todynamic(Entities)\n| where Entity['Type'] == 'account'\n| extend Account = strcat(tostring(Entity['NTDomain']),'\\\\',tostring(Entity['Name']))\n| where isnotempty(Account) and Account != '\\\\'\n| distinct Account | count;\nlet hosts = SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| mv-expand Entity = todynamic(Entities)\n| where Entity['Type'] == 'host'\n| extend Host = tostring(Entity['HostName'])\n| where isnotempty(Host)\n| distinct Host | count;\nlet ips = SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| mv-expand Entity = todynamic(Entities)\n| where Entity['Type'] == 'ip'\n| extend IP = tostring(Entity['Address'])\n| where isnotempty(IP)\n| distinct IP | count;\nprint Accounts = toscalar(accounts), Hosts = toscalar(hosts), IPs = toscalar(ips)",
+              "size": 4,
+              "title": "Entities in Alerts",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Column1",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "Accounts",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "orange"
+                  }
+                }
+              }
+            },
+            "customWidth": "33",
+            "name": "kpi-entities"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Activity volume from MDI tables per schema docs\nlet logons = IdentityLogonEvents | count;\nlet queries = IdentityQueryEvents | count;\nlet directory = IdentityDirectoryEvents | count;\nprint Logons = toscalar(logons), Queries = toscalar(queries), Directory = toscalar(directory)",
+              "size": 4,
+              "title": "MDI Activity Volume",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "tiles",
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Column1",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "Logons",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "blue"
+                  }
+                }
+              }
+            },
+            "customWidth": "33",
+            "name": "kpi-activity"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "---\n## 🎯 MITRE ATT&CK Kill Chain Coverage\n*MDI alerts mapped to tactics per [Alert Categories](https://learn.microsoft.com/en-us/defender-for-identity/alerts-overview#alerts-categories)*"
+            },
+            "name": "text - 4"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| extend Tactics = todynamic(Tactics)\n| mv-expand Tactic = Tactics\n| where isnotempty(Tactic)\n| summarize AlertCount = dcount(SystemAlertId) by tostring(Tactic)\n| extend TacticOrder = case(\n    Tactic == 'Reconnaissance', 1,\n    Tactic == 'Discovery', 2,\n    Tactic == 'CredentialAccess', 3,\n    Tactic == 'LateralMovement', 4,\n    Tactic == 'Persistence', 5,\n    Tactic == 'PrivilegeEscalation', 6,\n    Tactic == 'Execution', 7,\n    Tactic == 'DefenseEvasion', 8,\n    Tactic == 'Exfiltration', 9,\n    Tactic == 'CommandAndControl', 10,\n    99)\n| order by TacticOrder asc\n| project Tactic, AlertCount",
+              "size": 1,
+              "title": "Alerts by MITRE ATT&CK Tactic (Kill Chain Order)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "categoricalbar"
+            },
+            "customWidth": "50",
+            "name": "mitre-bar"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| summarize Count = dcount(SystemAlertId) by AlertName, AlertSeverity\n| extend SevOrder = case(AlertSeverity == 'High', 1, AlertSeverity == 'Medium', 2, 3)\n| order by SevOrder asc, Count desc\n| take 10\n| project AlertName, AlertSeverity, Count",
+              "size": 0,
+              "title": "Top 10 Alert Types",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 HIGH"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 MEDIUM"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 LOW"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "Count",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "blue"
+                    }
+                  }
+                ]
+              }
+            },
+            "customWidth": "50",
+            "name": "top-alerts"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| summarize Count = dcount(SystemAlertId) by bin(TimeGenerated, 1d), AlertSeverity\n| order by TimeGenerated asc",
+              "size": 0,
+              "title": "Alert Trend",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "linechart",
+              "chartSettings": {
+                "group": "AlertSeverity",
+                "createOtherGroup": 0,
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "High",
+                    "color": "redBright"
+                  },
+                  {
+                    "seriesName": "Medium",
+                    "color": "orange"
+                  },
+                  {
+                    "seriesName": "Low",
+                    "color": "yellow"
+                  }
+                ]
+              }
+            },
+            "name": "alert-trend"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Overview"
+      },
+      "name": "grpOverview"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🚨 All MDI Security Alerts\n*Complete list of [MDI Alert Types](https://learn.microsoft.com/en-us/defender-for-identity/alerts-overview#security-alert-name-mapping-and-unique-external-ids)*"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| summarize arg_max(TimeGenerated, *) by SystemAlertId\n| extend Tactics = todynamic(Tactics)\n| extend TacticList = strcat_array(Tactics, ', ')\n| extend SevOrder = case(AlertSeverity == 'High', 1, AlertSeverity == 'Medium', 2, 3)\n| order by SevOrder asc, TimeGenerated desc\n| project TimeGenerated, AlertName, AlertSeverity, TacticList, Description, AlertLink",
+              "size": 0,
+              "title": "All Alerts (Sorted: Severity → Time)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 HIGH"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 MEDIUM"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 LOW"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "AlertLink",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "Url",
+                      "linkLabel": "🔗 Open"
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "all-alerts-grid"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| where AlertSeverity == 'High'\n| mv-expand Entity = todynamic(Entities)\n| extend EntityType = tostring(Entity['Type'])\n| extend EntityName = case(\n    EntityType == 'account', strcat(tostring(Entity['NTDomain']),'\\\\',tostring(Entity['Name'])),\n    EntityType == 'host', tostring(Entity['HostName']),\n    EntityType == 'ip', tostring(Entity['Address']),\n    ''\n)\n| where isnotempty(EntityName) and EntityName != '\\\\'\n| summarize \n    Alerts = make_set(AlertName),\n    Count = dcount(SystemAlertId),\n    FirstSeen = min(TimeGenerated),\n    LastSeen = max(TimeGenerated)\n    by EntityType, EntityName\n| order by Count desc",
+              "size": 0,
+              "title": "🔴 High Severity - Impacted Entities",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "EntityType",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "account",
+                          "representation": "Person",
+                          "text": "👤 Account"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "host",
+                          "representation": "Computer",
+                          "text": "🖥️ Host"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "ip",
+                          "representation": "Protocol",
+                          "text": "🌐 IP"
+                        },
+                        {
+                          "operator": "Default",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "Count",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "redBright"
+                    }
+                  },
+                  {
+                    "columnMatch": "FirstSeen",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "LastSeen",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "high-sev-entities"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Alerts"
+      },
+      "name": "grpAlerts"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🔍 Reconnaissance & Discovery\n**MITRE:** TA0043 Reconnaissance / TA0007 Discovery\n\n*[MDI Reconnaissance Alerts](https://learn.microsoft.com/en-us/defender-for-identity/reconnaissance-discovery-alerts)*\n\n| External ID | Alert Name | Severity |\n|-------------|------------|----------|\n| 2003 | Account enumeration reconnaissance | Medium |\n| 2007 | Network mapping reconnaissance (DNS) | Medium |\n| 2012 | User and IP address reconnaissance (SMB) | Medium |\n| 2021 | User and Group membership reconnaissance (SAMR) | Medium |\n| 2038 | Security principal reconnaissance (LDAP) | Medium/High |\n| 2210 | Active Directory attributes reconnaissance (LDAP) | Medium |\n| 2429 | Honeytoken was queried via LDAP | Low |\n| 2437 | Account Enumeration reconnaissance (LDAP) | Medium |"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// MDI Reconnaissance alerts based on documented External IDs\nSecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| where AlertName has_any (\n    'reconnaissance', 'enumeration', 'LDAP', 'SAMR', 'SMB', 'DNS', \n    'discovery', 'Network mapping', 'Security principal', 'Honeytoken was queried'\n)\n| summarize arg_max(TimeGenerated, *) by SystemAlertId\n| project TimeGenerated, AlertName, AlertSeverity, Description\n| order by TimeGenerated desc",
+              "size": 0,
+              "title": "🔍 Reconnaissance Alerts",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 {0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 {0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 {0}{1}"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "recon-alerts"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// QueryType from IdentityQueryEvents schema\n// https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identityqueryevents-table\nIdentityQueryEvents\n| summarize QueryCount = count() by QueryType\n| order by QueryCount desc",
+              "size": 0,
+              "title": "Query Types (from IdentityQueryEvents)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "piechart"
+            },
+            "customWidth": "35",
+            "name": "query-types"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Suspicious enumeration - QueryType values indicating bulk queries\nIdentityQueryEvents\n| where QueryType in ('AllAccounts', 'AllUsers', 'AllGroups', 'EnumerateUsers', \n    'EnumerateGroups', 'AllSecurityPrincipals', 'AllObjects', 'QueryGroup', 'SamrEnumerateUsersInDomain')\n| summarize \n    QueryCount = count(),\n    QueryTypes = make_set(QueryType, 5),\n    LastQuery = max(TimeGenerated)\n    by AccountUpn, DeviceName\n| order by QueryCount desc",
+              "size": 0,
+              "title": "⚠️ Enumeration Activity (Potential Recon)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "QueryCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "orange"
+                    }
+                  },
+                  {
+                    "columnMatch": "LastQuery",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "65",
+            "name": "enum-activity"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "IdentityQueryEvents\n| summarize QueryCount = count() by bin(TimeGenerated, 4h), QueryType\n| order by TimeGenerated asc",
+              "size": 0,
+              "title": "Query Activity Timeline",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "barchart"
+            },
+            "name": "query-timeline"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Recon"
+      },
+      "name": "grpRecon"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🔐 Credential Access\n**MITRE:** TA0006 Credential Access\n\n*[MDI Credential Access Alerts](https://learn.microsoft.com/en-us/defender-for-identity/credential-access-alerts)*\n\n| External ID | Alert Name | Severity |\n|-------------|------------|----------|\n| 2004 | Suspected Brute Force attack (LDAP) | Medium |\n| 2006 | Suspected DCSync attack | High |\n| 2013 | Suspected Golden Ticket usage (forged authorization data) | High |\n| 2014 | Honeytoken activity | Medium |\n| 2020 | Malicious request of Data Protection API master key | High |\n| 2023 | Suspected Brute Force attack (Kerberos, NTLM) | Medium |\n| 2038 | Security principal reconnaissance (LDAP) | Medium/High |\n| 2410 | Suspected Kerberos SPN exposure (Kerberoasting) | High |\n| 2412 | Suspected AS-REP Roasting attack | High |\n| 2413 | Suspected AD FS DKM key read | High |\n| 2418 | Suspected suspicious Kerberos ticket request | High |\n| 2424 | Abnormal AD FS authentication using suspicious certificate | High |\n| 2426 | Suspected DFSCoerce attack | High |\n| 2431 | Suspected account takeover using shadow credentials | High |"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Credential Access alerts per documented alert names\nSecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| where AlertName has_any (\n    'Kerberos', 'DCSync', 'credential', 'SPN', 'password', 'Brute Force',\n    'AS-REP', 'DPAPI', 'DKM', 'shadow credential', 'Golden Ticket',\n    'Honeytoken activity', 'DFSCoerce', 'Kerberoasting'\n)\n| summarize arg_max(TimeGenerated, *) by SystemAlertId\n| extend SevOrder = case(AlertSeverity == 'High', 1, AlertSeverity == 'Medium', 2, 3)\n| order by SevOrder asc, TimeGenerated desc\n| project TimeGenerated, AlertName, AlertSeverity, Description",
+              "size": 0,
+              "title": "🔐 Credential Access Alerts",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 {0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 {0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 {0}{1}"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "cred-alerts"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// DCSync detection via IdentityDirectoryEvents ActionType\n// Per schema: https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitydirectoryevents-table\nIdentityDirectoryEvents\n| where ActionType == 'Directory Services replication'\n| summarize \n    ReplicationCount = count(),\n    Sources = make_set(DeviceName, 5)\n    by bin(TimeGenerated, 1h)\n| order by TimeGenerated desc",
+              "size": 0,
+              "title": "⚠️ DCSync - Directory Services Replication",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "barchart",
+              "chartSettings": {
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "ReplicationCount",
+                    "color": "redBright"
+                  }
+                ]
+              }
+            },
+            "customWidth": "50",
+            "name": "dcsync"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Password changes via IdentityDirectoryEvents\nIdentityDirectoryEvents\n| where ActionType in ('Account Password changed', 'User Account password was reset')\n| summarize \n    PasswordChanges = count(),\n    LastChange = max(TimeGenerated)\n    by AccountUpn, TargetAccountUpn, ActionType\n| order by PasswordChanges desc",
+              "size": 0,
+              "title": "Password Changes",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "PasswordChanges",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "blue"
+                    }
+                  },
+                  {
+                    "columnMatch": "LastChange",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "password-changes"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Failed logon analysis - FailureReason from IdentityLogonEvents schema\nIdentityLogonEvents\n| where ActionType == 'LogonFailed'\n| summarize \n    FailedCount = count(),\n    UniqueAccounts = dcount(AccountUpn),\n    UniqueDevices = dcount(DeviceName)\n    by FailureReason\n| order by FailedCount desc",
+              "size": 0,
+              "title": "Failed Logon Reasons (Brute Force Indicators)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "FailedCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "red"
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "failed-reasons"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Credentials"
+      },
+      "name": "grpCredentials"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🔀 Lateral Movement\n**MITRE:** TA0008 Lateral Movement\n\n*[MDI Lateral Movement Alerts](https://learn.microsoft.com/en-us/defender-for-identity/lateral-movement-alerts)*\n\n| External ID | Alert Name | Severity |\n|-------------|------------|----------|\n| 2002 | Suspected overpass-the-hash attack (Kerberos) | Medium |\n| 2008 | Suspected over-pass-the-hash attack (forced encryption) | Medium |\n| 2017 | Suspected identity theft (pass-the-hash) | High |\n| 2018 | Suspected identity theft (pass-the-ticket) | High/Medium |\n| 2033 | Suspected Brute Force attack (SMB) | Medium |\n| 2034 | Suspected use of Metasploit hacking framework | Medium |\n| 2035 | Suspected WannaCry ransomware attack | Medium |\n| 2036 | Remote code execution over DNS | Medium |\n| 2037 | Suspected NTLM relay attack | Medium/Low |\n| 2039 | Suspected NTLM authentication tampering | Medium |\n| 2047 | Suspected rogue Kerberos certificate usage | High |\n| 2406 | Suspected SMB packet manipulation (CVE-2020-0796) | High |\n| 2414 | Exchange Server Remote Code Execution (CVE-2021-26855) | High |\n| 2415 | Suspected exploitation on Windows Print Spooler | High/Medium |\n| 2416 | Suspicious network connection over EFS Remote Protocol | High/Medium |\n| 2425 | Suspicious certificate usage over Kerberos (PKINIT) | High |"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Lateral Movement alerts per documented alert names\nSecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| where AlertName has_any (\n    'pass-the-hash', 'pass-the-ticket', 'overpass', 'identity theft',\n    'NTLM relay', 'NTLM authentication tampering', 'lateral',\n    'remote code', 'SMB', 'WannaCry', 'Metasploit', 'rogue Kerberos certificate',\n    'Print Spooler', 'EFS Remote Protocol', 'PKINIT', 'Exchange Server Remote Code'\n)\n| summarize arg_max(TimeGenerated, *) by SystemAlertId\n| extend SevOrder = case(AlertSeverity == 'High', 1, AlertSeverity == 'Medium', 2, 3)\n| order by SevOrder asc, TimeGenerated desc\n| project TimeGenerated, AlertName, AlertSeverity, Description",
+              "size": 0,
+              "title": "🔀 Lateral Movement Alerts",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 {0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 {0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 {0}{1}"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "lateral-alerts"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Resource Access logons - LogonType per schema\n// https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitylogonevents-table#supported-logon-types\nIdentityLogonEvents\n| where LogonType == 'Resource access'\n| summarize \n    ConnectionCount = count(),\n    Accounts = make_set(AccountUpn, 5),\n    FirstSeen = min(TimeGenerated),\n    LastSeen = max(TimeGenerated)\n    by DeviceName, DestinationDeviceName\n| where isnotempty(DeviceName) and isnotempty(DestinationDeviceName)\n| where DeviceName != DestinationDeviceName\n| order by ConnectionCount desc",
+              "size": 0,
+              "title": "🖥️ Lateral Movement Paths (Resource Access)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "ConnectionCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "orange"
+                    }
+                  },
+                  {
+                    "columnMatch": "FirstSeen",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "LastSeen",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "lateral-paths"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// NTLM authentication - Protocol field from schema\nIdentityLogonEvents\n| where Protocol == 'Ntlm'\n| summarize \n    NtlmCount = count(),\n    UniqueTargets = dcount(DestinationDeviceName),\n    Devices = make_set(DeviceName, 5)\n    by AccountUpn\n| order by NtlmCount desc",
+              "size": 0,
+              "title": "⚠️ NTLM Authentication (Pass-the-Hash Risk)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "NtlmCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "orange"
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "ntlm-auth"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// RDP/Interactive sessions - LogonType values from schema\nIdentityLogonEvents\n| where LogonType in ('Remote desktop', 'Interactive')\n| summarize \n    SessionCount = count(),\n    UniqueDevices = dcount(DeviceName),\n    Devices = make_set(DeviceName, 5)\n    by AccountUpn\n| order by SessionCount desc",
+              "size": 0,
+              "title": "🖥️ Interactive/RDP Sessions",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "SessionCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "turquoise"
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "rdp-sessions"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Lateral"
+      },
+      "name": "grpLateral"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🏰 Persistence & Privilege Escalation\n**MITRE:** TA0003 Persistence / TA0004 Privilege Escalation\n\n*[MDI Persistence & Privilege Escalation Alerts](https://learn.microsoft.com/en-us/defender-for-identity/persistence-privilege-escalation-alerts)*\n\n| External ID | Alert Name | Severity |\n|-------------|------------|----------|\n| 1106 | Suspected SID-History injection | High |\n| 2009 | Suspected Golden Ticket usage (encryption downgrade) | Medium |\n| 2010 | Suspected Skeleton Key attack (encryption downgrade) | Medium |\n| 2022 | Suspected Golden Ticket usage (time anomaly) | High |\n| 2024 | Suspicious additions to sensitive groups | Medium |\n| 2027 | Suspected Golden Ticket usage (nonexistent account) | High |\n| 2032 | Suspected Golden Ticket usage (ticket anomaly) | High |\n| 2040 | Suspected Golden Ticket usage (ticket anomaly using RBCD) | High |\n| 2411 | Suspected Netlogon privilege elevation (CVE-2020-1472) | High |\n| 2420 | Suspicious modification of AD FS server trust | Medium |\n| 2421 | Suspicious modification of dNSHostName (CVE-2022-26923) | High |\n| 2422 | Suspicious Kerberos delegation by newly created computer | High |\n| 2423 | Suspicious modification of RBCD attribute | High |\n| 2427 | Honeytoken user attributes modified | High |\n| 2428 | Honeytoken group membership changed | High |\n| 2430 | Suspicious modification of domain AdminSdHolder | High |\n| 2432 | Suspicious Domain Controller certificate request (ESC8) | High |\n| 2435 | Suspicious modifications to AD CS security permissions | Medium |\n| 2438 | Directory Services Restore Mode Password Change | Medium |"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Persistence/PrivEsc alerts per documented alert names\nSecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| where AlertName has_any (\n    'sensitive group', 'Golden Ticket', 'Skeleton Key', 'SID-History',\n    'privilege', 'AdminSDHolder', 'Netlogon', 'RBCD', 'delegation',\n    'honeytoken', 'AD FS', 'dNSHostName', 'sAMNameAccount',\n    'Suspicious additions', 'Remote code execution', 'Suspicious service',\n    'certificate request', 'AD CS', 'Directory Services Restore Mode'\n)\n| summarize arg_max(TimeGenerated, *) by SystemAlertId\n| extend SevOrder = case(AlertSeverity == 'High', 1, AlertSeverity == 'Medium', 2, 3)\n| order by SevOrder asc, TimeGenerated desc\n| project TimeGenerated, AlertName, AlertSeverity, Description",
+              "size": 0,
+              "title": "🏰 Persistence & Privilege Escalation Alerts",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 {0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 {0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 {0}{1}"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "persistence-alerts"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Group Membership changes via IdentityDirectoryEvents\nIdentityDirectoryEvents\n| where ActionType == 'Group Membership changed'\n| summarize \n    ChangeCount = count(),\n    LastChange = max(TimeGenerated)\n    by AccountUpn, TargetAccountUpn\n| order by ChangeCount desc",
+              "size": 0,
+              "title": "⚠️ Group Membership Changes",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "ChangeCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "purple"
+                    }
+                  },
+                  {
+                    "columnMatch": "LastChange",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "group-changes"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Persistence mechanisms via IdentityDirectoryEvents ActionTypes\nIdentityDirectoryEvents\n| where ActionType in (\n    'User Account Created', 'Security Group Created', 'Service creation',\n    'Scheduled Task created', 'Group Policy was created', 'Computer Account Created'\n)\n| summarize \n    Count = count(),\n    LastEvent = max(TimeGenerated)\n    by ActionType, AccountUpn\n| order by Count desc",
+              "size": 0,
+              "title": "Persistence Mechanisms Created",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Count",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "blue"
+                    }
+                  },
+                  {
+                    "columnMatch": "LastEvent",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "persistence-mechanisms"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// All Directory Events by ActionType\nIdentityDirectoryEvents\n| summarize EventCount = count() by ActionType\n| order by EventCount desc\n| take 20",
+              "size": 0,
+              "title": "All Directory Event Types",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "barchart"
+            },
+            "name": "directory-events"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Persistence"
+      },
+      "name": "grpPersistence"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 👤 Risky Accounts Analysis\nAccounts in security alerts with risk scoring"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "SecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| mv-expand Entity = todynamic(Entities)\n| where Entity['Type'] == 'account'\n| extend Account = strcat(tostring(Entity['NTDomain']),'\\\\',tostring(Entity['Name']))\n| where isnotempty(Account) and Account != '\\\\'\n| summarize \n    AlertCount = dcount(SystemAlertId),\n    HighSeverity = dcountif(SystemAlertId, AlertSeverity == 'High'),\n    MediumSeverity = dcountif(SystemAlertId, AlertSeverity == 'Medium'),\n    Alerts = make_set(AlertName, 10),\n    FirstSeen = min(TimeGenerated),\n    LastSeen = max(TimeGenerated)\n    by Account\n| extend RiskScore = (HighSeverity * 10) + (MediumSeverity * 3) + AlertCount\n| order by RiskScore desc",
+              "size": 0,
+              "title": "🔴 Account Risk Scoring",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "AlertCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "orange"
+                    }
+                  },
+                  {
+                    "columnMatch": "HighSeverity",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "redBright"
+                    }
+                  },
+                  {
+                    "columnMatch": "MediumSeverity",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "orange"
+                    }
+                  },
+                  {
+                    "columnMatch": "RiskScore",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "redDark"
+                    }
+                  },
+                  {
+                    "columnMatch": "FirstSeen",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "LastSeen",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "account-risk"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Failed logons with FailureReason from schema\nIdentityLogonEvents\n| where ActionType == 'LogonFailed'\n| summarize \n    FailedCount = count(),\n    UniqueDevices = dcount(DeviceName),\n    FailureReasons = make_set(FailureReason, 3),\n    LastAttempt = max(TimeGenerated)\n    by AccountUpn\n| order by FailedCount desc\n| take 20",
+              "size": 0,
+              "title": "Failed Logons by Account",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "FailedCount",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "red"
+                    }
+                  },
+                  {
+                    "columnMatch": "LastAttempt",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "failed-logons"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "IdentityLogonEvents\n| summarize \n    TotalLogons = count(),\n    FailedLogons = countif(ActionType == 'LogonFailed'),\n    UniqueDevices = dcount(DeviceName),\n    Protocols = make_set(Protocol, 3)\n    by AccountUpn\n| extend FailRate = round(100.0 * FailedLogons / TotalLogons, 1)\n| where TotalLogons > 5\n| order by FailRate desc\n| take 15",
+              "size": 0,
+              "title": "Account Failure Rate",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "FailRate",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "redBright"
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "name": "fail-rate"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Accounts"
+      },
+      "name": "grpAccounts"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🔑 Authentication Analysis\n*Based on [IdentityLogonEvents Schema](https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitylogonevents-table)*\n\n**Supported LogonType Values:**\n| LogonType | Description |\n|-----------|-------------|\n| Credentials Validation | Domain auth using NTLM/Kerberos |\n| Interactive Logon | User entered username/password |\n| Interactive Logon with Certificate | Certificate-based auth |\n| VPN Connection | RADIUS protocol |\n| Resource Access | Kerberos/NTLM resource access |\n| Delegated Resource Access | Kerberos delegation |\n| LDAP Cleartext | Simple LDAP auth (insecure) |\n| Remote Desktop | RDP session via Kerberos |"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// LogonType distribution per schema documentation\nIdentityLogonEvents\n| where ActionType == 'LogonSuccess'\n| summarize Count = count() by LogonType\n| order by Count desc",
+              "size": 0,
+              "title": "Successful Logons by Type",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "piechart"
+            },
+            "customWidth": "33",
+            "name": "logon-types"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Protocol distribution per schema\nIdentityLogonEvents\n| summarize Count = count() by Protocol\n| order by Count desc",
+              "size": 0,
+              "title": "Authentication Protocols",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "piechart"
+            },
+            "customWidth": "33",
+            "name": "protocols"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// ActionType distribution\nIdentityLogonEvents\n| summarize Count = count() by ActionType\n| order by Count desc",
+              "size": 0,
+              "title": "Logon Success vs Failed",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "piechart"
+            },
+            "customWidth": "33",
+            "name": "success-fail"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// LDAP Cleartext - security concern per schema docs\nIdentityLogonEvents\n| where LogonType == 'LDAP Cleartext'\n| summarize \n    Count = count(),\n    Accounts = make_set(AccountUpn, 10),\n    Devices = make_set(DeviceName, 10)\n| where Count > 0",
+              "size": 0,
+              "title": "⚠️ LDAP Cleartext Authentication (Insecure)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ]
+            },
+            "customWidth": "50",
+            "name": "ldap-cleartext"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Delegated Resource Access - Kerberos delegation\nIdentityLogonEvents\n| where LogonType == 'Delegated Resource Access'\n| summarize \n    Count = count(),\n    Accounts = make_set(AccountUpn, 10)\n| where Count > 0",
+              "size": 0,
+              "title": "Kerberos Delegation Usage",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ]
+            },
+            "customWidth": "50",
+            "name": "kerberos-delegation"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "// Authentication timeline\nIdentityLogonEvents\n| summarize \n    Success = countif(ActionType == 'LogonSuccess'),\n    Failed = countif(ActionType == 'LogonFailed')\n    by bin(TimeGenerated, 1h)\n| order by TimeGenerated asc",
+              "size": 0,
+              "title": "Authentication Timeline",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "linechart",
+              "chartSettings": {
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "Success",
+                    "color": "green"
+                  },
+                  {
+                    "seriesName": "Failed",
+                    "color": "red"
+                  }
+                ]
+              }
+            },
+            "name": "auth-timeline"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Auth"
+      },
+      "name": "grpAuth"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## 🔎 Threat Hunting Workspace\nInvestigate specific accounts or devices across all MDI tables"
+            }
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "hunt-account",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "HuntAccount",
+                  "type": 1,
+                  "description": "Account to investigate (partial match)",
+                  "value": ""
+                },
+                {
+                  "id": "hunt-device",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "HuntDevice",
+                  "type": 1,
+                  "description": "Device to investigate (partial match)",
+                  "value": ""
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces"
+            },
+            "name": "hunt-params"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let account = '{HuntAccount}';\nlet device = '{HuntDevice}';\nIdentityLogonEvents\n| where (isempty(account) or AccountUpn has account or AccountName has account)\n| where (isempty(device) or DeviceName has device or DestinationDeviceName has device)\n| project TimeGenerated, AccountUpn, DeviceName, LogonType, ActionType, Protocol, IPAddress, DestinationDeviceName, FailureReason\n| order by TimeGenerated desc\n| take 100",
+              "size": 0,
+              "title": "🔎 IdentityLogonEvents",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "ActionType",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "LogonFailed",
+                          "representation": "red",
+                          "text": "❌ {0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "green",
+                          "text": "✅ {0}{1}"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "hunt-logons"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let account = '{HuntAccount}';\nlet device = '{HuntDevice}';\nIdentityDirectoryEvents\n| where (isempty(account) or AccountUpn has account or TargetAccountUpn has account)\n| where (isempty(device) or DeviceName has device or DestinationDeviceName has device)\n| project TimeGenerated, ActionType, AccountUpn, TargetAccountUpn, DeviceName, DestinationDeviceName, AdditionalFields\n| order by TimeGenerated desc\n| take 100",
+              "size": 0,
+              "title": "🔎 IdentityDirectoryEvents",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "hunt-directory"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let account = '{HuntAccount}';\nlet device = '{HuntDevice}';\nIdentityQueryEvents\n| where (isempty(account) or AccountUpn has account)\n| where (isempty(device) or DeviceName has device or DestinationDeviceName has device)\n| project TimeGenerated, AccountUpn, DeviceName, QueryType, QueryTarget, Protocol\n| order by TimeGenerated desc\n| take 100",
+              "size": 0,
+              "title": "🔎 IdentityQueryEvents",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "hunt-queries"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let account = '{HuntAccount}';\nlet device = '{HuntDevice}';\nSecurityAlert\n| where ProductName == 'Azure Advanced Threat Protection'\n| mv-expand Entity = todynamic(Entities)\n| extend EntityAccount = strcat(tostring(Entity['NTDomain']),'\\\\',tostring(Entity['Name']))\n| extend EntityHost = tostring(Entity['HostName'])\n| where (isempty(account) or EntityAccount has account)\n| where (isempty(device) or EntityHost has device)\n| summarize arg_max(TimeGenerated, *) by SystemAlertId\n| project TimeGenerated, AlertName, AlertSeverity, Description, AlertLink\n| order by TimeGenerated desc",
+              "size": 0,
+              "title": "🔎 SecurityAlerts (MDI)",
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "TimeGenerated",
+                    "formatter": 6
+                  },
+                  {
+                    "columnMatch": "AlertSeverity",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "🔴 {0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "orange",
+                          "text": "🟠 {0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "representation": "yellow",
+                          "text": "🟡 {0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "AlertLink",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "Url",
+                      "linkLabel": "🔗 Open"
+                    }
+                  }
+                ],
+                "filter": true
+              }
+            },
+            "name": "hunt-alerts"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Hunt"
+      },
+      "name": "grpHunt"
+    }
+  ],
+  "fallbackResourceIds": [
+    "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinellaw"
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
