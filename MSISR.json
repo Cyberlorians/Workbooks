@@ -31,18 +31,12 @@
                   "quote": "'",
                   "delimiter": ",",
                   "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
-                  "crossComponentResources": [
-                    "value::all"
-                  ],
                   "typeSettings": {
                     "additionalResourceOptions": [],
                     "showDefault": false
                   },
                   "queryType": 1,
-                  "resourceType": "microsoft.resourcegraph/resources",
-                  "value": [
-                    "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/sentinellaw"
-                  ]
+                  "resourceType": "microsoft.operationalinsights/workspaces"
                 },
                 {
                   "id": "4d2aad49-d67d-4070-9fac-b0f14734b819",
@@ -103,7 +97,7 @@
                 }
               ],
               "style": "above",
-              "queryType": 0,
+              "queryType": 1,
               "resourceType": "microsoft.operationalinsights/workspaces"
             },
             "customWidth": "50",
