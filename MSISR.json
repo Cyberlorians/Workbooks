@@ -21,6 +21,28 @@
               "version": "KqlParameterItem/1.0",
               "parameters": [
                 {
+                  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "SelectedSubscription",
+                  "label": "Subscription",
+                  "type": 6,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ],
+                    "includeAll": true,
+                    "showDefault": false
+                  },
+                  "defaultValue": "value::all",
+                  "value": [
+                    "/subscriptions/ac95a806-c9d3-49e7-83ee-7f82e88c2bd3"
+                  ]
+                },
+                {
                   "id": "4853246f-5135-4586-a6a0-9e88edd4534b",
                   "version": "KqlParameterItem/1.0",
                   "name": "Workspace",
@@ -31,12 +53,18 @@
                   "quote": "'",
                   "delimiter": ",",
                   "query": "resources\r\n| where type =~ 'microsoft.operationalinsights/workspaces'\r\n| project id",
+                  "crossComponentResources": [
+                    "{SelectedSubscription}"
+                  ],
                   "typeSettings": {
                     "additionalResourceOptions": [],
                     "showDefault": false
                   },
                   "queryType": 1,
-                  "resourceType": "microsoft.operationalinsights/workspaces"
+                  "resourceType": "microsoft.resourcegraph/resources",
+                  "value": [
+                    "/subscriptions/ac95a806-c9d3-49e7-83ee-7f82e88c2bd3/resourceGroups/rg-siem-shared-001/providers/Microsoft.OperationalInsights/workspaces/log-c3elz7-usgovvirginia-001"
+                  ]
                 },
                 {
                   "id": "4d2aad49-d67d-4070-9fac-b0f14734b819",
@@ -97,10 +125,10 @@
                 }
               ],
               "style": "above",
-              "queryType": 1,
+              "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces"
             },
-            "customWidth": "50",
+            "customWidth": "75",
             "name": "Global Parameters"
           }
         ],
@@ -406,7 +434,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/4260a1bd-84f2-4114-8197-2bbf9a9350a1/resourcegroups/sentinel/providers/microsoft.operationalinsights/workspaces/sentinellaw"
+    "/subscriptions/ac95a806-c9d3-49e7-83ee-7f82e88c2bd3/resourcegroups/rg-siem-shared-001/providers/microsoft.operationalinsights/workspaces/log-c3elz7-usgovvirginia-001"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
